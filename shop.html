@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>roughly — Shop</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --warm-black:   #1E130A;
+  --tobacco:      #8B5C30;
+  --amber-dust:   #C49A52;
+  --brick-shadow: #7A3D2A;
+  --old-canvas:   #D6C9A8;
+  --cream-receipt:#EDE4CC;
+  --noon-light:   #F5EDD8;
+  --ink:          #120C05;
+  --border:       rgba(196,154,82,0.1);
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--warm-black);
+  color: var(--cream-receipt);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+
+/* Nav */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 56px;
+  transition: background 0.4s, backdrop-filter 0.4s;
+}
+nav.scrolled {
+  background: rgba(30,19,10,0.92);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-mark { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700; color: var(--cream-receipt); text-decoration: none; letter-spacing: -0.5px; }
+.nav-right { display: flex; align-items: center; gap: 28px; }
+.nav-link { font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; color: var(--tobacco); text-decoration: none; transition: color 0.2s, opacity 0.2s; opacity: 0.6; }
+.nav-link:hover { color: var(--cream-receipt); opacity: 1; }
+.nav-link.active { color: var(--amber-dust); opacity: 1; }
+
+/* Shop Hero */
+.shop-hero {
+  padding: 180px 48px 80px;
+  position: relative; overflow: hidden;
+}
+.shop-hero::before {
+  content: ''; position: absolute; top: -10%; right: -10%;
+  width: 50%; height: 60%;
+  background: radial-gradient(ellipse, rgba(196,154,82,0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+.shop-eyebrow { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--tobacco); opacity: 0.4; margin-bottom: 28px; }
+.shop-headline {
+  font-family: 'Crimson Pro', serif; font-style: italic;
+  font-size: clamp(36px, 6vw, 80px); font-weight: 400;
+  line-height: 1.08; letter-spacing: -2px; color: var(--cream-receipt);
+  max-width: 700px; margin-bottom: 28px;
+}
+.shop-context { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--tobacco); opacity: 0.8; max-width: 500px; }
+
+/* Donation Note */
+.donation-note { position: relative; padding: 60px 48px 100px; display: flex; justify-content: flex-start; }
+.donation-card {
+  background: rgba(196,154,82,0.04);
+  border-left: 3px solid var(--amber-dust);
+  padding: 24px 28px; max-width: 480px;
+  font-size: 13px; font-weight: 400; line-height: 1.8; letter-spacing: 0.5px;
+}
+.donation-card strong {
+  display: block; font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--amber-dust);
+  margin-bottom: 12px; font-weight: 400;
+}
+.donation-org { font-family: 'Caveat', cursive; font-size: 20px; color: var(--cream-receipt); margin-top: 8px; letter-spacing: -0.5px; }
+
+/* Launch Notice */
+.launch-notice { padding: 0 48px 80px; text-align: center; }
+.launch-badge {
+  display: inline-block; font-size: 9px; letter-spacing: 3px;
+  text-transform: uppercase; color: var(--amber-dust);
+  border: 1px solid rgba(196,154,82,0.25);
+  padding: 10px 24px; border-radius: 100px;
+}
+
+/* Collections */
+.collection { position: relative; padding: 0 48px 140px; }
+.collection-name {
+  font-family: 'Caveat', cursive;
+  font-size: clamp(48px, 7vw, 72px); font-weight: 700;
+  color: var(--cream-receipt); line-height: 0.9; margin-bottom: 12px;
+}
+.collection-tag {
+  font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--amber-dust); opacity: 0.5; display: block; margin-bottom: 20px;
+}
+.collection-desc { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--tobacco); max-width: 520px; }
+.collection-desc strong { color: var(--cream-receipt); font-weight: 400; }
+
+#finished-enough .collection-header { margin-bottom: 24px; }
+#finished-enough .collection-desc { margin-bottom: 60px; }
+
+#pre-loved { display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: start; }
+#pre-loved .collection-left { position: sticky; top: 140px; }
+
+#artist-collab { display: grid; grid-template-columns: 1fr 380px; gap: 80px; align-items: start; }
+#artist-collab .collection-right { position: sticky; top: 140px; }
+
+#statement { display: flex; flex-direction: column; align-items: center; text-align: center; }
+#statement .collection-desc { text-align: center; margin-bottom: 60px; }
+
+/* Product Grid */
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 3px; }
+.product-card {
+  background: rgba(196,154,82,0.03);
+  border: 1px solid rgba(196,154,82,0.08);
+  overflow: hidden; position: relative;
+}
+.product-img {
+  aspect-ratio: 3/4; position: relative;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.product-img.tobacco { background: linear-gradient(165deg, #9E6A3A 0%, #8B5C30 50%, #7A4F28 100%); }
+.product-img.canvas { background: linear-gradient(165deg, #E4D8B8 0%, #D6C9A8 50%, #C8BB9A 100%); }
+.product-img.warmblack { background: linear-gradient(165deg, #2A1C10 0%, #1E130A 50%, #130C05 100%); }
+.product-img.preloved { background: linear-gradient(165deg, #4A3F32 0%, #3D3428 50%, #302920 100%); }
+.product-img.artist { background: linear-gradient(165deg, #2E3832 0%, #1F2A24 50%, #16201B 100%); }
+.product-img.statement { background: linear-gradient(165deg, #1A1A1A 0%, #111 50%, #0A0A0A 100%); }
+
+.product-img-label {
+  position: absolute; top: 20px; left: 20px;
+  font-family: 'Caveat', cursive; font-size: 28px; font-weight: 700;
+  color: rgba(237,228,204,0.4); pointer-events: none;
+}
+.raw-edge-note {
+  position: absolute; bottom: 16px; right: 16px;
+  font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+  color: rgba(237,228,204,0.3); background: rgba(0,0,0,0.2);
+  padding: 4px 10px; border-radius: 2px;
+}
+.product-badge {
+  position: absolute; top: 16px; right: 16px;
+  font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
+  background: rgba(196,154,82,0.9); color: var(--ink);
+  padding: 5px 12px; border-radius: 2px; font-weight: 400;
+}
+.product-badge.oneofone { background: rgba(122,61,42,0.9); color: var(--cream-receipt); }
+
+.coming-soon-overlay {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(18,12,5,0.3); z-index: 2;
+}
+.coming-soon-tag {
+  font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--cream-receipt);
+  background: rgba(18,12,5,0.7); backdrop-filter: blur(4px);
+  padding: 8px 20px; border-radius: 100px;
+  border: 1px solid rgba(196,154,82,0.15);
+}
+
+.statement-text {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: clamp(18px, 2.5vw, 24px); font-weight: 500;
+  line-height: 1.4; text-align: center;
+  color: var(--cream-receipt); letter-spacing: 0.5px; padding: 0 32px;
+}
+
+.product-info { padding: 20px; background: rgba(0,0,0,0.15); }
+.product-name { font-size: 15px; font-weight: 400; color: var(--cream-receipt); margin-bottom: 6px; letter-spacing: -0.3px; }
+.product-detail { font-size: 12px; font-weight: 400; color: var(--tobacco); opacity: 0.7; margin-bottom: 16px; line-height: 1.7; }
+.product-price-row { display: flex; align-items: center; justify-content: space-between; }
+.product-price { font-size: 16px; font-weight: 400; color: var(--amber-dust); letter-spacing: -0.5px; }
+.product-notify {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--amber-dust); opacity: 0.6;
+  cursor: pointer;
+  background: none; border: 1px solid rgba(196,154,82,0.2);
+  padding: 6px 14px; border-radius: 100px;
+  font-family: 'IBM Plex Mono', monospace;
+  transition: all 0.25s;
+}
+.product-notify:hover {
+  opacity: 1; border-color: var(--amber-dust);
+  background: rgba(196,154,82,0.08);
+}
+
+/* Asymmetric */
+#pre-loved .product-grid { gap: 24px 3px; }
+#pre-loved .product-card:nth-child(2) { transform: translateY(40px); }
+#artist-collab .product-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; }
+#statement .product-grid { grid-template-columns: repeat(2, minmax(320px, 400px)); gap: 24px; justify-content: center; }
+
+/* Footer */
+footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 48px; margin-bottom: 60px; }
+.footer-mark { font-family: 'Caveat', cursive; font-size: 28px; font-weight: 700; color: var(--cream-receipt); display: block; margin-bottom: 8px; }
+.footer-tagline-small { font-family: 'Caveat', cursive; font-size: 18px; font-weight: 600; color: var(--amber-dust); opacity: 0.4; }
+.footer-nav-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber-dust); opacity: 0.4; margin-bottom: 20px; }
+.footer-nav-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-nav-links a { font-size: 12px; color: var(--tobacco); text-decoration: none; transition: color 0.2s; opacity: 0.7; }
+.footer-nav-links a:hover { color: var(--cream-receipt); opacity: 1; }
+.footer-signup-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--amber-dust); opacity: 0.4; margin-bottom: 12px; }
+.footer-signup-desc { font-size: 13px; font-weight: 400; line-height: 1.8; color: var(--tobacco); opacity: 0.7; margin-bottom: 20px; }
+.footer-signup-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; padding: 12px 24px;
+  background: transparent; color: var(--amber-dust);
+  border: 1px solid rgba(196,154,82,0.25); border-radius: 100px;
+  cursor: pointer; transition: all 0.3s;
+}
+.footer-signup-btn:hover { background: var(--amber-dust); color: var(--ink); border-color: var(--amber-dust); }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; padding-top: 28px; border-top: 1px solid rgba(196,154,82,0.06); }
+.footer-note { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--tobacco); opacity: 0.4; }
+.footer-contact { font-size: 10px; color: var(--tobacco); opacity: 0.5; text-decoration: none; transition: color 0.2s, opacity 0.2s; }
+.footer-contact:hover { color: var(--cream-receipt); opacity: 1; }
+
+/* Email Modal */
+.email-overlay {
+  position: fixed; inset: 0; background: rgba(10,6,2,0.8);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  z-index: 600; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.35s ease;
+}
+.email-overlay.open { opacity: 1; pointer-events: all; }
+.email-panel {
+  background: #1f1409; border: 1px solid var(--border); border-radius: 20px;
+  padding: 52px 44px; max-width: 440px; width: 90%; text-align: center;
+  transform: translateY(24px); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.email-overlay.open .email-panel { transform: translateY(0); }
+.email-panel-mark { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 700; color: var(--cream-receipt); margin-bottom: 8px; }
+.email-panel-tagline { font-family: 'Caveat', cursive; font-size: 16px; font-weight: 600; color: var(--amber-dust); opacity: 0.5; margin-bottom: 28px; }
+.email-panel-headline { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 22px; font-weight: 400; color: var(--cream-receipt); line-height: 1.3; margin-bottom: 12px; }
+.email-panel-desc { font-size: 13px; font-weight: 400; line-height: 1.8; color: var(--tobacco); opacity: 0.7; margin-bottom: 32px; }
+.email-form { display: flex; gap: 8px; margin-bottom: 16px; }
+.email-input {
+  flex: 1; font-family: 'IBM Plex Mono', monospace; font-size: 12px; padding: 14px 18px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--cream-receipt); outline: none; transition: border-color 0.2s;
+}
+.email-input::placeholder { color: var(--tobacco); opacity: 0.4; }
+.email-input:focus { border-color: var(--amber-dust); }
+.email-submit {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px;
+  text-transform: uppercase; padding: 14px 24px; background: var(--amber-dust);
+  color: var(--ink); border: none; border-radius: 8px; cursor: pointer;
+  transition: background 0.2s, transform 0.2s; white-space: nowrap;
+}
+.email-submit:hover { background: var(--old-canvas); transform: translateY(-1px); }
+.email-dismiss { font-size: 10px; color: var(--tobacco); opacity: 0.4; cursor: pointer; background: none; border: none; font-family: 'IBM Plex Mono', monospace; transition: opacity 0.2s; }
+.email-dismiss:hover { opacity: 0.8; }
+.email-success { display: none; }
+.email-success.show { display: block; }
+.email-success-text { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 600; color: var(--amber-dust); margin-bottom: 8px; }
+.email-success-sub { font-size: 11px; color: var(--tobacco); opacity: 0.7; }
+
+/* Responsive */
+@media (max-width: 1200px) {
+  #pre-loved, #artist-collab { grid-template-columns: 1fr; gap: 60px; }
+  #pre-loved .collection-left, #artist-collab .collection-right { position: relative; top: auto; }
+}
+
+@media (max-width: 768px) {
+  nav { padding: 16px 24px; }
+  .shop-hero { padding: 120px 24px 60px; }
+  .donation-note { padding: 40px 24px 60px; }
+  .donation-card { max-width: 100%; }
+  .launch-notice { padding: 0 24px 60px; }
+  .collection { padding: 0 24px 80px; }
+  .collection-name { font-size: clamp(36px, 9vw, 56px); }
+  .collection-desc { margin-bottom: 40px; }
+  .product-grid { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 2px; }
+  #pre-loved .product-grid { gap: 12px 2px; }
+  #pre-loved .product-card:nth-child(2) { transform: translateY(0); }
+  #artist-collab .product-grid { gap: 16px; grid-template-columns: 1fr; }
+  #statement .product-grid { grid-template-columns: 1fr; gap: 12px; }
+  #statement { text-align: left; }
+  #statement .collection-desc { text-align: left; }
+  #finished-enough .collection-desc { margin-bottom: 40px; }
+  footer { padding: 48px 24px 36px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .nav-right { display: none; }
+  .nav-hamburger { display: flex !important; }
+  nav { padding: 14px 20px; }
+  .shop-hero { padding: 100px 20px 48px; }
+  .shop-headline { font-size: clamp(28px, 8vw, 52px); letter-spacing: -1px; }
+  .shop-context { font-size: 14px; }
+  .donation-note { padding: 32px 20px 48px; }
+  .donation-card { padding: 20px; }
+  .donation-org { font-size: 18px; }
+  .launch-notice { padding: 0 20px 48px; }
+  .collection { padding: 0 20px 64px; }
+  .collection-name { font-size: clamp(32px, 10vw, 52px); line-height: 0.95; }
+  .collection-desc { font-size: 14px; }
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  #artist-collab .product-grid { grid-template-columns: 1fr 1fr; }
+  #artist-collab { display: flex; flex-direction: column; }
+  #artist-collab .collection-right { order: -1; }
+  #statement .product-grid { grid-template-columns: 1fr 1fr; }
+  .product-info { padding: 10px 12px 12px; }
+  .product-name { font-size: 12px; margin-bottom: 3px; }
+  .product-detail { font-size: 9px; margin-bottom: 10px; line-height: 1.4; }
+  .product-price { font-size: 13px; }
+  .product-notify { font-size: 8px; letter-spacing: 1px; padding: 5px 10px; }
+  .product-img-label { font-size: 20px; top: 12px; left: 12px; }
+  .raw-edge-note { font-size: 7px; padding: 3px 7px; bottom: 10px; right: 10px; }
+  .product-badge { font-size: 7px; padding: 3px 8px; top: 10px; right: 10px; }
+  .statement-text { font-size: clamp(14px, 4.5vw, 20px); padding: 0 16px; line-height: 1.3; }
+  .coming-soon-tag { font-size: 8px; padding: 6px 14px; }
+  footer { padding: 40px 20px 28px; }
+  .footer-grid { gap: 32px; }
+  .email-panel { padding: 36px 24px; }
+  .email-form { flex-direction: column; }
+  .email-submit { width: 100%; padding: 14px; }
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none; position: fixed; top: 20px; right: 20px; z-index: 400;
+  flex-direction: column; justify-content: space-between;
+  width: 22px; height: 14px; background: none; border: none; cursor: pointer; padding: 0;
+}
+.nav-hamburger span {
+  display: block; width: 100%; height: 1.5px; background: var(--cream-receipt);
+  transition: transform 0.32s ease, opacity 0.2s ease; transform-origin: center; will-change: transform;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(26,15,6,0.98); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+  opacity: 0; visibility: hidden; transition: opacity 0.35s ease, visibility 0.35s ease; pointer-events: none;
+}
+.nav-mobile-menu.open { opacity: 1; visibility: visible; pointer-events: all; }
+.nav-mobile-link {
+  font-family: 'Caveat', cursive; font-size: 36px; font-weight: 700;
+  color: rgba(237,228,204,0.5); text-decoration: none; transition: color 0.2s;
+}
+.nav-mobile-link.active { color: var(--amber-dust); }
+.nav-mobile-link:hover { color: var(--cream-receipt); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="nav-mark" href="index.html">roughly</a>
+  <div class="nav-right">
+    <a class="nav-link" href="index.html">Home</a>
+    <a class="nav-link" href="roughly-network.html">Network</a>
+    <a class="nav-link active" href="shop.html">Shop</a>
+  </div>
+</nav>
+<button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+
+<!-- SHOP HERO -->
+<section class="shop-hero">
+  <div class="shop-eyebrow reveal">The Shop</div>
+  <h1 class="shop-headline reveal reveal-d1">Clothing that propels the movement.</h1>
+  <p class="shop-context reveal reveal-d2">Every piece supports the roughly network. Every dollar is accounted for. Every donation is published.</p>
+</section>
+
+<!-- DONATION NOTE -->
+<div class="donation-note">
+  <div class="donation-card reveal">
+    <strong>Organization of the month</strong>
+    10% of every Finished Enough sale goes directly to a rotating monthly partner. Organization and donation amount published with every cycle.
+    <div class="donation-org">Launching soon — first partner announced at drop.</div>
+  </div>
+</div>
+
+<!-- LAUNCH NOTICE -->
+<div class="launch-notice reveal">
+  <div class="launch-badge">Pre-launch — Notify to be first</div>
+</div>
+
+<!-- FINISHED ENOUGH -->
+<section class="collection reveal" id="finished-enough">
+  <div class="collection-header">
+    <div class="collection-name">Finished Enough</div>
+    <div class="collection-tag">The Flagship</div>
+    <div class="collection-desc">Heavyweight cotton. Raw-cut neck and sleeves. No collar stitching, no hems — just holes for the head and arms. <strong>Every shirt frays differently over time. Yours becomes yours.</strong></div>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img tobacco">
+        <div class="product-img-label">roughly</div>
+        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Tobacco</div>
+        <div class="product-detail">Heavyweight cotton · Raw cut · Tobacco washed</div>
+        <div class="product-price-row">
+          <div class="product-price">$42</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img canvas">
+        <div class="product-img-label">roughly</div>
+        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Canvas</div>
+        <div class="product-detail">Heavyweight cotton · Raw cut · Garment dyed</div>
+        <div class="product-price-row">
+          <div class="product-price">$42</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img warmblack">
+        <div class="product-img-label">roughly</div>
+        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Warm Black</div>
+        <div class="product-detail">Heavyweight cotton · Raw cut · Enzyme washed</div>
+        <div class="product-price-row">
+          <div class="product-price">$42</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRE-LOVED -->
+<section class="collection reveal" id="pre-loved">
+  <div class="collection-left">
+    <div class="collection-name">Pre-Loved</div>
+    <div class="collection-tag">One of one</div>
+    <div class="collection-desc">Thrifted from Goodwill bins. Hand-selected, washed, and rebranded. <strong>Every piece has a past. Every piece is the only one.</strong> Portion of profits donated back to donation centers.</div>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img preloved">
+        <div class="product-img-label">roughly</div>
+        <div class="product-badge oneofone">1 of 1</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Faded Navy Crewneck</div>
+        <div class="product-detail">Sourced · Washed · Rebranded</div>
+        <div class="product-price-row">
+          <div class="product-price">$34</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img preloved" style="background: linear-gradient(165deg, #5A4A3A 0%, #4D3F30 50%, #3E3326 100%);">
+        <div class="product-img-label">roughly</div>
+        <div class="product-badge oneofone">1 of 1</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Sun-Bleached Henley</div>
+        <div class="product-detail">Sourced · Washed · Rebranded</div>
+        <div class="product-price-row">
+          <div class="product-price">$30</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img preloved" style="background: linear-gradient(165deg, #3A3A42 0%, #2E2E36 50%, #24242C 100%);">
+        <div class="product-img-label">roughly</div>
+        <div class="product-badge oneofone">1 of 1</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Washed Charcoal Pocket Tee</div>
+        <div class="product-detail">Sourced · Washed · Rebranded</div>
+        <div class="product-price-row">
+          <div class="product-price">$28</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ARTIST COLLAB -->
+<section class="collection reveal" id="artist-collab">
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img artist">
+        <div class="product-img-label">roughly</div>
+        <div class="product-badge">Limited — 30 pcs</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">"Pikes at Dawn" — by Elena Voss</div>
+        <div class="product-detail">Screen print on heavyweight tee · Artist split</div>
+        <div class="product-price-row">
+          <div class="product-price">$52</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img artist" style="background: linear-gradient(165deg, #322E28 0%, #28241E 50%, #1E1A16 100%);">
+        <div class="product-img-label">roughly</div>
+        <div class="product-badge">Limited — 20 pcs</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">"No Signal" — by Mateo Ruiz</div>
+        <div class="product-detail">Block print on canvas tee · Artist split</div>
+        <div class="product-price-row">
+          <div class="product-price">$48</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="collection-right">
+    <div class="collection-name">Artist Collab</div>
+    <div class="collection-tag">Local COS artists · Limited runs</div>
+    <div class="collection-desc">Prints and designs by local Colorado Springs artists on roughly blanks. <strong>Profit split with the artist. Once they're gone, they're gone.</strong></div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<section class="collection reveal" id="statement">
+  <div class="collection-header">
+    <div class="collection-name">Statement</div>
+    <div class="collection-tag">Part proceeds to the cause</div>
+    <div class="collection-desc">Direct words on direct issues. <strong>Every shirt names the cause and shows the receipt.</strong> If it doesn't make some people uncomfortable, it's not a statement.</div>
+  </div>
+
+  <div class="product-grid">
+    <div class="product-card">
+      <div class="product-img statement">
+        <div class="statement-text">stop fucking<br>bombing iran</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Statement 001</div>
+        <div class="product-detail">Proceeds → Iranian humanitarian aid</div>
+        <div class="product-price-row">
+          <div class="product-price">$38</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-img statement">
+        <div class="statement-text">support human<br>businesses</div>
+        <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
+      </div>
+      <div class="product-info">
+        <div class="product-name">Statement 002</div>
+        <div class="product-detail">Proceeds → Small business relief fund</div>
+        <div class="product-price-row">
+          <div class="product-price">$38</div>
+          <button class="product-notify" onclick="openEmailModal()">Notify me</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-col">
+      <span class="footer-mark">roughly</span>
+      <span class="footer-tagline-small">life happens in the -ish</span>
+    </div>
+    <div class="footer-col">
+      <div class="footer-nav-label">Navigate</div>
+      <ul class="footer-nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="roughly-network.html">Network</a></li>
+      </ul>
+    </div>
+    <div class="footer-col footer-signup">
+      <div class="footer-signup-label">Stay in the loop</div>
+      <div class="footer-signup-desc">First access to drops, new network businesses, and the things we're building.</div>
+      <button class="footer-signup-btn" onclick="openEmailModal()">Get notified →</button>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-note">Colorado Springs — Est. 2026</div>
+    <a href="#" class="footer-contact" onclick="event.preventDefault(); window.location.href=atob('bWFpbHRvOmNhc2UubGF2aW9sZXR0ZUBnbWFpbC5jb20=')">Contact</a>
+  </div>
+</footer>
+
+<!-- EMAIL MODAL -->
+<div class="email-overlay" id="email-modal">
+  <div class="email-panel">
+    <div id="email-form-view">
+      <div class="email-panel-mark">roughly</div>
+      <div class="email-panel-tagline">life happens in the -ish</div>
+      <div class="email-panel-headline">Be the first to know.</div>
+      <div class="email-panel-desc">Drops, network additions, events, and the things we're building — straight to your inbox. No spam. No algorithm.</div>
+      <div class="email-form">
+        <input type="email" class="email-input" id="email-input" placeholder="your@email.com" autocomplete="email">
+        <button class="email-submit" id="email-submit-btn">Notify me</button>
+      </div>
+      <button class="email-dismiss" onclick="closeEmailModal()">Not now</button>
+    </div>
+    <div class="email-success" id="email-success-view">
+      <div class="email-success-text">You're in.</div>
+      <div class="email-success-sub">We'll reach out when there's something worth saying.</div>
+      <br>
+      <button class="email-dismiss" onclick="closeEmailModal()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="nav-mobile-menu" id="nav-mobile-menu">
+  <a class="nav-mobile-link" href="index.html">Home</a>
+  <a class="nav-mobile-link" href="roughly-network.html">Network</a>
+  <a class="nav-mobile-link active" href="shop.html">Shop</a>
+</div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Intersection Observer
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Hamburger
+const hamburger = document.getElementById('nav-hamburger');
+const mobileMenu = document.getElementById('nav-mobile-menu');
+if (hamburger && mobileMenu) {
+  function openMenu() {
+    hamburger.classList.add('open'); mobileMenu.classList.add('open');
+    document.body.style.overflow = 'hidden'; document.body.style.position = 'fixed'; document.body.style.width = '100%';
+  }
+  function closeMenu() {
+    hamburger.classList.remove('open'); mobileMenu.classList.remove('open');
+    document.body.style.overflow = ''; document.body.style.position = ''; document.body.style.width = '';
+  }
+  hamburger.addEventListener('click', () => { hamburger.classList.contains('open') ? closeMenu() : openMenu(); });
+  mobileMenu.querySelectorAll('.nav-mobile-link').forEach(link => { link.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
+}
+
+// Email Modal
+function openEmailModal() {
+  document.getElementById('email-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('email-input').focus(), 350);
+}
+function closeEmailModal() {
+  document.getElementById('email-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('email-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('email-modal')) closeEmailModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && document.getElementById('email-modal').classList.contains('open')) closeEmailModal();
+});
+
+document.getElementById('email-submit-btn').addEventListener('click', () => {
+  const input = document.getElementById('email-input');
+  const email = input.value.trim();
+  if (email && email.includes('@') && email.includes('.')) {
+    document.getElementById('email-form-view').style.display = 'none';
+    document.getElementById('email-success-view').classList.add('show');
+    console.log('Email captured:', email);
+  } else {
+    input.style.borderColor = 'var(--brick-shadow)';
+    setTimeout(() => input.style.borderColor = '', 1500);
+  }
+});
+document.getElementById('email-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('email-submit-btn').click();
+});
+</script>
+</body>
+</html>
