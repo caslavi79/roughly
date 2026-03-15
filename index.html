@@ -92,7 +92,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
 
 .hero-wordmark {
   font-family: 'Caveat', cursive; font-size: clamp(80px, 14vw, 180px); font-weight: 700;
-  letter-spacing: -2px; line-height: 0.95; position: relative; z-index: 1; color: var(--cream-receipt);
+  letter-spacing: -2px; line-height: 1.1; padding-bottom: 0.05em; position: relative; z-index: 1; color: var(--cream-receipt);
   opacity: 0; animation: heroIn 1.2s ease-out 0.1s forwards;
 }
 .hero-tagline {
@@ -300,8 +300,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 .email-success-text { font-family: 'Caveat', cursive; font-size: 24px; font-weight: 600; color: var(--amber-dust); margin-bottom: 8px; }
 .email-success-sub { font-size: 11px; color: var(--tobacco); opacity: 0.7; }
 
-/* ── SNAP ARROWS (hidden by default, shown on mobile) ── */
-.snap-arrow { display: none; }
+
 
 /* ── HAMBURGER ───────────────────────────────── */
 .nav-hamburger { display: none; position: fixed; top: 20px; right: 20px; z-index: 400; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; background: none; border: none; cursor: pointer; padding: 0; transition: opacity 0.6s; }
@@ -404,26 +403,6 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
     padding: 80px 20px;
   }
 
-  /* ── SECTION ARROWS ───────────────────────────── */
-  .snap-arrow {
-    display: block;
-    position: absolute;
-    width: 12px; height: 12px;
-    border-color: var(--amber-dust);
-    border-style: solid;
-    border-width: 0;
-    opacity: 0.35;
-  }
-  .snap-arrow-up {
-    top: 56px; left: 20px;
-    border-top-width: 1.5px; border-left-width: 1.5px;
-    transform: rotate(45deg);
-  }
-  .snap-arrow-down {
-    bottom: 20px; right: 20px;
-    border-bottom-width: 1.5px; border-right-width: 1.5px;
-    transform: rotate(45deg);
-  }
 }
 
 /* ── GRAIN TEXTURE ───────────────────────────── */
@@ -500,7 +479,6 @@ body::after {
 
 <!-- 1. WHAT WE STAND AGAINST -->
 <section class="against-section">
-  <span class="snap-arrow snap-arrow-down"></span>
   <div class="against-intro">
     <div class="against-eyebrow reveal">What we stand against</div>
     <div class="against-headline reveal">You've felt this. We all have.</div>
@@ -520,8 +498,6 @@ body::after {
 
 <!-- 2. WHAT WE DO -->
 <section class="what-section reveal">
-  <span class="snap-arrow snap-arrow-up"></span>
-  <span class="snap-arrow snap-arrow-down"></span>
   <div class="what-inner">
     <div class="what-body">
       <p>We personally audit local businesses based on how they treat the people who work for them, and how they treat the people who walk through the door.</p>
@@ -534,8 +510,6 @@ body::after {
 
 <!-- 3. THE AUDIT -->
 <section class="audit-section">
-  <span class="snap-arrow snap-arrow-up"></span>
-  <span class="snap-arrow snap-arrow-down"></span>
   <div class="audit-left reveal">
     <div class="audit-eyebrow">The Audit</div>
     <div class="audit-headline">Four things we look for. No exceptions.</div>
@@ -569,8 +543,6 @@ body::after {
 
 <!-- 4. ORIGIN STORY -->
 <section class="origin-section">
-  <span class="snap-arrow snap-arrow-up"></span>
-  <span class="snap-arrow snap-arrow-down"></span>
   <div class="origin-right reveal">
     <div class="origin-card">
       <div class="origin-card-label">Colorado Springs · 2026</div>
@@ -602,8 +574,6 @@ body::after {
 
 <!-- 5. WHERE YOU COME IN -->
 <section class="process-wrap">
-  <span class="snap-arrow snap-arrow-up"></span>
-  <span class="snap-arrow snap-arrow-down"></span>
   <div class="section-eyebrow reveal">Where you come in</div>
   <div class="process-flow reveal">
     <div class="process-node">
@@ -657,7 +627,6 @@ body::after {
 
 <!-- 6. CTA -->
 <section class="cta-section">
-  <span class="snap-arrow snap-arrow-up"></span>
   <div>
     <div class="cta-headline reveal">This is just getting started.</div>
     <div class="cta-body reveal reveal-d1">One city. One network. A handful of businesses that still believe your time matters. Help us find the rest.</div>
@@ -831,73 +800,7 @@ document.getElementById('email-submit-btn').addEventListener('click', () => {
 });
 document.getElementById('email-input').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('email-submit-btn').click(); });
 
-// ── MOBILE SECTION SNAP ─────────────────────────
-// Let browser handle all scrolling naturally.
-// After scrolling stops, snap to nearest section edge.
-// If you're mid-scroll through a tall section, leave you alone.
-(function() {
-  const isMobile = () => window.innerWidth <= 600;
-  let sections = [];
-  let snapping = false;
-  let snapTimer;
 
-  function initSections() {
-    sections = Array.from(document.querySelectorAll(
-      '.against-section, .what-section, .audit-section'
-    ));
-  }
-
-  function snapToNearest() {
-    if (snapping || !isMobile() || heroActive || sections.length === 0) return;
-
-    const scrollY = window.scrollY;
-    const vh = window.innerHeight;
-
-    // Past the last tracked section? Free scroll from here.
-    const lastEl = sections[sections.length - 1];
-    if (scrollY > lastEl.offsetTop + lastEl.offsetHeight - vh + 60) return;
-
-    // Find nearest section top
-    let closest = 0;
-    let minDist = Infinity;
-    for (let i = 0; i < sections.length; i++) {
-      const dist = Math.abs(scrollY - sections[i].offsetTop);
-      if (dist < minDist) {
-        minDist = dist;
-        closest = i;
-      }
-    }
-
-    const el = sections[closest];
-    const isTall = el.offsetHeight > vh + 20;
-
-    // If inside a tall section and NOT near the very top or very bottom edge, leave them alone
-    if (isTall) {
-      const distFromTop = scrollY - el.offsetTop;
-      const distFromBottom = (el.offsetTop + el.offsetHeight) - (scrollY + vh);
-      // Only snap if within 60px of the section's top edge
-      // Otherwise they're reading — don't touch them
-      if (distFromTop > 60) return;
-    }
-
-    // If already close enough, don't bother
-    if (minDist < 5) return;
-
-    snapping = true;
-    window.scrollTo({ top: sections[closest].offsetTop, behavior: 'smooth' });
-    setTimeout(() => { snapping = false; }, 450);
-  }
-
-  // After scrolling stops for 120ms, snap
-  window.addEventListener('scroll', () => {
-    if (!isMobile() || heroActive || snapping) return;
-    clearTimeout(snapTimer);
-    snapTimer = setTimeout(snapToNearest, 50);
-  }, { passive: true });
-
-  window.addEventListener('load', initSections);
-  window.addEventListener('resize', initSections);
-})();
 </script>
 </body>
 </html>
