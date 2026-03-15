@@ -72,7 +72,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
 .hero {
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  text-align: center; position: relative; overflow: visible; padding: 80px 24px 120px;
+  text-align: center; position: relative; overflow: hidden; padding: 80px 24px 120px;
   z-index: 100;
   transition: transform 0.9s cubic-bezier(0.33,1,0.68,1), opacity 0.7s ease;
 }
@@ -92,7 +92,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
 
 .hero-wordmark {
   font-family: 'Caveat', cursive; font-size: clamp(80px, 14vw, 180px); font-weight: 700;
-  letter-spacing: -2px; line-height: 1.1; position: relative; z-index: 1; color: var(--cream-receipt);
+  letter-spacing: -2px; line-height: 1.1; padding: 0 0.15em; outline: 20px solid transparent; position: relative; z-index: 1; color: var(--cream-receipt);
   opacity: 0; animation: heroIn 1.2s ease-out 0.1s forwards;
 }
 .hero-tagline {
