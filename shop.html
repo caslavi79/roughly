@@ -92,6 +92,7 @@ nav.scrolled {
   background: rgba(196,154,82,0.04);
   border-left: 3px solid var(--amber-dust);
   padding: 24px 28px; max-width: 480px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.22);
   font-size: 13px; font-weight: 400; line-height: 1.8; letter-spacing: 0.5px;
 }
 .donation-card strong {
@@ -108,6 +109,7 @@ nav.scrolled {
   text-transform: uppercase; color: var(--amber-dust);
   border: 1px solid rgba(196,154,82,0.25);
   padding: 10px 24px; border-radius: 100px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.18);
 }
 
 /* Collections */
@@ -142,6 +144,7 @@ nav.scrolled {
   background: rgba(196,154,82,0.06);
   border: 1px solid rgba(196,154,82,0.12);
   overflow: hidden; position: relative;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
   transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
 }
 .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05); border-color: rgba(196,154,82,0.2); }
@@ -274,6 +277,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
   background: #1f1409; border: 1px solid var(--border); border-radius: 20px;
   padding: 52px 44px; max-width: 440px; width: 90%; text-align: center;
   transform: translateY(24px); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.35);
 }
 .email-overlay.open .email-panel { transform: translateY(0); }
 .email-panel-mark { font-family: 'Caveat', cursive; font-size: 32px; font-weight: 700; color: var(--cream-receipt); margin-bottom: 8px; }
@@ -351,16 +355,17 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
   #statement .product-grid { grid-template-columns: 1fr 1fr; }
   .product-info { padding: 10px 12px 12px; }
   .product-name { font-size: 12px; margin-bottom: 3px; }
-  .product-detail { font-size: 9px; margin-bottom: 10px; line-height: 1.4; }
+  .product-detail { font-size: 10px; margin-bottom: 10px; line-height: 1.4; }
   .product-price { font-size: 13px; }
-  .product-notify { font-size: 8px; letter-spacing: 1px; padding: 5px 10px; }
+  .product-notify { font-size: 9px; letter-spacing: 1px; padding: 6px 12px; }
   .product-img-label { font-size: 20px; top: 12px; left: 12px; }
-  .raw-edge-note { font-size: 7px; padding: 3px 7px; bottom: 10px; right: 10px; }
-  .product-badge { font-size: 7px; padding: 3px 8px; top: 10px; right: 10px; }
+  .raw-edge-note { font-size: 8px; padding: 4px 8px; bottom: 10px; right: 10px; }
+  .product-badge { font-size: 8px; padding: 4px 10px; top: 10px; right: 10px; }
   .statement-text { font-size: clamp(14px, 4.5vw, 20px); padding: 0 16px; line-height: 1.3; }
   .coming-soon-tag { font-size: 8px; padding: 6px 14px; }
   footer { padding: 40px 20px 28px; }
   .footer-grid { gap: 32px; }
+  .shop-hero svg { width: 200px; height: 200px; opacity: 0.1; }
   .email-panel { padding: 36px 24px; }
   .email-form { flex-direction: column; }
   .email-submit { width: 100%; padding: 14px; }
