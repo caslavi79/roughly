@@ -94,7 +94,7 @@ nav.scrolled {
 .hero::before {
   content: ''; position: absolute; top: -10%; right: -10%;
   width: 55%; height: 70%;
-  background: radial-gradient(ellipse, rgba(196,154,82,0.05) 0%, transparent 60%);
+  background: radial-gradient(ellipse, rgba(196,154,82,0.15) 0%, transparent 60%);
   pointer-events: none;
 }
 .hero-eyebrow {
@@ -244,7 +244,7 @@ nav.scrolled {
 }
 .biz-card:hover {
   background: var(--surface-hover); border-color: rgba(196,154,82,0.2);
-  transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05);
+  transform: translateY(-6px); box-shadow: 0 24px 80px rgba(0,0,0,0.4), 0 0 60px rgba(196,154,82,0.1);
 }
 .biz-card-top { padding: 36px 32px 28px; }
 .biz-stamp { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
@@ -489,7 +489,7 @@ nav.scrolled {
 
 /* Join section */
 .join-section {
-  background: rgba(196,154,82,0.04);
+  background: rgba(196,154,82,0.12);
   border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
   padding: 120px 56px; text-align: center;
 }
@@ -540,7 +540,7 @@ nav.scrolled {
   position: absolute;
   top: -10%; right: -5%;
   width: 40%; height: 60%;
-  background: radial-gradient(ellipse, rgba(122,61,42,0.06) 0%, transparent 65%);
+  background: radial-gradient(ellipse, rgba(122,61,42,0.18) 0%, transparent 65%);
   pointer-events: none;
 }
 .ledger-label {
@@ -736,15 +736,15 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
 @keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
-.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
-body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.04), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.03), transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.02), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
 @keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
 
 /* ── GLOW ORBS ──────────────────────────────── */
 .glow-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; animation: orbPulse 8s ease-in-out infinite alternate; }
-@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.03; } 100% { transform: scale(1.15); opacity: 0.06; } }
+@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.15); opacity: 1; } }
 
 /* ── SVG SECTION DIVIDERS ───────────────────── */
 .section-divider { width: 100%; padding: 0; overflow: visible; }
@@ -775,7 +775,7 @@ footer { position: relative; overflow: hidden; }
 .cta-btn-primary:active, .join-btn:active, .footer-signup-btn:active { transform: translateY(0) scale(0.97); }
 
 /* ── GRAIN TEXTURE ──────────────────────────── */
-body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.045; animation: grainShift 4s steps(3) infinite; }
+body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.06; animation: grainShift 4s steps(3) infinite; }
 @keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
 
 /* ── REDUCED MOTION ─────────────────────────── */
@@ -801,25 +801,36 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
 <!-- HERO -->
 <section class="hero">
 <svg class="hero-mesh" viewBox="0 0 800 400" fill="none" style="opacity:0;animation:fadeUp 1.5s ease-out 0.3s forwards">
-  <circle cx="100" cy="100" r="2" fill="rgba(196,154,82,0.08)"/><circle cx="250" cy="60" r="1.5" fill="rgba(196,154,82,0.06)"/>
-  <circle cx="400" cy="120" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="550" cy="80" r="1.5" fill="rgba(196,154,82,0.05)"/>
-  <circle cx="700" cy="110" r="2" fill="rgba(196,154,82,0.08)"/><circle cx="180" cy="200" r="1.5" fill="rgba(196,154,82,0.06)"/>
-  <circle cx="350" cy="250" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="500" cy="220" r="1.5" fill="rgba(196,154,82,0.05)"/>
-  <circle cx="650" cy="260" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="300" cy="350" r="1.5" fill="rgba(196,154,82,0.06)"/>
-  <line x1="100" y1="100" x2="250" y2="60" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
-  <line x1="250" y1="60" x2="400" y2="120" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
-  <line x1="400" y1="120" x2="550" y2="80" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
-  <line x1="550" y1="80" x2="700" y2="110" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
-  <line x1="100" y1="100" x2="180" y2="200" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="250" y1="60" x2="350" y2="250" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="400" y1="120" x2="500" y2="220" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="550" y1="80" x2="650" y2="260" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="180" y1="200" x2="350" y2="250" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="350" y1="250" x2="500" y2="220" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
-  <line x1="500" y1="220" x2="650" y2="260" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <circle cx="100" cy="100" r="3" fill="rgba(196,154,82,0.20)"/><circle cx="250" cy="60" r="2.5" fill="rgba(196,154,82,0.15)"/>
+  <circle cx="400" cy="120" r="3" fill="rgba(196,154,82,0.18)"/><circle cx="550" cy="80" r="2.5" fill="rgba(196,154,82,0.14)"/>
+  <circle cx="700" cy="110" r="3" fill="rgba(196,154,82,0.20)"/><circle cx="180" cy="200" r="2.5" fill="rgba(196,154,82,0.15)"/>
+  <circle cx="350" cy="250" r="3" fill="rgba(196,154,82,0.18)"/><circle cx="500" cy="220" r="2.5" fill="rgba(196,154,82,0.14)"/>
+  <circle cx="650" cy="260" r="3" fill="rgba(196,154,82,0.18)"/><circle cx="300" cy="350" r="2.5" fill="rgba(196,154,82,0.15)"/>
+  <line x1="100" y1="100" x2="250" y2="60" stroke="rgba(196,154,82,0.12)" stroke-width="0.8"/>
+  <line x1="250" y1="60" x2="400" y2="120" stroke="rgba(196,154,82,0.12)" stroke-width="0.8"/>
+  <line x1="400" y1="120" x2="550" y2="80" stroke="rgba(196,154,82,0.12)" stroke-width="0.8"/>
+  <line x1="550" y1="80" x2="700" y2="110" stroke="rgba(196,154,82,0.12)" stroke-width="0.8"/>
+  <line x1="100" y1="100" x2="180" y2="200" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="250" y1="60" x2="350" y2="250" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="400" y1="120" x2="500" y2="220" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="550" y1="80" x2="650" y2="260" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="180" y1="200" x2="350" y2="250" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="350" y1="250" x2="500" y2="220" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
+  <line x1="500" y1="220" x2="650" y2="260" stroke="rgba(196,154,82,0.09)" stroke-width="0.8"/>
 </svg>
-<div class="glow-orb" style="width:400px;height:400px;top:-10%;left:-5%;background:radial-gradient(circle,rgba(196,154,82,0.06),transparent 70%)"></div>
-<div class="glow-orb" style="width:350px;height:350px;bottom:0;right:-3%;background:radial-gradient(circle,rgba(122,61,42,0.05),transparent 70%);animation-delay:3s"></div>
+<div class="glow-orb" style="width:700px;height:700px;top:-15%;left:-8%;background:radial-gradient(circle,rgba(196,154,82,0.15),transparent 70%)"></div>
+<div class="glow-orb" style="width:600px;height:600px;bottom:-5%;right:-5%;background:radial-gradient(circle,rgba(122,61,42,0.12),transparent 70%);animation-delay:3s"></div>
+  <!-- Decorative approval stamp -->
+  <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="position:absolute;right:8%;top:50%;transform:translateY(-50%) rotate(-12deg);width:280px;height:280px;opacity:0.22;pointer-events:none;z-index:0">
+    <circle cx="100" cy="100" r="92" stroke="rgba(196,154,82,0.6)" stroke-width="2" stroke-dasharray="8 6" fill="none"/>
+    <circle cx="100" cy="100" r="80" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="none"/>
+    <circle cx="100" cy="100" r="68" stroke="rgba(196,154,82,0.4)" stroke-width="1" fill="none"/>
+    <text x="100" y="88" font-family="Caveat, cursive" font-weight="700" font-size="36" fill="rgba(196,154,82,0.85)" text-anchor="middle">roughly</text>
+    <text x="100" y="115" font-family="IBM Plex Mono, monospace" font-size="14" fill="rgba(237,228,204,0.7)" text-anchor="middle" letter-spacing="6">APPROVED</text>
+    <text x="100" y="138" font-family="IBM Plex Mono, monospace" font-size="8" fill="rgba(196,154,82,0.5)" text-anchor="middle" letter-spacing="3">COLORADO SPRINGS</text>
+    <path d="M 30 100 A 70 70 0 0 1 170 100" stroke="rgba(196,154,82,0.3)" stroke-width="1" fill="none"/>
+    <path d="M 30 100 A 70 70 0 0 0 170 100" stroke="rgba(196,154,82,0.3)" stroke-width="1" fill="none"/>
+  </svg>
   <div class="hero-eyebrow">Colorado Springs — The Network</div>
   <h1 class="hero-headline">Businesses measured by how they <em>treat people.</em></h1>
   <p class="hero-context">A growing directory of businesses personally audited on how they treat their customers, their employees, and the clock. No fee. No algorithm. You either pass or you don't.</p>
@@ -959,6 +970,19 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
         <span class="biz-arrow">→</span>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- PULL QUOTE -->
+<section class="reveal" style="padding:100px 56px;text-align:center;position:relative;overflow:hidden">
+  <div style="max-width:720px;margin:0 auto;position:relative">
+    <blockquote style="font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(28px,4.5vw,52px);font-weight:400;color:var(--cream-receipt);line-height:1.3;margin:0 0 32px;padding:0">
+      &ldquo;The best businesses don&rsquo;t watch the clock.<br>They watch the person.&rdquo;
+    </blockquote>
+    <svg viewBox="0 0 400 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:min(360px,80%);height:24px;display:block;margin:0 auto">
+      <path d="M 0 12 C 40 0, 80 24, 120 12 C 160 0, 200 24, 240 12 C 280 0, 320 24, 360 12 C 380 6, 400 12, 400 12" stroke="rgba(196,154,82,0.35)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div style="margin-top:20px;font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--tobacco);opacity:0.5">The Roughly Standard</div>
   </div>
 </section>
 
@@ -1398,7 +1422,7 @@ document.querySelectorAll('.biz-card').forEach(card => {
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
     card.style.transform = 'perspective(800px) rotateY(' + (x*8) + 'deg) rotateX(' + (-y*8) + 'deg) translateY(-4px)';
-    card.style.boxShadow = '0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05)';
+    card.style.boxShadow = '0 24px 80px rgba(0,0,0,0.4), 0 0 60px rgba(196,154,82,0.1)';
   });
   card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; });
 });

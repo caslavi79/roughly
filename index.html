@@ -499,23 +499,25 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   animation: orbPulse 8s ease-in-out infinite alternate;
 }
 @keyframes orbPulse {
-  0% { transform: scale(1); opacity: 0.03; }
-  100% { transform: scale(1.15); opacity: 0.06; }
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.2); opacity: 1; }
 }
+@keyframes slowSpin { to { transform: rotate(360deg); } }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
 .cursor-glow {
   position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998;
-  background: radial-gradient(circle, rgba(196,154,82,0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%);
   transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out;
 }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
 body::before {
   content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none;
-  background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.04), transparent 50%),
-              radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.03), transparent 50%),
-              radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.02), transparent 50%);
+  background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.10), transparent 50%),
+              radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.08), transparent 50%),
+              radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%);
   animation: ambientDrift 25s ease-in-out infinite alternate;
 }
 @keyframes ambientDrift {
@@ -560,7 +562,7 @@ body::before {
 .cta-section { position: relative; background-size: 200% 200%; }
 .cta-section::before {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse at 30% 50%, rgba(196,154,82,0.06), transparent 60%);
+  background: radial-gradient(ellipse at 30% 50%, rgba(196,154,82,0.15), transparent 60%);
   animation: ctaGlow 6s ease-in-out infinite alternate;
 }
 @keyframes ctaGlow {
@@ -611,26 +613,26 @@ body::after {
   100% { transform: translate(0,0); }
 }
 
-/* ── SECTION AMBIENT GLOWS ───────────────────── */
+/* ── SECTION AMBIENT GLOWS (BOLD) ────────────── */
 .what-section {
   position: relative;
-  background: radial-gradient(ellipse 65% 90% at 50% 50%, rgba(196,154,82,0.04) 0%, transparent 70%);
+  background: radial-gradient(ellipse 70% 90% at 50% 50%, rgba(196,154,82,0.12) 0%, transparent 70%);
 }
 .origin-section {
   position: relative;
-  background: radial-gradient(ellipse 75% 80% at 72% 42%, rgba(196,154,82,0.05) 0%, transparent 65%);
+  background: radial-gradient(ellipse 80% 85% at 72% 42%, rgba(196,154,82,0.14) 0%, transparent 65%);
 }
 .against-section {
   position: relative;
-  background: radial-gradient(ellipse 60% 70% at 50% 30%, rgba(122,61,42,0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse 65% 75% at 50% 30%, rgba(122,61,42,0.15) 0%, transparent 70%);
 }
 .process-wrap {
   position: relative;
-  background: radial-gradient(ellipse 70% 80% at 50% 80%, rgba(196,154,82,0.04) 0%, transparent 65%);
+  background: radial-gradient(ellipse 75% 85% at 50% 80%, rgba(196,154,82,0.12) 0%, transparent 65%);
 }
 .audit-section {
   position: relative;
-  background: radial-gradient(ellipse 80% 70% at 30% 50%, rgba(196,154,82,0.04) 0%, transparent 65%);
+  background: radial-gradient(ellipse 85% 75% at 30% 50%, rgba(196,154,82,0.12) 0%, transparent 65%);
 }
 
 /* ── SECTION DIVIDER ─────────────────────────── */
@@ -655,22 +657,42 @@ body::after {
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <!-- Decorative SVG background art -->
-  <svg class="hero-bg-art" viewBox="0 0 800 600" fill="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;animation:heroIn 2s ease-out 0.2s forwards">
-    <path d="M100 300 Q200 100 400 250 T700 200" stroke="rgba(196,154,82,0.06)" stroke-width="2" fill="none" stroke-linecap="round"/>
-    <path d="M50 400 Q250 200 450 350 T750 280" stroke="rgba(122,61,42,0.04)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-    <path d="M150 500 Q300 300 500 400 T800 350" stroke="rgba(196,154,82,0.05)" stroke-width="1" fill="none" stroke-linecap="round"/>
-    <ellipse cx="200" cy="250" rx="120" ry="80" fill="rgba(196,154,82,0.02)" style="animation:orbPulse 10s ease-in-out infinite alternate"/>
-    <ellipse cx="600" cy="350" rx="100" ry="70" fill="rgba(122,61,42,0.02)" style="animation:orbPulse 12s ease-in-out infinite alternate-reverse"/>
-    <circle cx="350" cy="150" r="3" fill="rgba(196,154,82,0.15)"/>
-    <circle cx="550" cy="400" r="2" fill="rgba(196,154,82,0.12)"/>
-    <circle cx="180" cy="420" r="2.5" fill="rgba(196,154,82,0.1)"/>
-    <circle cx="650" cy="200" r="1.5" fill="rgba(196,154,82,0.15)"/>
-    <circle cx="480" cy="280" r="2" fill="rgba(196,154,82,0.08)"/>
+  <!-- BOLD decorative SVG — large flowing smoke/ribbon lines -->
+  <svg class="hero-bg-art" viewBox="0 0 1200 800" fill="none" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;animation:heroIn 2s ease-out 0.2s forwards">
+    <!-- Large flowing ribbon curves -->
+    <path d="M-100 400 C100 200, 300 600, 500 350 C700 100, 900 500, 1300 300" stroke="rgba(196,154,82,0.18)" stroke-width="3" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="20s" repeatCount="indefinite" values="M-100 400 C100 200, 300 600, 500 350 C700 100, 900 500, 1300 300;M-100 380 C100 250, 350 550, 500 380 C650 200, 950 450, 1300 280;M-100 400 C100 200, 300 600, 500 350 C700 100, 900 500, 1300 300"/>
+    </path>
+    <path d="M-50 550 C200 350, 400 700, 600 450 C800 200, 1000 550, 1250 400" stroke="rgba(196,154,82,0.12)" stroke-width="2.5" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="25s" repeatCount="indefinite" values="M-50 550 C200 350, 400 700, 600 450 C800 200, 1000 550, 1250 400;M-50 530 C200 400, 450 650, 600 480 C750 300, 1050 500, 1250 380;M-50 550 C200 350, 400 700, 600 450 C800 200, 1000 550, 1250 400"/>
+    </path>
+    <path d="M-80 250 C150 100, 350 400, 550 200 C750 0, 950 350, 1280 180" stroke="rgba(122,61,42,0.14)" stroke-width="2" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="22s" repeatCount="indefinite" values="M-80 250 C150 100, 350 400, 550 200 C750 0, 950 350, 1280 180;M-80 270 C150 150, 400 380, 550 230 C700 50, 1000 320, 1280 200;M-80 250 C150 100, 350 400, 550 200 C750 0, 950 350, 1280 180"/>
+    </path>
+    <!-- Large warm glow blobs -->
+    <ellipse cx="300" cy="350" rx="250" ry="200" fill="rgba(196,154,82,0.06)">
+      <animate attributeName="rx" dur="12s" repeatCount="indefinite" values="250;280;250"/>
+      <animate attributeName="ry" dur="12s" repeatCount="indefinite" values="200;220;200"/>
+    </ellipse>
+    <ellipse cx="850" cy="400" rx="200" ry="180" fill="rgba(122,61,42,0.05)">
+      <animate attributeName="rx" dur="15s" repeatCount="indefinite" values="200;230;200"/>
+    </ellipse>
+    <!-- Scattered hand-drawn dots and dashes -->
+    <circle cx="150" cy="150" r="4" fill="rgba(196,154,82,0.25)"><animate attributeName="r" dur="4s" repeatCount="indefinite" values="4;6;4"/></circle>
+    <circle cx="1050" cy="200" r="3" fill="rgba(196,154,82,0.2)"><animate attributeName="r" dur="5s" repeatCount="indefinite" values="3;5;3"/></circle>
+    <circle cx="600" cy="120" r="5" fill="rgba(196,154,82,0.15)"><animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.15;0.3;0.15"/></circle>
+    <circle cx="200" cy="600" r="3.5" fill="rgba(196,154,82,0.2)"/>
+    <circle cx="950" cy="550" r="4" fill="rgba(122,61,42,0.18)"/>
+    <line x1="100" y1="500" x2="160" y2="500" stroke="rgba(196,154,82,0.2)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="1000" y1="300" x2="1060" y2="300" stroke="rgba(196,154,82,0.15)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="500" y1="650" x2="540" y2="650" stroke="rgba(196,154,82,0.18)" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- Hand-drawn circle around the wordmark area -->
+    <ellipse cx="600" cy="350" rx="320" ry="120" fill="none" stroke="rgba(196,154,82,0.08)" stroke-width="1.5" stroke-dasharray="8 12" style="transform-origin:center;animation:slowSpin 60s linear infinite"/>
   </svg>
-  <!-- Glow orbs -->
-  <div class="glow-orb" style="width:400px;height:400px;top:-10%;left:-5%;background:radial-gradient(circle,rgba(196,154,82,0.06),transparent 70%)"></div>
-  <div class="glow-orb" style="width:350px;height:350px;bottom:-5%;right:-3%;background:radial-gradient(circle,rgba(122,61,42,0.05),transparent 70%);animation-delay:3s"></div>
+  <!-- Visible glow orbs -->
+  <div class="glow-orb" style="width:600px;height:600px;top:-15%;left:-10%;background:radial-gradient(circle,rgba(196,154,82,0.12),transparent 65%)"></div>
+  <div class="glow-orb" style="width:500px;height:500px;bottom:-10%;right:-8%;background:radial-gradient(circle,rgba(122,61,42,0.1),transparent 65%);animation-delay:3s"></div>
+  <div class="glow-orb" style="width:300px;height:300px;top:30%;right:15%;background:radial-gradient(circle,rgba(196,154,82,0.08),transparent 60%);animation-delay:5s"></div>
   <div class="hero-side-left">
     <div class="hero-side-line"></div>
     <div class="hero-side-text">Colorado Springs · 2026</div>
@@ -681,6 +703,10 @@ body::after {
   </div>
   <div class="hero-wordmark">roughly</div>
   <div class="hero-tagline">life happens in the -ish</div>
+  <!-- Hand-drawn underline SVG beneath tagline -->
+  <svg viewBox="0 0 300 12" style="width:clamp(200px,30vw,320px);height:12px;position:relative;z-index:1;margin-top:-4px;overflow:visible;opacity:0;animation:heroIn 1.2s ease-out 0.5s forwards">
+    <path d="M10 8 Q50 2, 100 7 Q150 12, 200 6 Q250 1, 290 7" stroke="rgba(196,154,82,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="300" stroke-dashoffset="300" style="animation:drawLine 1.5s ease-out 1s forwards"/>
+  </svg>
   <div class="hero-context-line">A network of businesses<br>that still run on human time.</div>
   <button class="hero-enter" id="hero-enter" aria-label="Enter site">
     <span class="hero-enter-text">Step in</span>
@@ -708,11 +734,24 @@ body::after {
 <div class="section-divider reveal"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q150 4, 300 12 T600 12 T900 12 T1200 12" stroke="rgba(196,154,82,0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
 
 <!-- 2. WHAT WE DO -->
-<section class="what-section reveal">
-  <div class="what-inner">
+<section class="what-section reveal" style="position:relative">
+  <!-- Large decorative SVG behind text -->
+  <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0">
+    <!-- Hand-drawn circle -->
+    <circle cx="200" cy="200" r="160" stroke="rgba(196,154,82,0.12)" stroke-width="2" fill="none" stroke-dasharray="10 8" style="transform-origin:center;animation:slowSpin 40s linear infinite"/>
+    <circle cx="200" cy="200" r="130" stroke="rgba(196,154,82,0.08)" stroke-width="1.5" fill="none" stroke-dasharray="6 10" style="transform-origin:center;animation:slowSpin 50s linear infinite reverse"/>
+    <!-- Handshake/connection symbol -->
+    <path d="M140 210 Q160 180, 200 195 Q240 180, 260 210" stroke="rgba(196,154,82,0.2)" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M140 210 C140 240, 170 260, 200 250 C230 260, 260 240, 260 210" stroke="rgba(196,154,82,0.15)" stroke-width="2" fill="rgba(196,154,82,0.03)" stroke-linecap="round"/>
+    <!-- Small decorative marks -->
+    <circle cx="200" cy="140" r="3" fill="rgba(196,154,82,0.2)"/>
+    <line x1="120" y1="170" x2="135" y2="170" stroke="rgba(196,154,82,0.15)" stroke-width="2" stroke-linecap="round"/>
+    <line x1="265" y1="170" x2="280" y2="170" stroke="rgba(196,154,82,0.15)" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <div class="what-inner" style="position:relative;z-index:1">
     <div class="what-body">
       <p>We personally audit local businesses based on how they treat the people who work for them, and how they treat the people who walk through the door.</p>
-      <p style="color: var(--amber-dust); text-shadow: 0 0 30px rgba(196,154,82,0.25), 0 0 70px rgba(196,154,82,0.1);">The ones that pass join the Network.</p>
+      <p style="color: var(--amber-dust); text-shadow: 0 0 30px rgba(196,154,82,0.35), 0 0 70px rgba(196,154,82,0.15);">The ones that pass join the Network.</p>
     </div>
   </div>
 </section>
@@ -720,8 +759,19 @@ body::after {
 <div class="section-divider reveal"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q100 20, 250 12 T500 14 T750 10 T1000 12 T1200 12" stroke="rgba(196,154,82,0.12)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
 
 <!-- 3. THE AUDIT -->
-<section class="audit-section">
-  <div class="audit-left reveal">
+<section class="audit-section" style="position:relative">
+  <!-- Large decorative clipboard SVG illustration -->
+  <svg viewBox="0 0 200 280" fill="none" style="position:absolute;left:-40px;top:50%;transform:translateY(-50%);width:180px;pointer-events:none;z-index:0;opacity:0.12">
+    <rect x="20" y="30" width="160" height="230" rx="12" stroke="rgba(196,154,82,1)" stroke-width="2" fill="none"/>
+    <rect x="60" y="15" width="80" height="30" rx="6" stroke="rgba(196,154,82,1)" stroke-width="2" fill="rgba(30,19,10,1)"/>
+    <circle cx="100" cy="30" r="5" stroke="rgba(196,154,82,1)" stroke-width="1.5" fill="none"/>
+    <line x1="50" y1="80" x2="150" y2="80" stroke="rgba(196,154,82,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="110" x2="130" y2="110" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="140" x2="140" y2="140" stroke="rgba(196,154,82,0.6)" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="50" y1="170" x2="120" y2="170" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M45 200 L55 210 L75 185" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div class="audit-left reveal" style="position:relative;z-index:1">
     <div class="audit-eyebrow">The Audit</div>
     <div class="audit-headline">Four things we look for. No exceptions.</div>
     <div class="audit-body">Every business in the network is scored on the same four criteria — 25 points each, 100 total. We publish the scores. You decide what to do with them.</div>
@@ -795,7 +845,7 @@ body::after {
     </div>
   </div>
   <div class="origin-left reveal reveal-d1" style="position:relative">
-    <svg class="origin-quote-svg" viewBox="0 0 60 50" style="top:-20px;left:-20px;width:60px"><text x="0" y="45" font-family="Crimson Pro, serif" font-size="60" fill="rgba(196,154,82,0.12)">"</text></svg>
+    <svg class="origin-quote-svg" viewBox="0 0 120 100" style="top:-40px;left:-30px;width:120px"><text x="0" y="90" font-family="Crimson Pro, serif" font-size="120" fill="rgba(196,154,82,0.18)">"</text></svg>
     <div class="origin-eyebrow">Where it started</div>
     <div class="origin-headline">"Life happens in the -ish."</div>
     <div class="origin-body">
@@ -862,12 +912,14 @@ body::after {
 </section>
 
 <!-- 6. CTA -->
-<section class="cta-section">
-  <div>
+<section class="cta-section" style="overflow:hidden">
+  <!-- Large background watermark -->
+  <span style="position:absolute;font-family:'Caveat',cursive;font-size:clamp(200px,25vw,400px);font-weight:700;color:rgba(196,154,82,0.04);right:-5%;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;z-index:0">roughly</span>
+  <div style="position:relative;z-index:1">
     <div class="cta-headline reveal">This is just getting started.</div>
     <div class="cta-body reveal reveal-d1">One city. One network. A handful of businesses that still believe your time matters. Help us find the rest.</div>
   </div>
-  <div class="cta-actions reveal reveal-d2">
+  <div class="cta-actions reveal reveal-d2" style="position:relative;z-index:1">
     <a class="cta-btn-primary" href="roughly-network.html">Browse the network</a>
     <a class="cta-btn-secondary" href="shop.html">Shop roughly</a>
   </div>

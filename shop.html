@@ -74,7 +74,7 @@ nav.scrolled {
 .shop-hero::before {
   content: ''; position: absolute; top: -10%; right: -10%;
   width: 50%; height: 60%;
-  background: radial-gradient(ellipse, rgba(196,154,82,0.06) 0%, transparent 60%);
+  background: radial-gradient(ellipse, rgba(196,154,82,0.18) 0%, transparent 60%);
   pointer-events: none;
 }
 .shop-eyebrow { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--tobacco); opacity: 0.4; margin-bottom: 28px; }
@@ -139,8 +139,8 @@ nav.scrolled {
 /* Product Grid */
 .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 3px; }
 .product-card {
-  background: rgba(196,154,82,0.03);
-  border: 1px solid rgba(196,154,82,0.08);
+  background: rgba(196,154,82,0.06);
+  border: 1px solid rgba(196,154,82,0.12);
   overflow: hidden; position: relative;
   transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
 }
@@ -194,7 +194,7 @@ nav.scrolled {
 }
 .coming-soon-overlay::after, .product-overlay::after {
   content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(196,154,82,0.06), transparent);
+  background: linear-gradient(90deg, transparent, rgba(196,154,82,0.15), transparent);
   animation: shimmer 3s ease-in-out infinite;
 }
 @keyframes shimmer { 100% { left: 200%; } }
@@ -400,15 +400,15 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 @keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
-.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
-body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.04), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.03), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
 @keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
 
 /* ── GLOW ORBS ──────────────────────────────── */
 .glow-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; animation: orbPulse 8s ease-in-out infinite alternate; }
-@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.03; } 100% { transform: scale(1.15); opacity: 0.06; } }
+@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.15); opacity: 1; } }
 
 /* ── COLLECTION TITLE UNDERLINE ─────────────── */
 .collection-name { position: relative; display: inline-block; }
@@ -437,7 +437,7 @@ footer { position: relative; overflow: hidden; }
 body::after {
   content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.045;
+  opacity: 0.06;
   animation: grainShift 4s steps(3) infinite;
 }
 @keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
@@ -464,8 +464,8 @@ body::after {
 
 <!-- SHOP HERO -->
 <section class="shop-hero">
-  <div class="glow-orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(196,154,82,0.06),transparent 70%);"></div>
-  <div class="glow-orb" style="width:300px;height:300px;bottom:-60px;left:-60px;background:radial-gradient(circle,rgba(122,61,42,0.05),transparent 70%);"></div>
+  <div class="glow-orb" style="width:600px;height:600px;top:-150px;right:-120px;background:radial-gradient(circle,rgba(196,154,82,0.12),transparent 70%);"></div>
+  <div class="glow-orb" style="width:500px;height:500px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(122,61,42,0.10),transparent 70%);"></div>
   <div class="shop-eyebrow reveal">The Shop</div>
   <h1 class="shop-headline reveal reveal-d1">Clothing that propels the movement.</h1>
   <p class="shop-context reveal reveal-d2">Every piece supports the roughly network. Every dollar is accounted for. Every donation is published.</p>
@@ -500,6 +500,7 @@ body::after {
   <div class="product-grid">
     <div class="product-card">
       <div class="product-img tobacco">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="raw-edge-note">Raw cut — no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -516,6 +517,7 @@ body::after {
 
     <div class="product-card">
       <div class="product-img canvas">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="raw-edge-note">Raw cut — no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -532,6 +534,7 @@ body::after {
 
     <div class="product-card">
       <div class="product-img warmblack">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="raw-edge-note">Raw cut — no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -561,6 +564,7 @@ body::after {
   <div class="product-grid">
     <div class="product-card">
       <div class="product-img preloved">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="product-badge oneofone">1 of 1</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -577,6 +581,7 @@ body::after {
 
     <div class="product-card">
       <div class="product-img preloved" style="background: linear-gradient(165deg, #5A4A3A 0%, #4D3F30 50%, #3E3326 100%);">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="product-badge oneofone">1 of 1</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -593,6 +598,7 @@ body::after {
 
     <div class="product-card">
       <div class="product-img preloved" style="background: linear-gradient(165deg, #3A3A42 0%, #2E2E36 50%, #24242C 100%);">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="product-badge oneofone">1 of 1</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -616,6 +622,7 @@ body::after {
   <div class="product-grid">
     <div class="product-card">
       <div class="product-img artist">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="product-badge">Limited — 30 pcs</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
@@ -632,6 +639,7 @@ body::after {
 
     <div class="product-card">
       <div class="product-img artist" style="background: linear-gradient(165deg, #322E28 0%, #28241E 50%, #1E1A16 100%);">
+        <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
         <div class="product-badge">Limited — 20 pcs</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
