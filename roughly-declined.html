@@ -35,11 +35,16 @@ body {
 }
 
 /* Reveal */
-.reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+.reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal, .reveal-up { transform: translateY(40px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal.visible, .reveal-up.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; } .reveal-d5 { transition-delay: 0.5s; }
 
 /* ========================
    NAV
@@ -53,7 +58,7 @@ nav {
   transition: border-color 0.4s;
   border-bottom: 1px solid transparent;
 }
-nav.scrolled { border-bottom: 1px solid var(--cold-border); }
+nav.scrolled { border-bottom: 1px solid var(--cold-border); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); box-shadow: 0 4px 30px rgba(0,0,0,0.3); background: rgba(12,12,14,0.92); }
 .nav-mark {
   font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700;
   color: var(--cold-text); text-decoration: none; letter-spacing: -0.5px;
@@ -366,9 +371,84 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 }
 .nav-mobile-link.active { color: var(--brick-shadow); }
 .nav-mobile-link:hover { color: var(--cold-text); }
+
+/* ── GLITCH TEXT ─────────────────────────────── */
+.hero-title { animation: glitch 0.8s ease-out 0.3s 1, heroIn 1.2s ease-out forwards; }
+@keyframes glitch {
+  0%, 100% { text-shadow: none; }
+  20% { text-shadow: -3px 0 rgba(255,50,50,0.4), 3px 0 rgba(100,100,255,0.3); transform: translate(-1px, 1px); }
+  40% { text-shadow: 3px 0 rgba(255,50,50,0.4), -3px 0 rgba(100,100,255,0.3); transform: translate(1px, -1px); }
+  60% { text-shadow: -2px 0 rgba(255,50,50,0.3); transform: translate(0px, 1px); }
+  80% { text-shadow: 2px 0 rgba(255,50,50,0.3), -1px 0 rgba(100,100,255,0.3); transform: translate(-1px, 0px); }
+}
+
+/* ── FOG/MIST ───────────────────────────────── */
+.fog-element { position: absolute; pointer-events: none; opacity: 0.03; z-index: 0; }
+.fog-1 { animation: fogDrift1 40s linear infinite; }
+.fog-2 { animation: fogDrift2 55s linear infinite; }
+.fog-3 { animation: fogDrift3 35s linear infinite; }
+@keyframes fogDrift1 { 0% { transform: translateX(-30%); } 100% { transform: translateX(110%); } }
+@keyframes fogDrift2 { 0% { transform: translateX(110%); } 100% { transform: translateX(-30%); } }
+@keyframes fogDrift3 { 0% { transform: translateX(-20%) translateY(-5%); } 100% { transform: translateX(100%) translateY(5%); } }
+
+/* ── COLD PARTICLES ─────────────────────────── */
+.particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particle { position: absolute; border-radius: 50%; background: rgba(200,200,210,0.4); pointer-events: none; animation: particleFall linear infinite; }
+@keyframes particleFall { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.4; } 90% { opacity: 0.1; } 100% { opacity: 0; transform: translateY(100vh) translateX(-30px); } }
+
+/* ── COLD CURSOR GLOW ───────────────────────── */
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(180,180,200,0.03) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+
+/* ── COLD AMBIENT DRIFT ─────────────────────── */
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(255,60,60,0.02), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(100,100,140,0.02), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+@keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
+
+/* ── TABLE ROW ENHANCEMENTS ─────────────────── */
+.table-row { transition: all 0.3s ease; }
+.table-row:hover { background: rgba(255,255,255,0.03); box-shadow: inset 3px 0 0 rgba(255,80,80,0.4), 0 0 30px rgba(255,80,80,0.03); }
+
+/* ── TABLE CONTAINER GLOW ───────────────────── */
+.table-container, .data-table-wrap {
+  position: relative;
+  box-shadow: 0 0 40px rgba(255,80,80,0.02);
+  animation: tableGlow 4s ease-in-out infinite alternate;
+}
+@keyframes tableGlow { 0% { box-shadow: 0 0 40px rgba(255,80,80,0.02); } 100% { box-shadow: 0 0 60px rgba(255,80,80,0.04); } }
+
+/* ── STATIC OVERLAY ─────────────────────────── */
+.static-overlay {
+  position: fixed; inset: 0; z-index: 997; pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 128px 128px;
+  animation: staticShift 0.3s steps(4) infinite;
+}
+@keyframes staticShift { 0% { transform: translate(0,0); } 25% { transform: translate(-3px,2px); } 50% { transform: translate(2px,-1px); } 75% { transform: translate(-1px,3px); } 100% { transform: translate(0,0); } }
+
+/* ── SVG SECTION DIVIDERS (cold) ────────────── */
+.section-divider { width: 100%; padding: 0; overflow: visible; }
+.section-divider svg { display: block; width: 100%; height: 24px; }
+.divider-path { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1); }
+.section-divider.visible .divider-path { stroke-dashoffset: 0; }
+
+/* ── FOOTER WATERMARK ───────────────────────── */
+footer { position: relative; overflow: hidden; }
+.footer-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Caveat', cursive; font-size: 240px; font-weight: 700; color: rgba(200,200,210,0.015); pointer-events: none; white-space: nowrap; }
+
+/* ── NAV LINK UNDERLINE ─────────────────────── */
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px; background: var(--cold-dim); transition: width 0.3s ease, left 0.3s ease; }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
+
+/* ── REDUCED MOTION ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .particles-container, .cursor-glow, .static-overlay { display: none; }
+}
 </style>
 </head>
 <body>
+<div class="static-overlay"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -383,7 +463,11 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 
 <!-- HERO -->
 <section class="hero">
-  <h1 class="hero-headline">Declined.</h1>
+  <!-- Fog elements -->
+  <svg class="fog-element fog-1" viewBox="0 0 800 200" style="width:80%;top:20%;left:-10%"><ellipse cx="400" cy="100" rx="350" ry="80" fill="rgba(200,200,210,0.5)"/></svg>
+  <svg class="fog-element fog-2" viewBox="0 0 800 200" style="width:60%;top:50%;right:-5%"><ellipse cx="400" cy="100" rx="300" ry="60" fill="rgba(200,200,210,0.4)"/></svg>
+  <svg class="fog-element fog-3" viewBox="0 0 800 200" style="width:70%;bottom:10%;left:0"><ellipse cx="400" cy="100" rx="320" ry="70" fill="rgba(200,200,210,0.3)"/></svg>
+  <h1 class="hero-headline hero-title">Declined.</h1>
   <p class="hero-context">A public ledger of businesses that were contacted for a roughly audit and either refused or didn't respond.</p>
   <div class="hero-rule">
     <div class="hero-rule-line"></div>
@@ -406,7 +490,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 
   <div class="table-body" id="table-body">
 
-    <div class="table-row reveal" data-name="The Benchmark Group" data-category="Food & Drink" data-date="2026-01" data-location="Downtown">
+    <div class="table-row reveal-left" data-name="The Benchmark Group" data-category="Food & Drink" data-date="2026-01" data-location="Downtown">
       <div>
         <div class="td-name">The Benchmark Group</div>
       </div>
@@ -415,7 +499,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Downtown</div>
     </div>
 
-    <div class="table-row reveal" data-name="Velocity Fitness" data-category="Health" data-date="2026-01" data-location="Briargate">
+    <div class="table-row reveal-left reveal-d1" data-name="Velocity Fitness" data-category="Health" data-date="2026-01" data-location="Briargate">
       <div>
         <div class="td-name">Velocity Fitness</div>
       </div>
@@ -424,7 +508,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Briargate</div>
     </div>
 
-    <div class="table-row reveal" data-name="Prestige Auto Group" data-category="Service" data-date="2026-01" data-location="Powers Blvd">
+    <div class="table-row reveal-left reveal-d2" data-name="Prestige Auto Group" data-category="Service" data-date="2026-01" data-location="Powers Blvd">
       <div>
         <div class="td-name">Prestige Auto Group</div>
       </div>
@@ -433,7 +517,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Powers Blvd</div>
     </div>
 
-    <div class="table-row reveal" data-name="CleanCut Salons" data-category="Service" data-date="2026-02" data-location="Chapel Hills">
+    <div class="table-row reveal-left reveal-d3" data-name="CleanCut Salons" data-category="Service" data-date="2026-02" data-location="Chapel Hills">
       <div>
         <div class="td-name">CleanCut Salons</div>
       </div>
@@ -442,7 +526,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Chapel Hills</div>
     </div>
 
-    <div class="table-row reveal" data-name="Summit Medical Partners" data-category="Health" data-date="2026-02" data-location="Briargate">
+    <div class="table-row reveal-left reveal-d4" data-name="Summit Medical Partners" data-category="Health" data-date="2026-02" data-location="Briargate">
       <div>
         <div class="td-name">Summit Medical Partners</div>
       </div>
@@ -451,7 +535,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Briargate</div>
     </div>
 
-    <div class="table-row reveal" data-name="The Daily Grind" data-category="Food & Drink" data-date="2026-02" data-location="Downtown">
+    <div class="table-row reveal-left reveal-d5" data-name="The Daily Grind" data-category="Food & Drink" data-date="2026-02" data-location="Downtown">
       <div>
         <div class="td-name">The Daily Grind</div>
       </div>
@@ -460,7 +544,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Downtown</div>
     </div>
 
-    <div class="table-row reveal" data-name="Apex Property Management" data-category="Service" data-date="2026-03" data-location="Midtown">
+    <div class="table-row reveal-left" data-name="Apex Property Management" data-category="Service" data-date="2026-03" data-location="Midtown">
       <div>
         <div class="td-name">Apex Property Management</div>
       </div>
@@ -469,7 +553,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Midtown</div>
     </div>
 
-    <div class="table-row reveal" data-name="Meridian Law Group" data-category="Service" data-date="2026-03" data-location="Downtown">
+    <div class="table-row reveal-left reveal-d1" data-name="Meridian Law Group" data-category="Service" data-date="2026-03" data-location="Downtown">
       <div>
         <div class="td-name">Meridian Law Group</div>
       </div>
@@ -478,7 +562,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Downtown</div>
     </div>
 
-    <div class="table-row reveal" data-name="PeakPoint Recruiting" data-category="Service" data-date="2026-03" data-location="North Gate">
+    <div class="table-row reveal-left reveal-d2" data-name="PeakPoint Recruiting" data-category="Service" data-date="2026-03" data-location="North Gate">
       <div>
         <div class="td-name">PeakPoint Recruiting</div>
       </div>
@@ -487,7 +571,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">North Gate</div>
     </div>
 
-    <div class="table-row reveal" data-name="Thrive Urgent Care" data-category="Health" data-date="2026-03" data-location="Powers Blvd">
+    <div class="table-row reveal-left reveal-d3" data-name="Thrive Urgent Care" data-category="Health" data-date="2026-03" data-location="Powers Blvd">
       <div>
         <div class="td-name">Thrive Urgent Care</div>
       </div>
@@ -496,7 +580,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
       <div class="td">Powers Blvd</div>
     </div>
 
-    <div class="table-row reveal" data-name="The Social Table" data-category="Food & Drink" data-date="2026-03" data-location="Manitou Springs">
+    <div class="table-row reveal-left reveal-d4" data-name="The Social Table" data-category="Food & Drink" data-date="2026-03" data-location="Manitou Springs">
       <div>
         <div class="td-name">The Social Table</div>
       </div>
@@ -524,6 +608,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 
 <!-- FOOTER -->
 <footer>
+  <div class="footer-watermark">roughly</div>
   <div class="footer-grid">
     <div class="footer-col">
       <span class="footer-mark">roughly</span>
@@ -691,6 +776,29 @@ document.getElementById('email-submit-btn').addEventListener('click', () => {
 document.getElementById('email-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('email-submit-btn').click();
 });
+
+// Enhanced reveal
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale,.section-divider').forEach(el => revealObs.observe(el));
+
+// Cold particles (falling downward)
+(function() {
+  const c = document.createElement('div'); c.className = 'particles-container'; document.body.appendChild(c);
+  for (let i = 0; i < 12; i++) {
+    const p = document.createElement('div'); p.className = 'particle';
+    const size = 1.5 + Math.random() * 2.5;
+    p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;top:-10px;animation-duration:'+(12+Math.random()*15)+'s;animation-delay:'+Math.random()*15+'s;';
+    c.appendChild(p);
+  }
+})();
+
+// Cursor glow (cold)
+if (window.matchMedia('(pointer: fine)').matches) {
+  const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
+  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+}
 </script>
 </body>
 </html>

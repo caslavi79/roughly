@@ -16,6 +16,10 @@
   --noon-light:   #F5EDD8;
   --ink:          #120C05;
   --border:       rgba(196,154,82,0.1);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.25);
+  --shadow-lg: 0 24px 64px rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 40px rgba(196,154,82,0.08);
 }
 
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
@@ -32,14 +36,16 @@ body {
 }
 
 /* Reveal */
-.reveal {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+.reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-.reveal-d1 { transition-delay: 0.1s; }
-.reveal-d2 { transition-delay: 0.2s; }
+.reveal, .reveal-up { transform: translateY(40px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal.visible, .reveal-up.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity: 1; transform: none; }
+.reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; } .reveal-d5 { transition-delay: 0.5s; }
 
 /* Nav */
 nav {
@@ -49,9 +55,10 @@ nav {
   transition: background 0.4s, backdrop-filter 0.4s;
 }
 nav.scrolled {
-  background: rgba(30,19,10,0.92);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  background: linear-gradient(135deg, rgba(30,19,10,0.95), rgba(26,15,6,0.92));
+  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
   border-bottom: 1px solid var(--border);
+  box-shadow: var(--shadow-md);
 }
 .nav-mark { font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700; color: var(--cream-receipt); text-decoration: none; letter-spacing: -0.5px; }
 .nav-right { display: flex; align-items: center; gap: 28px; }
@@ -135,10 +142,22 @@ nav.scrolled {
   background: rgba(196,154,82,0.03);
   border: 1px solid rgba(196,154,82,0.08);
   overflow: hidden; position: relative;
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
 }
+.product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05); border-color: rgba(196,154,82,0.2); }
 .product-img {
   aspect-ratio: 3/4; position: relative;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.product-img::after {
+  content: ''; position: absolute; inset: -6px; border: 1.5px solid rgba(196,154,82,0.1);
+  border-radius: 3px; transform: rotate(-0.5deg); pointer-events: none;
+  transition: border-color 0.4s ease;
+}
+.product-card:hover .product-img::after { border-color: rgba(196,154,82,0.2); }
+.product-img-inner {
+  background-image: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px),
+    repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
 }
 .product-img.tobacco { background: linear-gradient(165deg, #9E6A3A 0%, #8B5C30 50%, #7A4F28 100%); }
 .product-img.canvas { background: linear-gradient(165deg, #E4D8B8 0%, #D6C9A8 50%, #C8BB9A 100%); }
@@ -170,7 +189,15 @@ nav.scrolled {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   background: rgba(18,12,5,0.3); z-index: 2;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  overflow: hidden;
 }
+.coming-soon-overlay::after, .product-overlay::after {
+  content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(196,154,82,0.06), transparent);
+  animation: shimmer 3s ease-in-out infinite;
+}
+@keyframes shimmer { 100% { left: 200%; } }
 .coming-soon-tag {
   font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
   color: var(--cream-receipt);
@@ -366,6 +393,60 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 }
 .nav-mobile-link.active { color: var(--amber-dust); }
 .nav-mobile-link:hover { color: var(--cream-receipt); }
+
+/* ── PARTICLES ───────────────────────────────── */
+.particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particle { position: absolute; border-radius: 50%; background: var(--amber-dust); pointer-events: none; animation: particleFloat linear infinite; }
+@keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
+
+/* ── CURSOR GLOW ────────────────────────────── */
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+
+/* ── AMBIENT DRIFT ──────────────────────────── */
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.04), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.03), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+@keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
+
+/* ── GLOW ORBS ──────────────────────────────── */
+.glow-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; animation: orbPulse 8s ease-in-out infinite alternate; }
+@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.03; } 100% { transform: scale(1.15); opacity: 0.06; } }
+
+/* ── COLLECTION TITLE UNDERLINE ─────────────── */
+.collection-name { position: relative; display: inline-block; }
+.collection-name::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--amber-dust), transparent); transition: width 1.2s cubic-bezier(0.16,1,0.3,1); }
+.collection-name.visible::after { width: 100%; }
+
+/* ── SVG SECTION DIVIDERS ───────────────────── */
+.section-divider { width: 100%; padding: 0; overflow: visible; }
+.section-divider svg { display: block; width: 100%; height: 24px; }
+.divider-path { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1); }
+.section-divider.visible .divider-path { stroke-dashoffset: 0; }
+
+/* ── FOOTER WATERMARK ───────────────────────── */
+footer { position: relative; overflow: hidden; }
+.footer-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Caveat', cursive; font-size: 240px; font-weight: 700; color: rgba(196,154,82,0.02); pointer-events: none; white-space: nowrap; }
+
+/* ── NAV LINK UNDERLINE ─────────────────────── */
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px; background: var(--amber-dust); transition: width 0.3s ease, left 0.3s ease; }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
+
+/* ── BUTTON PRESS ───────────────────────────── */
+.product-notify:active { transform: scale(0.97); }
+
+/* ── GRAIN TEXTURE ──────────────────────────── */
+body::after {
+  content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.045;
+  animation: grainShift 4s steps(3) infinite;
+}
+@keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
+
+/* ── REDUCED MOTION ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .particles-container, .cursor-glow { display: none; }
+}
 </style>
 </head>
 <body>
@@ -383,10 +464,14 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 
 <!-- SHOP HERO -->
 <section class="shop-hero">
+  <div class="glow-orb" style="width:400px;height:400px;top:-100px;right:-80px;background:radial-gradient(circle,rgba(196,154,82,0.06),transparent 70%);"></div>
+  <div class="glow-orb" style="width:300px;height:300px;bottom:-60px;left:-60px;background:radial-gradient(circle,rgba(122,61,42,0.05),transparent 70%);"></div>
   <div class="shop-eyebrow reveal">The Shop</div>
   <h1 class="shop-headline reveal reveal-d1">Clothing that propels the movement.</h1>
   <p class="shop-context reveal reveal-d2">Every piece supports the roughly network. Every dollar is accounted for. Every donation is published.</p>
 </section>
+
+<div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,0 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
 
 <!-- DONATION NOTE -->
 <div class="donation-note">
@@ -401,6 +486,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 <div class="launch-notice reveal">
   <div class="launch-badge">Pre-launch — Notify to be first</div>
 </div>
+
+<div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,24 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
 
 <!-- FINISHED ENOUGH -->
 <section class="collection reveal" id="finished-enough">
@@ -461,6 +548,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
   </div>
 </section>
 
+<div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,0 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
+
 <!-- PRE-LOVED -->
 <section class="collection reveal" id="pre-loved">
   <div class="collection-left">
@@ -520,6 +609,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
   </div>
 </section>
 
+<div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,24 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
+
 <!-- ARTIST COLLAB -->
 <section class="collection reveal" id="artist-collab">
   <div class="product-grid">
@@ -562,6 +653,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
     <div class="collection-desc">Prints and designs by local Colorado Springs artists on roughly blanks. <strong>Profit split with the artist. Once they're gone, they're gone.</strong></div>
   </div>
 </section>
+
+<div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,0 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
 
 <!-- STATEMENT -->
 <section class="collection reveal" id="statement">
@@ -624,6 +717,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
       <button class="footer-signup-btn" onclick="openEmailModal()">Get notified →</button>
     </div>
   </div>
+  <div class="footer-watermark">roughly</div>
   <div class="footer-bottom">
     <div class="footer-note">Colorado Springs — Est. 2026</div>
     <a href="#" class="footer-contact" onclick="event.preventDefault(); window.location.href=atob('bWFpbHRvOmNhc2UubGF2aW9sZXR0ZUBnbWFpbC5jb20=')">Contact</a>
@@ -727,6 +821,29 @@ document.getElementById('email-submit-btn').addEventListener('click', () => {
 document.getElementById('email-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('email-submit-btn').click();
 });
+
+// Enhanced reveals
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale,.section-divider,.collection-name').forEach(el => revealObs.observe(el));
+
+// Particles
+(function() {
+  const c = document.createElement('div'); c.className = 'particles-container'; document.body.appendChild(c);
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div'); p.className = 'particle';
+    const size = 2 + Math.random() * 3;
+    p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;bottom:-10px;animation-duration:'+(10+Math.random()*12)+'s;animation-delay:'+Math.random()*15+'s;';
+    c.appendChild(p);
+  }
+})();
+
+// Cursor glow
+if (window.matchMedia('(pointer: fine)').matches) {
+  const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
+  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+}
 </script>
 </body>
 </html>

@@ -19,6 +19,10 @@
   --surface-hover:rgba(196,154,82,0.07);
   --border:       rgba(196,154,82,0.1);
   --border-hover: rgba(196,154,82,0.22);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.15);
+  --shadow-md: 0 8px 32px rgba(0,0,0,0.25);
+  --shadow-lg: 0 24px 64px rgba(0,0,0,0.35);
+  --shadow-glow: 0 0 40px rgba(196,154,82,0.08);
 }
 
 *,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
@@ -35,12 +39,19 @@ body {
 }
 
 /* Reveal system */
-.reveal {
-  opacity: 0; transform: translateY(28px);
-  transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+.reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
+  opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1);
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal, .reveal-up { transform: translateY(40px); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-scale { transform: scale(0.92); }
+.reveal.visible, .reveal-up.visible, .reveal-left.visible, .reveal-right.visible, .reveal-scale.visible { opacity: 1; transform: none; }
 .reveal-d1 { transition-delay: 0.1s; }
+.reveal-d2 { transition-delay: 0.2s; }
+.reveal-d3 { transition-delay: 0.3s; }
+.reveal-d4 { transition-delay: 0.4s; }
+.reveal-d5 { transition-delay: 0.5s; }
 
 /* ========================
    NAV
@@ -52,10 +63,11 @@ nav {
   transition: background 0.5s, backdrop-filter 0.5s;
 }
 nav.scrolled {
-  background: rgba(26,17,8,0.88);
+  background: linear-gradient(to bottom, rgba(26,17,8,0.95), rgba(26,17,8,0.88));
   backdrop-filter: blur(32px);
   -webkit-backdrop-filter: blur(32px);
   border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 -1px 0 rgba(196,154,82,0.06), 0 1px 3px rgba(0,0,0,0.3);
 }
 .nav-mark {
   font-family: 'Caveat', cursive; font-size: 26px; font-weight: 700;
@@ -226,12 +238,13 @@ nav.scrolled {
 .biz-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 20px; cursor: pointer;
-  transition: background 0.5s ease, border-color 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1), box-shadow 0.5s ease;
+  transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   position: relative; overflow: hidden;
 }
 .biz-card:hover {
-  background: var(--surface-hover); border-color: var(--border-hover);
-  transform: translateY(-4px); box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  background: var(--surface-hover); border-color: rgba(196,154,82,0.2);
+  transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05);
 }
 .biz-card-top { padding: 36px 32px 28px; }
 .biz-stamp { display: flex; align-items: center; gap: 10px; margin-bottom: 28px; }
@@ -716,6 +729,60 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
 }
 .nav-mobile-link.active { color: var(--amber-dust); }
 .nav-mobile-link:hover { color: var(--cream-receipt); }
+
+/* ── PARTICLES ───────────────────────────────── */
+.particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particle { position: absolute; border-radius: 50%; background: var(--amber-dust); pointer-events: none; animation: particleFloat linear infinite; }
+@keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
+
+/* ── CURSOR GLOW ────────────────────────────── */
+.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.04) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+
+/* ── AMBIENT DRIFT ──────────────────────────── */
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.04), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.03), transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.02), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+@keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
+
+/* ── GLOW ORBS ──────────────────────────────── */
+.glow-orb { position: absolute; border-radius: 50%; pointer-events: none; z-index: -1; animation: orbPulse 8s ease-in-out infinite alternate; }
+@keyframes orbPulse { 0% { transform: scale(1); opacity: 0.03; } 100% { transform: scale(1.15); opacity: 0.06; } }
+
+/* ── SVG SECTION DIVIDERS ───────────────────── */
+.section-divider { width: 100%; padding: 0; overflow: visible; }
+.section-divider svg { display: block; width: 100%; height: 24px; }
+.divider-path { stroke-dasharray: 1200; stroke-dashoffset: 1200; transition: stroke-dashoffset 2s cubic-bezier(0.16,1,0.3,1); }
+.section-divider.visible .divider-path { stroke-dashoffset: 0; }
+
+/* ── NETWORK MESH HERO BG ───────────────────── */
+.hero-mesh { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+
+/* ── FILTER SMOOTH TRANSITIONS ──────────────── */
+.biz-card.filter-hidden { opacity: 0; transform: scale(0.9); pointer-events: none; position: absolute; }
+
+/* ── MODAL SPRING ───────────────────────────── */
+.modal-overlay { transition: opacity 0.4s ease, backdrop-filter 0.4s ease; }
+.modal-panel { transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* ── FOOTER WATERMARK ───────────────────────── */
+footer { position: relative; overflow: hidden; }
+.footer-watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: 'Caveat', cursive; font-size: 240px; font-weight: 700; color: rgba(196,154,82,0.02); pointer-events: none; white-space: nowrap; }
+
+/* ── NAV LINK UNDERLINE ─────────────────────── */
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 1px; background: var(--amber-dust); transition: width 0.3s ease, left 0.3s ease; }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; left: 0; }
+
+/* ── BUTTON MICRO-INTERACTIONS ──────────────── */
+.cta-btn-primary:active, .join-btn:active, .footer-signup-btn:active { transform: translateY(0) scale(0.97); }
+
+/* ── GRAIN TEXTURE ──────────────────────────── */
+body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.045; animation: grainShift 4s steps(3) infinite; }
+@keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
+
+/* ── REDUCED MOTION ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+  .particles-container, .cursor-glow { display: none; }
+}
 </style>
 </head>
 <body>
@@ -733,6 +800,26 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
 
 <!-- HERO -->
 <section class="hero">
+<svg class="hero-mesh" viewBox="0 0 800 400" fill="none" style="opacity:0;animation:fadeUp 1.5s ease-out 0.3s forwards">
+  <circle cx="100" cy="100" r="2" fill="rgba(196,154,82,0.08)"/><circle cx="250" cy="60" r="1.5" fill="rgba(196,154,82,0.06)"/>
+  <circle cx="400" cy="120" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="550" cy="80" r="1.5" fill="rgba(196,154,82,0.05)"/>
+  <circle cx="700" cy="110" r="2" fill="rgba(196,154,82,0.08)"/><circle cx="180" cy="200" r="1.5" fill="rgba(196,154,82,0.06)"/>
+  <circle cx="350" cy="250" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="500" cy="220" r="1.5" fill="rgba(196,154,82,0.05)"/>
+  <circle cx="650" cy="260" r="2" fill="rgba(196,154,82,0.07)"/><circle cx="300" cy="350" r="1.5" fill="rgba(196,154,82,0.06)"/>
+  <line x1="100" y1="100" x2="250" y2="60" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
+  <line x1="250" y1="60" x2="400" y2="120" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
+  <line x1="400" y1="120" x2="550" y2="80" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
+  <line x1="550" y1="80" x2="700" y2="110" stroke="rgba(196,154,82,0.04)" stroke-width="0.5"/>
+  <line x1="100" y1="100" x2="180" y2="200" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="250" y1="60" x2="350" y2="250" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="400" y1="120" x2="500" y2="220" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="550" y1="80" x2="650" y2="260" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="180" y1="200" x2="350" y2="250" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="350" y1="250" x2="500" y2="220" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+  <line x1="500" y1="220" x2="650" y2="260" stroke="rgba(196,154,82,0.03)" stroke-width="0.5"/>
+</svg>
+<div class="glow-orb" style="width:400px;height:400px;top:-10%;left:-5%;background:radial-gradient(circle,rgba(196,154,82,0.06),transparent 70%)"></div>
+<div class="glow-orb" style="width:350px;height:350px;bottom:0;right:-3%;background:radial-gradient(circle,rgba(122,61,42,0.05),transparent 70%);animation-delay:3s"></div>
   <div class="hero-eyebrow">Colorado Springs — The Network</div>
   <h1 class="hero-headline">Businesses measured by how they <em>treat people.</em></h1>
   <p class="hero-context">A growing directory of businesses personally audited on how they treat their customers, their employees, and the clock. No fee. No algorithm. You either pass or you don't.</p>
@@ -921,6 +1008,7 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
     <div class="footer-note">Colorado Springs — Est. 2026</div>
     <a href="#" class="footer-contact" onclick="event.preventDefault(); window.location.href=atob('bWFpbHRvOmNhc2UubGF2aW9sZXR0ZUBnbWFpbC5jb20=')">Contact</a>
   </div>
+  <div class="footer-watermark">roughly</div>
 </footer>
 
 <!-- MODAL -->
@@ -1296,6 +1384,41 @@ document.getElementById('email-submit-btn').addEventListener('click', () => {
 document.getElementById('email-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('email-submit-btn').click();
 });
+
+// Enhanced reveal observer
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('visible'); revealObs.unobserve(e.target); }});
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale,.section-divider').forEach(el => revealObs.observe(el));
+
+// 3D tilt on business cards
+document.querySelectorAll('.biz-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const rect = card.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = 'perspective(800px) rotateY(' + (x*8) + 'deg) rotateX(' + (-y*8) + 'deg) translateY(-4px)';
+    card.style.boxShadow = '0 20px 60px rgba(0,0,0,0.3), 0 0 40px rgba(196,154,82,0.05)';
+  });
+  card.addEventListener('mouseleave', () => { card.style.transform = ''; card.style.boxShadow = ''; });
+});
+
+// Floating particles
+(function() {
+  const c = document.createElement('div'); c.className = 'particles-container'; document.body.appendChild(c);
+  for (let i = 0; i < 14; i++) {
+    const p = document.createElement('div'); p.className = 'particle';
+    const size = 2 + Math.random() * 3;
+    p.style.cssText = 'width:'+size+'px;height:'+size+'px;left:'+Math.random()*100+'%;bottom:-10px;animation-duration:'+(10+Math.random()*12)+'s;animation-delay:'+Math.random()*15+'s;';
+    c.appendChild(p);
+  }
+})();
+
+// Cursor glow
+if (window.matchMedia('(pointer: fine)').matches) {
+  const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
+  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+}
 </script>
 </body>
 </html>
