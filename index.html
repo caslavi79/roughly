@@ -220,6 +220,23 @@ body.locked {
   width: 8px; height: 8px; border-left: 1px solid var(--amber-dust);
   border-bottom: 1px solid var(--amber-dust); transform: rotate(0deg);
 }
+/* Bottom center with right-pointing arrow */
+.slide-advance.pos-bottom-right-arrow {
+  bottom: 40px; left: 50%; transform: translateX(-50%);
+  flex-direction: row; gap: 14px;
+}
+.slide-advance.pos-bottom-right-arrow .slide-advance-arrow {
+  width: 36px; height: 1px; position: relative; opacity: 0.7;
+}
+.slide-advance.pos-bottom-right-arrow .slide-advance-arrow::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 1px; background: var(--amber-dust);
+}
+.slide-advance.pos-bottom-right-arrow .slide-advance-arrow::after {
+  content: ''; position: absolute; right: 0; top: -4px;
+  width: 9px; height: 9px; border-right: 1px solid var(--amber-dust);
+  border-top: 1px solid var(--amber-dust); transform: rotate(45deg);
+}
 /* Rotated text for side buttons */
 .slide-advance.pos-right .slide-advance-text,
 .slide-advance.pos-left .slide-advance-text {
@@ -1036,7 +1053,7 @@ body::after {
 </section>
 
 <!-- 4. ORIGIN STORY -->
-<section class="origin-section slide" data-slide="3" data-advance-pos="pos-bottom-right" data-advance-label="Where you come in">
+<section class="origin-section slide" data-slide="3" data-advance-pos="pos-bottom-right-arrow" data-advance-label="Where you come in">
   <div class="origin-right reveal">
     <div class="origin-card">
       <div class="origin-card-label">Colorado Springs · 2026</div>
