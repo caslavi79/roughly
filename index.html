@@ -89,37 +89,115 @@ body.locked {
   from { opacity: 0; transform: translateY(-60px); }
   to { opacity: 1; transform: none; }
 }
+/* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
-  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-  display: none; flex-direction: column; align-items: center; gap: 8px;
-  cursor: pointer; background: rgba(26,17,8,0.85); border: 1px solid var(--border);
-  border-radius: 100px; padding: 12px 24px 16px; z-index: 150;
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  transition: border-color 0.3s, background 0.3s;
+  position: absolute; display: none; align-items: center; gap: 10px;
+  cursor: pointer; background: none; border: none; z-index: 10;
+  transition: opacity 0.3s;
 }
-.slide-advance:hover { border-color: var(--border-hover); background: rgba(26,17,8,0.95); }
 .slide-advance.advance-visible { display: flex; }
-.slide-advance.pos-right { left: auto; right: 56px; transform: none; }
-.slide-advance.pos-left { left: 56px; transform: none; }
-.slide-advance.pos-center { /* default */ }
+.slide-advance:hover { opacity: 1; }
+/* Right side: vertically centered on right edge, arrow points right */
+.slide-advance.pos-right {
+  right: 40px; top: 50%; transform: translateY(-50%);
+  flex-direction: row; writing-mode: horizontal-tb;
+}
+/* Left side: vertically centered on left edge, arrow points left */
+.slide-advance.pos-left {
+  left: 40px; top: 50%; transform: translateY(-50%);
+  flex-direction: row-reverse;
+}
+/* Bottom center: at the bottom, arrow points down */
+.slide-advance.pos-bottom {
+  bottom: 40px; left: 50%; transform: translateX(-50%);
+  flex-direction: column;
+}
 .slide-advance-text {
-  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
   letter-spacing: 3px; text-transform: uppercase;
-  color: var(--amber-dust); opacity: 0.6;
+  color: var(--amber-dust); opacity: 0.5;
   transition: opacity 0.3s;
 }
 .slide-advance:hover .slide-advance-text { opacity: 1; }
-.slide-advance-arrow {
+/* Right-pointing arrow */
+.slide-advance.pos-right .slide-advance-arrow {
+  width: 28px; height: 1px; position: relative; opacity: 0.4;
+}
+.slide-advance.pos-right .slide-advance-arrow::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 1px; background: var(--amber-dust);
+}
+.slide-advance.pos-right .slide-advance-arrow::after {
+  content: ''; position: absolute; right: 0; top: -4px;
+  width: 9px; height: 9px; border-right: 1px solid var(--amber-dust);
+  border-top: 1px solid var(--amber-dust); transform: rotate(45deg);
+}
+/* Left-pointing arrow */
+.slide-advance.pos-left .slide-advance-arrow {
+  width: 28px; height: 1px; position: relative; opacity: 0.4;
+}
+.slide-advance.pos-left .slide-advance-arrow::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 100%; height: 1px; background: var(--amber-dust);
+}
+.slide-advance.pos-left .slide-advance-arrow::after {
+  content: ''; position: absolute; left: 0; top: -4px;
+  width: 9px; height: 9px; border-left: 1px solid var(--amber-dust);
+  border-top: 1px solid var(--amber-dust); transform: rotate(-45deg);
+}
+/* Down-pointing arrow */
+.slide-advance.pos-bottom .slide-advance-arrow {
   width: 1px; height: 28px; position: relative; opacity: 0.4;
 }
-.slide-advance-arrow::before {
+.slide-advance.pos-bottom .slide-advance-arrow::before {
   content: ''; position: absolute; top: 0; left: 0;
   width: 1px; height: 100%; background: var(--amber-dust);
 }
-.slide-advance-arrow::after {
+.slide-advance.pos-bottom .slide-advance-arrow::after {
   content: ''; position: absolute; bottom: 0; left: -4px;
   width: 9px; height: 9px; border-right: 1px solid var(--amber-dust);
   border-bottom: 1px solid var(--amber-dust); transform: rotate(45deg);
+}
+/* Diagonal bottom-right */
+.slide-advance.pos-bottom-right {
+  bottom: 40px; right: 56px; left: auto; transform: none;
+  flex-direction: row; gap: 12px;
+}
+.slide-advance.pos-bottom-right .slide-advance-arrow {
+  width: 24px; height: 24px; position: relative; opacity: 0.4;
+}
+.slide-advance.pos-bottom-right .slide-advance-arrow::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 34px; height: 1px; background: var(--amber-dust);
+  transform: rotate(45deg); transform-origin: top left;
+}
+.slide-advance.pos-bottom-right .slide-advance-arrow::after {
+  content: ''; position: absolute; bottom: 0; right: 0;
+  width: 8px; height: 8px; border-right: 1px solid var(--amber-dust);
+  border-bottom: 1px solid var(--amber-dust); transform: rotate(0deg);
+}
+/* Diagonal bottom-left */
+.slide-advance.pos-bottom-left {
+  bottom: 40px; left: 56px; right: auto; transform: none;
+  flex-direction: row-reverse; gap: 12px;
+}
+.slide-advance.pos-bottom-left .slide-advance-arrow {
+  width: 24px; height: 24px; position: relative; opacity: 0.4;
+}
+.slide-advance.pos-bottom-left .slide-advance-arrow::before {
+  content: ''; position: absolute; top: 0; right: 0;
+  width: 34px; height: 1px; background: var(--amber-dust);
+  transform: rotate(-45deg); transform-origin: top right;
+}
+.slide-advance.pos-bottom-left .slide-advance-arrow::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 8px; height: 8px; border-left: 1px solid var(--amber-dust);
+  border-bottom: 1px solid var(--amber-dust); transform: rotate(0deg);
+}
+/* Rotated text for side buttons */
+.slide-advance.pos-right .slide-advance-text,
+.slide-advance.pos-left .slide-advance-text {
+  writing-mode: vertical-rl; text-orientation: mixed;
 }
 .slide-back {
   position: fixed; top: 88px; left: 56px; z-index: 150;
@@ -533,11 +611,9 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
 }
 @media (max-width: 600px) {
-  .slide-advance.pos-right, .slide-advance.pos-left {
-    left: 50%; right: auto; transform: translateX(-50%);
-  }
+  .slide-advance.pos-right { right: 20px; }
+  .slide-advance.pos-left { left: 20px; }
   .slide-back { left: 20px; top: 78px; }
-  .slide-advance { bottom: 32px; }
   .nav-right { display: none; }
   .nav-hamburger { display: flex !important; }
   nav { padding: 14px 20px; }
@@ -829,7 +905,7 @@ body::after {
 </section>
 
 <!-- 1. WHAT WE STAND AGAINST -->
-<section class="against-section slide" data-slide="1" data-enter="slide-from-bottom" data-advance-pos="pos-right" data-advance-label="What we do">
+<section class="against-section slide" data-slide="1" data-enter="slide-from-bottom" data-advance-pos="pos-bottom" data-advance-label="What we do" data-advance-anim="slide-from-bottom">
   <div class="section-divider divider-top"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q200 4, 400 14 T800 10 T1200 12" stroke="rgba(196,154,82,0.12)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
   <div class="against-intro">
     <div class="against-eyebrow reveal">What we stand against</div>
@@ -848,7 +924,7 @@ body::after {
 </section>
 
 <!-- 2. WHAT WE DO -->
-<section class="what-section slide" data-slide="2" data-enter="slide-from-right" data-advance-pos="pos-left" data-advance-label="How we do it" style="position:relative">
+<section class="what-section slide" data-slide="2" data-enter="slide-from-bottom" data-advance-pos="pos-bottom-right" data-advance-label="How we do it" data-advance-anim="slide-from-bottom" style="position:relative">
   <!-- Large decorative SVG behind text -->
   <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0">
     <!-- Hand-drawn circle -->
@@ -872,7 +948,7 @@ body::after {
 </section>
 
 <!-- 3. THE AUDIT -->
-<section class="audit-section slide" data-slide="3" data-enter="slide-from-left" data-advance-pos="pos-center" data-advance-label="Where it started" style="position:relative">
+<section class="audit-section slide" data-slide="3" data-enter="slide-from-bottom" data-advance-pos="pos-bottom-left" data-advance-label="Where it started" data-advance-anim="slide-from-left" style="position:relative">
   <!-- Large decorative clipboard SVG illustration -->
   <svg class="audit-clipboard" viewBox="0 0 200 280" fill="none" style="position:absolute;left:25%;top:55%;transform:translateX(-50%) translateY(-30%);width:220px;pointer-events:none;z-index:0;opacity:0.12">
     <rect x="20" y="30" width="160" height="230" rx="12" stroke="rgba(196,154,82,1)" stroke-width="2" fill="none"/>
@@ -939,7 +1015,7 @@ body::after {
 </section>
 
 <!-- 4. ORIGIN STORY -->
-<section class="origin-section slide" data-slide="4" data-enter="slide-from-bottom" data-advance-pos="pos-right" data-advance-label="Where you come in">
+<section class="origin-section slide" data-slide="4" data-enter="slide-from-left" data-advance-pos="pos-right" data-advance-label="Where you come in" data-advance-anim="slide-from-right">
   <div class="origin-right reveal">
     <div class="origin-card">
       <div class="origin-card-label">Colorado Springs · 2026</div>
@@ -1115,18 +1191,24 @@ backBtn.className = 'slide-back';
 backBtn.innerHTML = '<span class="slide-back-arrow"></span><span>Back</span>';
 document.body.appendChild(backBtn);
 
-// Create single fixed advance button
-const advanceBtn = document.createElement('button');
-advanceBtn.className = 'slide-advance';
-advanceBtn.innerHTML = '<span class="slide-advance-text"></span><div class="slide-advance-arrow"></div>';
-advanceBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
-document.body.appendChild(advanceBtn);
+// Create advance buttons inside each slide
+slides.forEach((slide, i) => {
+  const pos = slide.dataset.advancePos || 'pos-bottom';
+  const label = slide.dataset.advanceLabel || 'Continue';
+  const btn = document.createElement('button');
+  btn.className = `slide-advance advance-visible ${pos}`;
+  btn.innerHTML = `<span class="slide-advance-text">${label}</span><div class="slide-advance-arrow"></div>`;
+  btn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  slide.appendChild(btn);
+});
 
 function goToSlide(idx) {
   if (transitioning) return;
   transitioning = true;
 
   const prevSlide = currentSlide >= 0 ? slides[currentSlide] : null;
+  // Use the previous slide's advance-anim to determine how the next slide enters
+  const enterAnim = prevSlide ? (prevSlide.dataset.advanceAnim || 'slide-from-bottom') : 'slide-from-bottom';
 
   // Last slide: unlock scroll and show scroll zone
   if (idx >= slides.length) {
@@ -1136,7 +1218,6 @@ function goToSlide(idx) {
     }
     document.getElementById('scroll-zone').style.display = '';
     document.body.classList.remove('locked');
-    advanceBtn.classList.remove('advance-visible');
     backBtn.classList.add('visible');
     window.scrollTo(0, 0);
     transitioning = false;
@@ -1145,7 +1226,6 @@ function goToSlide(idx) {
   }
 
   const nextSlide = slides[idx];
-  const enterAnim = nextSlide.dataset.enter || 'slide-from-bottom';
 
   // Hide previous
   if (prevSlide) {
@@ -1155,7 +1235,6 @@ function goToSlide(idx) {
 
   // Show next
   window.scrollTo(0, 0);
-  // Allow scroll within tall slides
   document.body.classList.remove('locked');
   nextSlide.classList.add('slide-active', enterAnim);
 
@@ -1163,12 +1242,6 @@ function goToSlide(idx) {
   nextSlide.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale, .stamp-animate').forEach(el => {
     el.classList.add('visible');
   });
-
-  // Update advance button
-  const pos = nextSlide.dataset.advancePos || 'pos-center';
-  const label = nextSlide.dataset.advanceLabel || 'Continue';
-  advanceBtn.className = `slide-advance advance-visible ${pos}`;
-  advanceBtn.querySelector('.slide-advance-text').textContent = label;
 
   // Update back button
   if (idx > 0) {
@@ -1208,12 +1281,6 @@ function goBack() {
   targetSlide.className = targetSlide.className.replace(/slide-from-\w+/g, '');
   targetSlide.classList.add('slide-active', reverseAnim);
 
-  // Update advance button for target slide
-  const pos = targetSlide.dataset.advancePos || 'pos-center';
-  const label = targetSlide.dataset.advanceLabel || 'Continue';
-  advanceBtn.className = `slide-advance advance-visible ${pos}`;
-  advanceBtn.querySelector('.slide-advance-text').textContent = label;
-
   // Update back button
   if (targetIdx <= 0) backBtn.classList.remove('visible');
 
@@ -1230,11 +1297,6 @@ backBtn.addEventListener('click', () => {
     const lastSlide = slides[currentSlide];
     lastSlide.className = lastSlide.className.replace(/slide-from-\w+/g, '');
     lastSlide.classList.add('slide-active', 'slide-from-top');
-    // Update advance button
-    const pos = lastSlide.dataset.advancePos || 'pos-center';
-    const label = lastSlide.dataset.advanceLabel || 'Continue';
-    advanceBtn.className = `slide-advance advance-visible ${pos}`;
-    advanceBtn.querySelector('.slide-advance-text').textContent = label;
     window.scrollTo(0, 0);
     if (currentSlide <= 0) backBtn.classList.remove('visible');
   } else {
