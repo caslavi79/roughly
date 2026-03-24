@@ -466,6 +466,28 @@ body::after {
 <section class="shop-hero">
   <div class="glow-orb" style="width:600px;height:600px;top:-150px;right:-120px;background:radial-gradient(circle,rgba(196,154,82,0.12),transparent 70%);"></div>
   <div class="glow-orb" style="width:500px;height:500px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(122,61,42,0.10),transparent 70%);"></div>
+  <!-- Hero illustration: scissors & thread motif -->
+  <svg viewBox="0 0 400 400" fill="none" style="position:absolute;right:5%;top:50%;transform:translateY(-50%);width:380px;height:380px;opacity:0.17;pointer-events:none;z-index:0">
+    <!-- Scissors -->
+    <ellipse cx="160" cy="140" rx="38" ry="52" stroke="rgba(196,154,82,0.7)" stroke-width="2" fill="rgba(196,154,82,0.03)" transform="rotate(-20 160 140)"/>
+    <ellipse cx="240" cy="140" rx="38" ry="52" stroke="rgba(196,154,82,0.7)" stroke-width="2" fill="rgba(196,154,82,0.03)" transform="rotate(20 240 140)"/>
+    <line x1="178" y1="180" x2="222" y2="180" stroke="rgba(196,154,82,0.6)" stroke-width="2.5"/>
+    <line x1="200" y1="180" x2="170" y2="310" stroke="rgba(196,154,82,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="200" y1="180" x2="230" y2="310" stroke="rgba(196,154,82,0.6)" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Thread spool -->
+    <ellipse cx="310" cy="280" rx="40" ry="18" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="rgba(196,154,82,0.02)"/>
+    <line x1="270" y1="280" x2="270" y2="240" stroke="rgba(196,154,82,0.4)" stroke-width="1.5"/>
+    <line x1="350" y1="280" x2="350" y2="240" stroke="rgba(196,154,82,0.4)" stroke-width="1.5"/>
+    <ellipse cx="310" cy="240" rx="40" ry="18" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="rgba(196,154,82,0.02)"/>
+    <!-- Loose thread curve -->
+    <path d="M310 258 Q280 300 250 280 Q220 260 200 290 Q180 320 140 300 Q100 280 80 310" stroke="rgba(196,154,82,0.45)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="6 4"/>
+    <!-- Needle -->
+    <line x1="80" y1="310" x2="60" y2="340" stroke="rgba(196,154,82,0.6)" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="60" cy="345" r="4" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="none"/>
+    <!-- Decorative stitches -->
+    <path d="M50 80 L70 95 L50 110 L70 125 L50 140" stroke="rgba(196,154,82,0.3)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    <path d="M340 100 L360 115 L340 130 L360 145 L340 160" stroke="rgba(196,154,82,0.3)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  </svg>
   <div class="shop-eyebrow reveal">The Shop</div>
   <h1 class="shop-headline reveal reveal-d1">Clothing that propels the movement.</h1>
   <p class="shop-context reveal reveal-d2">Every piece supports the roughly network. Every dollar is accounted for. Every donation is published.</p>
@@ -552,6 +574,19 @@ body::after {
 </section>
 
 <div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,0 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
+
+<!-- PULL QUOTE -->
+<div class="reveal" style="padding:80px 48px;text-align:center;position:relative;">
+  <blockquote style="font-family:'Crimson Pro',serif;font-style:italic;font-size:clamp(28px,4.5vw,52px);font-weight:400;color:var(--cream-receipt);line-height:1.2;letter-spacing:-1px;max-width:720px;margin:0 auto 20px;position:relative;">
+    Each piece frays differently. That's the point.
+  </blockquote>
+  <svg viewBox="0 0 400 12" fill="none" style="width:min(400px,80%);margin:0 auto;display:block;opacity:0.5">
+    <path d="M0 6 Q50 0 100 6 T200 6 T300 6 T400 6" stroke="rgba(196,154,82,0.6)" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <circle cx="0" cy="6" r="3" fill="rgba(196,154,82,0.4)"/>
+    <circle cx="200" cy="6" r="3" fill="rgba(196,154,82,0.4)"/>
+    <circle cx="400" cy="6" r="3" fill="rgba(196,154,82,0.4)"/>
+  </svg>
+</div>
 
 <!-- PRE-LOVED -->
 <section class="collection reveal" id="pre-loved">
