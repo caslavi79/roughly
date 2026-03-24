@@ -83,6 +83,7 @@ nav.scrolled {
 .shop-hero {
   padding: 180px 48px 80px;
   position: relative; overflow: hidden;
+  text-align: center;
 }
 .shop-hero::before {
   content: ''; position: absolute; top: -10%; right: -10%;
@@ -95,12 +96,12 @@ nav.scrolled {
   font-family: 'Crimson Pro', serif; font-style: italic;
   font-size: clamp(36px, 6vw, 80px); font-weight: 400;
   line-height: 1.08; letter-spacing: -2px; color: var(--cream-receipt);
-  max-width: 700px; margin-bottom: 28px;
+  max-width: 700px; margin: 0 auto 28px;
 }
-.shop-context { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--tobacco); opacity: 0.8; max-width: 500px; }
+.shop-context { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--tobacco); opacity: 0.8; max-width: 500px; margin: 0 auto; }
 
 /* Donation Note */
-.donation-note { position: relative; padding: 60px 48px 100px; display: flex; justify-content: flex-start; }
+.donation-note { position: relative; padding: 60px 48px 100px; display: flex; justify-content: center; }
 .donation-card {
   background: rgba(196,154,82,0.04);
   border-left: 3px solid var(--amber-dust);
@@ -139,8 +140,8 @@ nav.scrolled {
 .collection-desc { font-size: 15px; font-weight: 400; line-height: 1.9; color: var(--tobacco); max-width: 520px; }
 .collection-desc strong { color: var(--cream-receipt); font-weight: 400; }
 
-#finished-enough .collection-header { margin-bottom: 24px; }
-#finished-enough .collection-desc { margin-bottom: 60px; }
+#finished-enough .collection-header { margin-bottom: 24px; text-align: center; }
+#finished-enough .collection-desc { margin-bottom: 60px; margin-left: auto; margin-right: auto; text-align: center; }
 
 #pre-loved { display: grid; grid-template-columns: 380px 1fr; gap: 80px; align-items: start; }
 #pre-loved .collection-left { position: sticky; top: 140px; }
@@ -251,6 +252,7 @@ nav.scrolled {
 /* Asymmetric */
 #pre-loved .product-grid { gap: 24px 3px; }
 #pre-loved .product-card:nth-child(2) { transform: translateY(40px); }
+#pre-loved .product-card:nth-child(2):hover { transform: translateY(32px); }
 #artist-collab .product-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; }
 #statement .product-grid { grid-template-columns: repeat(2, minmax(320px, 400px)); gap: 24px; justify-content: center; }
 
