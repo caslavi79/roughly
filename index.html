@@ -76,7 +76,7 @@ body.locked {
 .slide[data-state="below"] { transform: translateY(100%); }
 
 /* ── BOUNDARY TRANSITIONS ─────────────────── */
-/* B0: Hero→Against — vertical slide down */
+/* B0: Against→WhatWeDo — button is bottom-center ↓ so slide vertically */
 .b0-out-fwd { z-index:3!important; animation: b0OutFwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-in-fwd  { z-index:2!important; animation: b0InFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-out-bwd { z-index:3!important; animation: b0OutBwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
@@ -86,45 +86,35 @@ body.locked {
 @keyframes b0OutBwd { from{transform:translateY(0);opacity:1} to{transform:translateY(100%);opacity:0} }
 @keyframes b0InBwd  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
 
-/* B1: Against→WhatWeDo — dissolve with blur */
-.b1-out-fwd { z-index:3!important; animation: b1OutFwd 0.7s cubic-bezier(0.25,0,0.5,1) forwards!important; }
-.b1-in-fwd  { z-index:2!important; animation: b1InFwd  0.7s cubic-bezier(0.16,1,0.3,1) forwards!important; }
-.b1-out-bwd { z-index:3!important; animation: b1OutBwd 0.7s cubic-bezier(0.25,0,0.5,1) forwards!important; }
-.b1-in-bwd  { z-index:2!important; animation: b1InBwd  0.7s cubic-bezier(0.16,1,0.3,1) forwards!important; }
-@keyframes b1OutFwd { 0%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.97)} 100%{opacity:0;transform:scale(0.94)} }
-@keyframes b1InFwd  { from{opacity:0;transform:scale(1.04)} to{opacity:1;transform:scale(1)} }
-@keyframes b1OutBwd { 0%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.03)} 100%{opacity:0;transform:scale(1.06)} }
-@keyframes b1InBwd  { from{opacity:0;transform:scale(0.96)} to{opacity:1;transform:scale(1)} }
+/* B1: WhatWeDo→Audit — button is bottom-right ↘ so slide diagonally */
+.b1-out-fwd { z-index:3!important; animation: b1OutFwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b1-in-fwd  { z-index:2!important; animation: b1InFwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b1-out-bwd { z-index:3!important; animation: b1OutBwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b1-in-bwd  { z-index:2!important; animation: b1InBwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes b1OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
+@keyframes b1InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b1OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
+@keyframes b1InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
-/* B2: WhatWeDo→Audit — diagonal slide (down-right) */
-.b2-out-fwd { z-index:3!important; animation: b2OutFwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-.b2-in-fwd  { z-index:2!important; animation: b2InFwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-.b2-out-bwd { z-index:3!important; animation: b2OutBwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-.b2-in-bwd  { z-index:2!important; animation: b2InBwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-40%,-60%);opacity:0} }
-@keyframes b2InFwd  { from{transform:translate(40%,60%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(40%,60%);opacity:0} }
-@keyframes b2InBwd  { from{transform:translate(-40%,-60%);opacity:0} to{transform:translate(0,0);opacity:1} }
+/* B2: Audit→Origin — button is bottom-left ↙ so slide from the left */
+.b2-out-fwd { z-index:3!important; animation: b2OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-in-fwd  { z-index:2!important; animation: b2InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-out-bwd { z-index:3!important; animation: b2OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-in-bwd  { z-index:2!important; animation: b2InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,-50%);opacity:0} }
+@keyframes b2InFwd  { from{transform:translate(-50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
+@keyframes b2InBwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
-/* B3: Audit→Origin — horizontal slide left */
+/* B3: Origin→ScrollZone — button is right side → so slide horizontally right */
 .b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-fwd  { z-index:2!important; animation: b3InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
-@keyframes b3InFwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
-@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
-@keyframes b3InBwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
-
-/* B4: Origin→ScrollZone — scale zoom + blur */
-.b4-out-fwd { z-index:3!important; animation: b4OutFwd 0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
-.b4-in-fwd  { z-index:2!important; animation: b4InFwd  0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
-.b4-out-bwd { z-index:3!important; animation: b4OutBwd 0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
-.b4-in-bwd  { z-index:2!important; animation: b4InBwd  0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
-@keyframes b4OutFwd { from{transform:scale(1);opacity:1} to{transform:scale(1.12);opacity:0} }
-@keyframes b4InFwd  { from{transform:scale(0.88);opacity:0} to{transform:scale(1);opacity:1} }
-@keyframes b4OutBwd { from{transform:scale(1);opacity:1} to{transform:scale(0.88);opacity:0} }
-@keyframes b4InBwd  { from{transform:scale(1.12);opacity:0} to{transform:scale(1);opacity:1} }
+@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+@keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
+@keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
   position: absolute; display: flex; align-items: center; gap: 10px;
@@ -260,7 +250,8 @@ body.locked {
 .slide .section-divider.divider-top { top: 0; }
 .slide .section-divider.divider-bottom { bottom: 0; }
 /* Audit section keeps grid layout inside slide */
-.slide.audit-section { display: grid !important; align-content: center; padding: 80px 56px; }
+.slide.audit-section { display: grid !important; align-content: center; padding: 100px 56px 120px; }
+.slide.origin-section { display: grid !important; align-content: center; padding: 100px 56px 120px; }
 /* Dividers inside slides */
 
 .reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
@@ -1218,8 +1209,8 @@ const total = slides.length;
 let current = -1; // -1 = hero active
 let transitioning = false;
 
-// Boundary transition durations
-const TX_DUR = [800, 750, 750, 700, 650];
+// Boundary transition durations (B0=vertical, B1=diagonal↘, B2=diagonal↙, B3=horizontal→)
+const TX_DUR = [800, 750, 700, 700];
 
 // Get transition classes for a boundary
 function getTx(boundary, fwd) {
