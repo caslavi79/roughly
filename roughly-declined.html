@@ -209,7 +209,7 @@ nav.scrolled { border-bottom: 1px solid var(--cold-border); backdrop-filter: blu
 }
 .cta-strip-text {
   font-family: 'Crimson Pro', serif; font-style: italic;
-  font-size: clamp(18px, 2vw, 26px); color: #777;
+  font-size: clamp(18px, 2vw, 26px); color: #b0a090;
   max-width: 500px; line-height: 1.4; margin-bottom: 36px;
 }
 .cta-btn {
@@ -352,8 +352,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 .nav-hamburger span {
   display: block; width: 100%; height: 1.5px; background: var(--cold-text);
   transition: transform 0.32s ease, opacity 0.2s ease;
-  transform-origin: center; will-change: transform;
-}
+  transform-origin: center;}
 .nav-hamburger.open span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
@@ -385,9 +384,9 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 
 /* ── FOG/MIST ───────────────────────────────── */
 .fog-element { position: absolute; pointer-events: none; opacity: 0.09; z-index: 0; }
-.fog-1 { animation: fogDrift1 40s linear infinite; }
-.fog-2 { animation: fogDrift2 55s linear infinite; }
-.fog-3 { animation: fogDrift3 35s linear infinite; }
+.fog-1 { animation: fogDrift1 40s ease-in-out infinite alternate; }
+.fog-2 { animation: fogDrift2 55s ease-in-out infinite alternate; }
+.fog-3 { animation: fogDrift3 35s ease-in-out infinite alternate; }
 @keyframes fogDrift1 { 0% { transform: translateX(-30%); } 100% { transform: translateX(110%); } }
 @keyframes fogDrift2 { 0% { transform: translateX(110%); } 100% { transform: translateX(-30%); } }
 @keyframes fogDrift3 { 0% { transform: translateX(-20%) translateY(-5%); } 100% { transform: translateX(100%) translateY(5%); } }
@@ -398,10 +397,10 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--cold-border); }
 @keyframes particleFall { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.4; } 90% { opacity: 0.1; } 100% { opacity: 0; transform: translateY(100vh) translateX(-30px); } }
 
 /* ── COLD CURSOR GLOW ───────────────────────── */
-.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(180,180,200,0.06) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+.cursor-glow { position: fixed; left: 0; top: 0; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(180,180,200,0.06) 0%, transparent 70%); will-change: transform; }
 
 /* ── COLD AMBIENT DRIFT ─────────────────────── */
-body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(255,60,60,0.07), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(100,100,140,0.07), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(255,60,60,0.07), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(100,100,140,0.07), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; will-change: transform; }
 @keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
 
 /* ── TABLE ROW ENHANCEMENTS ─────────────────── */
@@ -421,10 +420,8 @@ body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-e
   position: fixed; inset: 0; z-index: 997; pointer-events: none;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat; background-size: 128px 128px;
-  animation: staticShift 0.3s steps(4) infinite;
-}
-@keyframes staticShift { 0% { transform: translate(0,0); } 25% { transform: translate(-3px,2px); } 50% { transform: translate(2px,-1px); } 75% { transform: translate(-1px,3px); } 100% { transform: translate(0,0); } }
+  background-repeat: repeat; background-size: 256px 256px;
+ }
 
 /* ── SVG SECTION DIVIDERS (cold) ────────────── */
 .section-divider { width: 100%; padding: 0; overflow: visible; }
@@ -452,9 +449,7 @@ body::after {
   content: ''; position: fixed; inset: 0; z-index: 999; pointer-events: none; opacity: 0.06;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat; background-size: 256px 256px;
-  animation: grainShift 4s steps(3) infinite;
-}
-@keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
+ }
 
 /* ── DRAW LINE ANIMATION ───────────────────── */
 @keyframes drawLine { to { stroke-dashoffset: 0; } }
@@ -495,15 +490,15 @@ body::after {
   <svg class="fog-element fog-2" viewBox="0 0 800 200" style="width:60%;top:50%;right:-5%"><ellipse cx="400" cy="100" rx="300" ry="60" fill="rgba(200,200,210,0.4)"/></svg>
   <svg class="fog-element fog-3" viewBox="0 0 800 200" style="width:70%;bottom:10%;left:0"><ellipse cx="400" cy="100" rx="320" ry="70" fill="rgba(200,200,210,0.3)"/></svg>
   <h1 class="hero-headline hero-title">Declined.</h1>
-  <p class="hero-context">A public ledger of businesses that were contacted for a roughly audit and either refused or didn't respond.</p>
+  <p class="hero-context">A public record of businesses that were invited to participate in a roughly audit and either declined or didn't respond.</p>
   <svg style="width:120px;height:3px;margin:20px 0;display:block">
     <line x1="0" y1="1.5" x2="120" y2="1.5" stroke="rgba(255,80,80,0.5)" stroke-width="2" stroke-linecap="round" stroke-dasharray="120" stroke-dashoffset="120" style="animation:drawLine 1.5s ease-out 1s forwards"/>
   </svg>
   <div class="hero-rule">
     <div class="hero-rule-line"></div>
     <p class="hero-rule-text">
-      Every business on this page was contacted at least twice. Some said no. Some said nothing.<br><br>
-      <strong>Silence counts as a no.</strong> We're not saying anything beyond that. The list says enough.
+      Every business on this page was contacted at least twice. Some said no. Some didn't respond.<br><br>
+      <strong>That's all we know.</strong> We're not drawing conclusions. We're just keeping the record public. What you make of it is up to you.
     </p>
   </div>
   <div class="hero-tagline">life happens in the -ish</div>
@@ -627,11 +622,11 @@ body::after {
   <div class="footnote-section">
     <div class="footnote-block">
       <h3>What "declined" means.</h3>
-      <p>We reached out. They said no — or they said nothing at all. Silence is a decision. We're treating it like one. We're not speculating about why — we don't need to. A business that doesn't want to be evaluated on how it treats its people has told you something already.</p>
+      <p>We reached out. They said no, or they didn't respond. Either way, they're not in the network. We're not speculating about why. There are plenty of reasons a business might pass on something like this. This page is just the record that we asked and they didn't move forward.</p>
     </div>
   </div>
   <div class="cta-strip">
-    <div class="cta-strip-text">Know a business that belongs on this list — or one that shouldn't be here anymore?</div>
+    <div class="cta-strip-text">Know a business we should reach out to, or one that's since agreed to participate?</div>
     <a href="#" onclick="event.preventDefault(); window.location.href=atob('bWFpbHRvOmNhc2UubGF2aW9sZXR0ZUBnbWFpbC5jb20=')" class="cta-btn">Tell us →</a>
   </div>
 </div>
@@ -672,7 +667,7 @@ body::after {
       <div class="email-panel-mark">roughly</div>
       <div class="email-panel-tagline">life happens in the -ish</div>
       <div class="email-panel-headline">Be the first to know.</div>
-      <div class="email-panel-desc">Drops, network additions, events, and the things we're building — straight to your inbox. No spam. No algorithm.</div>
+      <div class="email-panel-desc">Drops, network additions, events, and the things we're building. Straight to your inbox. No spam. No algorithm.</div>
       <div class="email-form">
         <input type="email" class="email-input" id="email-input" placeholder="your@email.com" autocomplete="email">
         <button class="email-submit" id="email-submit-btn">Notify me</button>
@@ -827,7 +822,8 @@ document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale,.
 // Cursor glow (cold)
 if (window.matchMedia('(pointer: fine)').matches) {
   const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
-  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+  let gx = 0, gy = 0, raf = false;
+  document.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; if (!raf) { raf = true; requestAnimationFrame(() => { g.style.transform = 'translate(' + (gx-150) + 'px,' + (gy-150) + 'px)'; raf = false; }); } });
 }
 </script>
 </body>

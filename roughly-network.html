@@ -172,13 +172,15 @@ nav.scrolled {
 .expand-item.open .expand-trigger-icon { transform: rotate(45deg); opacity: 0.7; }
 .expand-body {
   max-height: 0; overflow: hidden;
-  transition: max-height 0.55s cubic-bezier(0.16,1,0.3,1);
+  transition: max-height 0.25s ease-in;
 }
-.expand-item.open .expand-body { max-height: 400px; }
+.expand-item.open .expand-body { max-height: 400px; transition: max-height 0.55s cubic-bezier(0.16,1,0.3,1); }
 .expand-content {
   padding: 0 22px 22px; font-size: 14px; font-weight: 400; line-height: 1.9;
-  color: var(--tobacco); opacity: 0.8;
+  color: var(--tobacco); opacity: 0;
+  transition: opacity 0.15s ease;
 }
+.expand-item.open .expand-content { opacity: 0.8; transition: opacity 0.4s ease 0.1s; }
 .expand-content ul { list-style: none; }
 .expand-content li { padding: 4px 0; display: flex; gap: 14px; }
 .expand-content li::before { content: '—'; color: var(--amber-dust); opacity: 0.35; flex-shrink: 0; }
@@ -210,6 +212,27 @@ nav.scrolled {
   background: var(--amber-dust); color: var(--ink);
   border-color: var(--amber-dust); opacity: 1;
 }
+.search-wrap {
+  margin-left: auto;
+}
+.search-input {
+  font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px;
+  padding: 8px 16px; border-radius: 100px; border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04); color: var(--cream-receipt); outline: none;
+  width: 200px; transition: border-color 0.3s, width 0.3s;
+}
+.search-input::placeholder { color: var(--tobacco); opacity: 0.4; }
+.search-input:focus { border-color: var(--amber-dust); width: 260px; }
+
+/* LOAD MORE */
+.load-more-wrap { text-align: center; padding: 48px 0 0; }
+.load-more-btn {
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+  padding: 14px 36px; border-radius: 100px; border: 1px solid var(--border);
+  background: transparent; color: var(--amber-dust); cursor: pointer;
+  transition: all 0.3s;
+}
+.load-more-btn:hover { border-color: var(--amber-dust); background: rgba(196,154,82,0.08); }
 
 /* ========================
    NETWORK GRID
@@ -237,12 +260,11 @@ nav.scrolled {
    BUSINESS CARD
 ======================== */
 .biz-card {
-  background: var(--surface); border: 1px solid var(--border);
+  background: rgba(42,32,20,0.9); border: 1px solid var(--border);
   border-radius: 20px; cursor: pointer;
   transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
   position: relative; overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.22);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.22), inset 0 1px 0 rgba(196,154,82,0.07), 0 0 60px rgba(196,154,82,0.04);
 }
 .biz-card:hover {
   background: var(--surface-hover); border-color: rgba(196,154,82,0.2);
@@ -498,7 +520,7 @@ nav.scrolled {
 }
 .join-section .section-label {
   font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
-  color: var(--tobacco); opacity: 0.4; margin-bottom: 32px;
+  color: var(--tobacco); opacity: 0.8; margin-bottom: 32px;
 }
 .join-headline {
   font-family: 'Crimson Pro', serif; font-style: italic;
@@ -618,7 +640,10 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
   .hero-headline { letter-spacing: -1px; }
   .hero-scroll-prompt { display: none; }
   .about-strip { grid-template-columns: 1fr; gap: 48px; padding: 72px 24px; }
-  .filter-bar { padding: 12px 24px; gap: 6px; }
+  .filter-bar { padding: 12px 24px; gap: 6px; flex-wrap: wrap; }
+  .search-wrap { margin-left: 0; width: 100%; margin-top: 6px; }
+  .search-input { width: 100%; }
+  .search-input:focus { width: 100%; }
   .network-section { padding: 52px 24px 80px; }
   .network-header { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 32px; }
   .business-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -713,8 +738,7 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
 }
 .nav-hamburger span {
   display: block; width: 100%; height: 1.5px; background: var(--cream-receipt);
-  transition: transform 0.32s ease, opacity 0.2s ease; transform-origin: center; will-change: transform;
-}
+  transition: transform 0.32s ease, opacity 0.2s ease; transform-origin: center;}
 .nav-hamburger.open span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
@@ -740,10 +764,10 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
 @keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
-.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+.cursor-glow { position: fixed; left: 0; top: 0; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); will-change: transform; }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
-body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%); filter: blur(80px); animation: ambientDrift 25s ease-in-out infinite alternate; }
 @keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
 
 /* ── GLOW ORBS ──────────────────────────────── */
@@ -779,8 +803,7 @@ footer { position: relative; overflow: hidden; }
 .cta-btn-primary:active, .join-btn:active, .footer-signup-btn:active { transform: translateY(0) scale(0.97); }
 
 /* ── GRAIN TEXTURE ──────────────────────────── */
-body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); opacity: 0.06; animation: grainShift 4s steps(3) infinite; }
-@keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
+body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 256px 256px; opacity: 0.045; }
 
 /* ── REDUCED MOTION ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -845,7 +868,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
 <section class="about-strip reveal">
   <div class="about-left">
     <div class="about-stamp">How this works.</div>
-    <p class="about-body">These aren't paid listings. Every business here was personally audited — on how they treat their customers, their employees, and the clock. If they're on this list, they passed.</p>
+    <p class="about-body">These aren't paid listings. Every business here was personally audited on how they treat their customers, their employees, and the clock. If they're on this list, they passed.</p>
   </div>
   <div class="about-right">
     <div class="expand-item" data-expand>
@@ -854,7 +877,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
         <span class="expand-trigger-icon">+</span>
       </button>
       <div class="expand-body">
-        <div class="expand-content">Approval isn't a membership. It's a judgment call — made after actually spending time with the business. We look at four things: how they structure their time, how they treat their employees, how the customer experience feels, and whether humans are still in the loop. There's no algorithm. There's no fee. You either pass or you don't.</div>
+        <div class="expand-content">Approval isn't a membership. It's a judgment call, made after actually spending time with the business. We look at four things: how they structure their time, how they treat their employees, how the customer experience feels, and whether humans are still in the loop. There's no algorithm. There's no fee. You either pass or you don't.</div>
       </div>
     </div>
     <div class="expand-item" data-expand>
@@ -865,10 +888,10 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
       <div class="expand-body">
         <div class="expand-content">
           <ul>
-            <li>Non-rigid timeframes — conversations end when they should, not when a timer says</li>
-            <li>Employee experience — anonymous input from staff, not just what the owner says</li>
-            <li>Customer experience — does a person leave feeling like a person or a transaction</li>
-            <li>No AI displacement — no human has been or is being replaced by automation</li>
+            <li>Non-rigid timeframes: conversations end when they should, not when a timer says</li>
+            <li>Employee experience: anonymous input from staff, not just what the owner says</li>
+            <li>Customer experience: does a person leave feeling like a person or a transaction</li>
+            <li>No AI displacement: no human has been or is being replaced by automation</li>
           </ul>
         </div>
       </div>
@@ -879,7 +902,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
         <span class="expand-trigger-icon">+</span>
       </button>
       <div class="expand-body">
-        <div class="expand-content">You don't apply. You get nominated. If you've had an experience at a business in Colorado Springs that felt genuinely different — where someone gave you real time — tell us. We'll look into it. If they pass, they're in.</div>
+        <div class="expand-content">You don't apply. You get nominated. If you've had an experience at a business in Colorado Springs that felt genuinely different, where someone gave you real time, tell us. We'll look into it. If they pass, they're in.</div>
       </div>
     </div>
   </div>
@@ -893,13 +916,14 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
   <button class="filter-btn" data-filter="health">Health</button>
   <button class="filter-btn" data-filter="service">Service</button>
   <button class="filter-btn" data-filter="shop">Shop</button>
+  <div class="search-wrap"><input type="text" class="search-input" id="biz-search" placeholder="Search..."></div>
 </div>
 
 <!-- NETWORK GRID -->
 <section class="network-section">
   <div class="network-header reveal">
     <h2 class="network-title">The Network</h2>
-    <span class="network-count" id="biz-count">6 businesses</span>
+    <span class="network-count" id="biz-count">12 businesses</span>
   </div>
 
   <div class="business-grid" id="biz-grid">
@@ -955,7 +979,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
       <div class="biz-card-top">
         <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">High Ground Books</div>
         <div class="biz-category">Independent Bookshop — Manitou Springs</div>
-        <div class="biz-desc">The owner will spend 40 minutes helping you find the right book. Not the popular one — the right one.</div>
+        <div class="biz-desc">The owner will spend 40 minutes helping you find the right book. Not the popular one. The right one.</div>
       </div>
       <div class="biz-card-bottom">
         <div class="biz-tags"><span class="biz-tag">Human Time</span><span class="biz-tag">Independent</span></div>
@@ -974,7 +998,81 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
         <span class="biz-arrow">→</span>
       </div>
     </div>
+
+    <div class="biz-card reveal" data-category="food" data-biz="6" id="mesa-verde-tacos">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Mesa Verde Tacos</div>
+        <div class="biz-category">Food — Westside</div>
+        <div class="biz-desc">Family recipes, no rush. They'll chat with you about the salsa while your order cooks. Cash preferred.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">Family Run</span><span class="biz-tag">No Rush</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="biz-card reveal" data-category="service" data-biz="7" id="iron-press-cleaners">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Iron Press Cleaners</div>
+        <div class="biz-category">Service — Fountain</div>
+        <div class="biz-desc">Same-day turnaround, but they'll hold your clothes an extra week if you forget. No late fees, ever.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">No Fees</span><span class="biz-tag">Flexible</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="biz-card reveal" data-category="health" data-biz="8" id="summit-chiro">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Summit Chiropractic</div>
+        <div class="biz-category">Health — North End</div>
+        <div class="biz-desc">Appointments run 45 minutes minimum. Dr. Reeves won't let you leave until you actually feel better.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">No Rush</span><span class="biz-tag">Results First</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="biz-card reveal" data-category="food" data-biz="9" id="bread-and-butter">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Bread &amp; Butter Bakery</div>
+        <div class="biz-category">Food — Ivywild</div>
+        <div class="biz-desc">Everything baked that morning. When it's gone, it's gone. The owner knows every regular by name.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">Fresh Daily</span><span class="biz-tag">Community</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="biz-card reveal" data-category="service" data-biz="10" id="golden-thread-tailor">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Golden Thread Tailor</div>
+        <div class="biz-category">Service — Downtown</div>
+        <div class="biz-desc">Hand alterations only. Maria measures twice, talks to you about the garment's history, and treats every piece like it matters.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">Handcraft</span><span class="biz-tag">Personal</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
+    <div class="biz-card reveal" data-category="shop" data-biz="11" id="pine-and-iron">
+      <div class="biz-card-top">
+        <div class="biz-sticker-corner"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><circle cx="40" cy="40" r="36" stroke="rgba(196,154,82,0.3)" stroke-width="1" stroke-dasharray="4 5"/><circle cx="40" cy="40" r="28" stroke="rgba(196,154,82,0.5)" stroke-width="1.5" fill="#000"/><text x="40" y="39" font-family="Caveat, cursive" font-weight="700" font-size="16" fill="rgba(196,154,82,0.9)" text-anchor="middle">roughly</text><text x="40" y="50" font-family="IBM Plex Mono, monospace" font-size="5.5" fill="#EDE4CC" text-anchor="middle" letter-spacing="2">APPROVED</text></svg></div><div class="biz-name">Pine &amp; Iron General</div>
+        <div class="biz-category">Shop — Old North End</div>
+        <div class="biz-desc">Local goods, local makers. Every product on the shelf has a story card written by the person who made it.</div>
+      </div>
+      <div class="biz-card-bottom">
+        <div class="biz-tags"><span class="biz-tag">Local Makers</span><span class="biz-tag">Story-Driven</span></div>
+        <span class="biz-arrow">→</span>
+      </div>
+    </div>
+
   </div>
+  <div class="load-more-wrap" id="load-more-wrap"><button class="load-more-btn" id="load-more-btn">Show more</button></div>
 </section>
 
 <!-- PULL QUOTE -->
@@ -994,7 +1092,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
 <section class="join-section reveal">
   <div class="section-label">Know a business that belongs here?</div>
   <h2 class="join-headline">You don't apply. You get nominated.</h2>
-  <p class="join-body">If you've had an experience at a business in Colorado Springs that felt genuinely different — where someone gave you real time, treated you like a person — tell us. We'll look into it.</p>
+  <p class="join-body">If you've had an experience at a business in Colorado Springs that felt genuinely different, where someone gave you real time, treated you like a person, tell us. We'll look into it.</p>
   <a href="#" onclick="event.preventDefault(); window.location.href=atob('bWFpbHRvOmNhc2UubGF2aW9sZXR0ZUBnbWFpbC5jb20=')" class="join-btn">Tell us about them</a>
 </section>
 
@@ -1003,7 +1101,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
   <div>
     <div class="ledger-label">The Ledger</div>
     <div class="ledger-headline">Not every business said yes.</div>
-    <p class="ledger-body">We contacted businesses across Colorado Springs and asked to audit them. Some declined. Some said nothing. The list is public — because silence is a decision, and we're treating it like one.</p>
+    <p class="ledger-body">We contacted businesses across Colorado Springs and asked to audit them. Some declined. Some said nothing. The list is public.</p>
   </div>
   <div class="ledger-right">
     <div class="ledger-stat">12</div>
@@ -1058,7 +1156,7 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
       <div class="email-panel-mark">roughly</div>
       <div class="email-panel-tagline">life happens in the -ish</div>
       <div class="email-panel-headline">Be the first to know.</div>
-      <div class="email-panel-desc">Drops, network additions, events, and the things we're building — straight to your inbox. No spam. No algorithm.</div>
+      <div class="email-panel-desc">Drops, network additions, events, and the things we're building. Straight to your inbox. No spam. No algorithm.</div>
       <div class="email-form">
         <input type="email" class="email-input" id="email-input" placeholder="your@email.com" autocomplete="email">
         <button class="email-submit" id="email-submit-btn">Notify me</button>
@@ -1309,21 +1407,59 @@ window.addEventListener('load', handleDeepLink);
 // Run on hash change
 window.addEventListener('hashchange', handleDeepLink);
 
-// ---- FILTERS ----
+// ---- SEARCH + FILTER + PAGINATION ----
+const CARDS_PER_PAGE = 6;
+let currentPage = 1;
+let activeFilter = 'all';
+let searchQuery = '';
+const allCards = Array.from(document.querySelectorAll('.biz-card'));
+const countEl = document.getElementById('biz-count');
+const loadMoreWrap = document.getElementById('load-more-wrap');
+const loadMoreBtn = document.getElementById('load-more-btn');
+
+function getFilteredCards() {
+  return allCards.filter(card => {
+    const catMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
+    if (!catMatch) return false;
+    if (!searchQuery) return true;
+    const text = (card.querySelector('.biz-name')?.textContent + ' ' +
+                  card.querySelector('.biz-category')?.textContent + ' ' +
+                  card.querySelector('.biz-desc')?.textContent + ' ' +
+                  Array.from(card.querySelectorAll('.biz-tag')).map(t => t.textContent).join(' ')).toLowerCase();
+    return text.includes(searchQuery);
+  });
+}
+
+function renderCards() {
+  const filtered = getFilteredCards();
+  const showCount = currentPage * CARDS_PER_PAGE;
+  allCards.forEach(card => card.style.display = 'none');
+  filtered.slice(0, showCount).forEach(card => { card.style.display = ''; card.classList.add('visible'); });
+  const total = filtered.length;
+  const showing = Math.min(showCount, total);
+  countEl.textContent = (total === showing ? total : showing + ' of ' + total) + (total === 1 ? ' business' : ' businesses');
+  loadMoreWrap.style.display = showCount >= total ? 'none' : '';
+}
+
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    let visible = 0;
-    document.querySelectorAll('.biz-card').forEach(card => {
-      const show = filter === 'all' || card.dataset.category === filter;
-      card.style.display = show ? '' : 'none';
-      if (show) visible++;
-    });
-    document.getElementById('biz-count').textContent = visible + (visible === 1 ? ' business' : ' businesses');
+    activeFilter = btn.dataset.filter;
+    currentPage = 1;
+    renderCards();
   });
 });
+
+document.getElementById('biz-search').addEventListener('input', e => {
+  searchQuery = e.target.value.trim().toLowerCase();
+  currentPage = 1;
+  renderCards();
+});
+
+loadMoreBtn.addEventListener('click', () => { currentPage++; renderCards(); });
+
+renderCards();
 
 // ---- INTERSECTION OBSERVER ----
 const observer = new IntersectionObserver((entries) => {
@@ -1344,7 +1480,11 @@ window.addEventListener('scroll', () => {
 
 // ---- EXPANDABLES ----
 document.querySelectorAll('[data-expand]').forEach(item => {
-  item.querySelector('.expand-trigger').addEventListener('click', () => item.classList.toggle('open'));
+  item.querySelector('.expand-trigger').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('[data-expand].open').forEach(other => other.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
 });
 
 // ---- HAMBURGER ----
@@ -1445,7 +1585,8 @@ document.querySelectorAll('.biz-card').forEach(card => {
 // Cursor glow
 if (window.matchMedia('(pointer: fine)').matches) {
   const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
-  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+  let gx = 0, gy = 0, raf = false;
+  document.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; if (!raf) { raf = true; requestAnimationFrame(() => { g.style.transform = 'translate(' + (gx-150) + 'px,' + (gy-150) + 'px)'; raf = false; }); } });
 }
 </script>
 </body>

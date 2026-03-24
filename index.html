@@ -485,11 +485,10 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 }
 
 /* ── PARTICLES ───────────────────────────────── */
-.particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.particles-container { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; will-change: transform; }
 .particle {
   position: absolute; border-radius: 50%; background: var(--amber-dust); pointer-events: none;
-  animation: particleFloat linear infinite;
-}
+  animation: particleFloat linear infinite;}
 @keyframes particleFloat {
   0% { opacity: 0; transform: translateY(0) translateX(0); }
   10% { opacity: 0.5; }
@@ -500,8 +499,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 /* ── GLOW ORBS ──────────────────────────────── */
 .glow-orb {
   position: absolute; border-radius: 50%; pointer-events: none; z-index: -1;
-  animation: orbPulse 8s ease-in-out infinite alternate;
-}
+  animation: orbPulse 8s ease-in-out infinite alternate;}
 @keyframes orbPulse {
   0% { transform: scale(1); opacity: 0.7; }
   100% { transform: scale(1.2); opacity: 1; }
@@ -511,10 +509,9 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 
 /* ── CURSOR GLOW ────────────────────────────── */
 .cursor-glow {
-  position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998;
+  position: fixed; left: 0; top: 0; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998;
   background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%);
-  transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out;
-}
+ }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
 body::before {
@@ -522,8 +519,7 @@ body::before {
   background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.10), transparent 50%),
               radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.08), transparent 50%),
               radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%);
-  animation: ambientDrift 25s ease-in-out infinite alternate;
-}
+  animation: ambientDrift 25s ease-in-out infinite alternate;}
 @keyframes ambientDrift {
   0% { transform: translate(0, 0) rotate(0deg); }
   100% { transform: translate(5%, 3%) rotate(2deg); }
@@ -565,10 +561,9 @@ body::before {
 /* ── CTA GRADIENT ANIMATION ─────────────────── */
 .cta-section { position: relative; background-size: 200% 200%; }
 .cta-section::before {
-  content: ''; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(ellipse at 30% 50%, rgba(196,154,82,0.15), transparent 60%);
-  animation: ctaGlow 6s ease-in-out infinite alternate;
-}
+  content: ''; position: absolute; inset: -20% -15%; pointer-events: none;
+  background: radial-gradient(ellipse at 40% 50%, rgba(196,154,82,0.15), transparent 50%);
+  animation: ctaGlow 6s ease-in-out infinite alternate;}
 @keyframes ctaGlow {
   0% { opacity: 0.3; transform: translateX(-5%); }
   100% { opacity: 1; transform: translateX(5%); }
@@ -608,35 +603,30 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   background-size: 256px 256px;
-  animation: grainShift 4s steps(3) infinite;
-}
-@keyframes grainShift {
-  0% { transform: translate(0,0); }
-  33% { transform: translate(-2px,1px); }
-  66% { transform: translate(1px,-2px); }
-  100% { transform: translate(0,0); }
-}
+ }
 
 /* ── SECTION AMBIENT GLOWS (BOLD) ────────────── */
+/* ── SECTION AMBIENT GLOWS (BOLD) ────────────── */
+/* Gradients fade fully to transparent at edges so no hard lines between sections */
 .what-section {
   position: relative;
-  background: radial-gradient(ellipse 70% 90% at 50% 50%, rgba(196,154,82,0.12) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(196,154,82,0.12) 0%, transparent 100%);
 }
 .origin-section {
   position: relative;
-  background: radial-gradient(ellipse 80% 85% at 72% 42%, rgba(196,154,82,0.14) 0%, transparent 65%);
+  background: radial-gradient(ellipse 60% 40% at 60% 50%, rgba(196,154,82,0.14) 0%, transparent 100%);
 }
 .against-section {
   position: relative;
-  background: radial-gradient(ellipse 65% 75% at 50% 30%, rgba(122,61,42,0.15) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 40% at 50% 40%, rgba(122,61,42,0.15) 0%, transparent 100%);
 }
 .process-wrap {
   position: relative;
-  background: radial-gradient(ellipse 75% 85% at 50% 80%, rgba(196,154,82,0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(196,154,82,0.12) 0%, transparent 100%);
 }
 .audit-section {
   position: relative;
-  background: radial-gradient(ellipse 85% 75% at 30% 50%, rgba(196,154,82,0.12) 0%, transparent 65%);
+  background: radial-gradient(ellipse 60% 40% at 35% 50%, rgba(196,154,82,0.12) 0%, transparent 100%);
 }
 
 /* ── SECTION DIVIDER ─────────────────────────── */
@@ -765,7 +755,7 @@ body::after {
 <!-- 3. THE AUDIT -->
 <section class="audit-section" style="position:relative">
   <!-- Large decorative clipboard SVG illustration -->
-  <svg viewBox="0 0 200 280" fill="none" style="position:absolute;left:-40px;top:50%;transform:translateY(-50%);width:180px;pointer-events:none;z-index:0;opacity:0.12">
+  <svg class="audit-clipboard" viewBox="0 0 200 280" fill="none" style="position:absolute;left:25%;top:55%;transform:translateX(-50%) translateY(-30%);width:220px;pointer-events:none;z-index:0;opacity:0.12">
     <rect x="20" y="30" width="160" height="230" rx="12" stroke="rgba(196,154,82,1)" stroke-width="2" fill="none"/>
     <rect x="60" y="15" width="80" height="30" rx="6" stroke="rgba(196,154,82,1)" stroke-width="2" fill="rgba(30,19,10,1)"/>
     <circle cx="100" cy="30" r="5" stroke="rgba(196,154,82,1)" stroke-width="1.5" fill="none"/>
@@ -778,7 +768,7 @@ body::after {
   <div class="audit-left reveal" style="position:relative;z-index:1">
     <div class="audit-eyebrow">The Audit</div>
     <div class="audit-headline">Four things we look for. No exceptions.</div>
-    <div class="audit-body">Every business in the network is scored on the same four criteria — 25 points each, 100 total. We publish the scores. You decide what to do with them.</div>
+    <div class="audit-body">Every business in the network is scored on the same four criteria. 25 points each, 100 total. We publish the scores. You decide what to do with them.</div>
   </div>
   <div class="audit-right reveal reveal-d1">
     <div class="audit-criterion" data-score="92">
@@ -823,7 +813,7 @@ body::after {
           <text class="gauge-label" x="60" y="72" text-anchor="middle">/100</text>
         </svg>
       </div>
-      <div class="audit-crit-info"><div class="audit-crit-label">Criterion IV</div><div class="audit-crit-name">Human Presence — No AI</div></div>
+      <div class="audit-crit-info"><div class="audit-crit-label">Criterion IV</div><div class="audit-crit-name">Human Presence, No AI</div></div>
     </div>
   </div>
 </section>
@@ -836,7 +826,7 @@ body::after {
     <div class="origin-card">
       <div class="origin-card-label">Colorado Springs · 2026</div>
       <div class="origin-card-name">Ahavah Gardens</div>
-      <div class="origin-card-type">Church of Entheogenics — Consultation Practice</div>
+      <div class="origin-card-type">Church of Entheogenics · Consultation Practice</div>
       <div class="origin-card-note">30-minute sessions that run 60. Because the conversation isn't done.</div>
       <div class="origin-card-stamp stamp-animate">
         <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80">
@@ -886,7 +876,7 @@ body::after {
         </svg>
       </div>
       <div class="process-node-label">Step 2</div>
-      <div class="process-node-title">Others see it</div>
+      <div class="process-node-title">Profits fund SEO</div>
     </div>
     <div class="process-arrow">→</div>
     <div class="process-node">
@@ -897,7 +887,7 @@ body::after {
         </svg>
       </div>
       <div class="process-node-label">Step 3</div>
-      <div class="process-node-title">They find the network</div>
+      <div class="process-node-title">Network exposure grows</div>
     </div>
     <div class="process-arrow">→</div>
     <div class="process-node">
@@ -916,7 +906,7 @@ body::after {
 </section>
 
 <!-- 6. CTA -->
-<section class="cta-section" style="overflow:hidden">
+<section class="cta-section">
   <!-- Large background watermark -->
   <span style="position:absolute;font-family:'Caveat',cursive;font-size:clamp(200px,25vw,400px);font-weight:700;color:rgba(196,154,82,0.04);right:-5%;top:50%;transform:translateY(-50%);pointer-events:none;white-space:nowrap;z-index:0">roughly</span>
   <div style="position:relative;z-index:1">
@@ -963,7 +953,7 @@ body::after {
       <div class="email-panel-mark">roughly</div>
       <div class="email-panel-tagline">life happens in the -ish</div>
       <div class="email-panel-headline">Be the first to know.</div>
-      <div class="email-panel-desc">Drops, network additions, events, and the things we're building — straight to your inbox. No spam. No algorithm.</div>
+      <div class="email-panel-desc">Drops, network additions, events, and the things we're building. Straight to your inbox. No spam. No algorithm.</div>
       <div class="email-form">
         <input type="email" class="email-input" id="email-input" placeholder="your@email.com" autocomplete="email">
         <button class="email-submit" id="email-submit-btn">Notify me</button>
@@ -1019,16 +1009,7 @@ enterBtn.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); dismissHero(); }
 });
 
-// Scroll/touch/key dismiss (body stays locked so page doesn't move)
-document.addEventListener('wheel', () => { if (heroActive) dismissHero(); }, { passive: true });
-let touchStartY = 0;
-document.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, { passive: true });
-document.addEventListener('touchmove', (e) => {
-  if (heroActive && touchStartY - e.touches[0].clientY > 20) dismissHero();
-}, { passive: true });
-document.addEventListener('keydown', (e) => {
-  if (heroActive && (e.key === 'ArrowDown' || e.key === ' ')) dismissHero();
-});
+// Hero can only be dismissed by the button (click or Enter/Space on focus)
 
 // Nav scroll
 window.addEventListener('scroll', () => {
@@ -1080,7 +1061,7 @@ document.querySelectorAll('.audit-right').forEach(el => gaugeObserver.observe(el
   const container = document.createElement('div');
   container.className = 'particles-container';
   document.body.appendChild(container);
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 10; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     const size = 2 + Math.random() * 3;
@@ -1097,9 +1078,10 @@ if (window.matchMedia('(pointer: fine)').matches) {
   const glow = document.createElement('div');
   glow.className = 'cursor-glow';
   document.body.appendChild(glow);
+  let gx = 0, gy = 0, raf = false;
   document.addEventListener('mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
+    gx = e.clientX; gy = e.clientY;
+    if (!raf) { raf = true; requestAnimationFrame(() => { glow.style.transform = 'translate(' + (gx - 150) + 'px,' + (gy - 150) + 'px)'; raf = false; }); }
   });
 }
 

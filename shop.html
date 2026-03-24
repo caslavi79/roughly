@@ -379,8 +379,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 }
 .nav-hamburger span {
   display: block; width: 100%; height: 1.5px; background: var(--cream-receipt);
-  transition: transform 0.32s ease, opacity 0.2s ease; transform-origin: center; will-change: transform;
-}
+  transition: transform 0.32s ease, opacity 0.2s ease; transform-origin: center;}
 .nav-hamburger.open span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
@@ -405,10 +404,10 @@ footer { padding: 80px 48px 48px; border-top: 1px solid rgba(196,154,82,0.05); }
 @keyframes particleFloat { 0% { opacity: 0; transform: translateY(0) translateX(0); } 10% { opacity: 0.5; } 90% { opacity: 0.15; } 100% { opacity: 0; transform: translateY(-100vh) translateX(40px); } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
-.cursor-glow { position: fixed; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); transform: translate(-50%, -50%); transition: left 0.15s ease-out, top 0.15s ease-out; }
+.cursor-glow { position: fixed; left: 0; top: 0; width: 300px; height: 300px; border-radius: 50%; pointer-events: none; z-index: 998; background: radial-gradient(circle, rgba(196,154,82,0.08) 0%, transparent 70%); will-change: transform; }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
-body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; }
+body::before { content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none; background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.12), transparent 50%), radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.09), transparent 50%); animation: ambientDrift 25s ease-in-out infinite alternate; will-change: transform; }
 @keyframes ambientDrift { 0% { transform: translate(0, 0) rotate(0deg); } 100% { transform: translate(5%, 3%) rotate(2deg); } }
 
 /* ── GLOW ORBS ──────────────────────────────── */
@@ -441,11 +440,10 @@ footer { position: relative; overflow: hidden; }
 /* ── GRAIN TEXTURE ──────────────────────────── */
 body::after {
   content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  animation: grainShift 4s steps(3) infinite;
-}
-@keyframes grainShift { 0% { transform: translate(0,0); } 33% { transform: translate(-2px,1px); } 66% { transform: translate(1px,-2px); } 100% { transform: translate(0,0); } }
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat; background-size: 256px 256px;
+  opacity: 0.045;
+ }
 
 /* ── REDUCED MOTION ─────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -505,13 +503,13 @@ body::after {
   <div class="donation-card reveal">
     <strong>Organization of the month</strong>
     10% of every Finished Enough sale goes directly to a rotating monthly partner. Organization and donation amount published with every cycle.
-    <div class="donation-org">Launching soon — first partner announced at drop.</div>
+    <div class="donation-org">Launching soon. First partner announced at drop.</div>
   </div>
 </div>
 
 <!-- LAUNCH NOTICE -->
 <div class="launch-notice reveal">
-  <div class="launch-badge">Pre-launch — Notify to be first</div>
+  <div class="launch-badge">Pre-launch · Notify to be first</div>
 </div>
 
 <div class="section-divider"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0,12 Q300,24 600,12 T1200,12" fill="none" stroke="rgba(196,154,82,0.12)" stroke-width="1"/></svg></div>
@@ -521,7 +519,7 @@ body::after {
   <div class="collection-header">
     <div class="collection-name">Finished Enough</div>
     <div class="collection-tag">The Flagship</div>
-    <div class="collection-desc">Heavyweight cotton. Raw-cut neck and sleeves. No collar stitching, no hems — just holes for the head and arms. <strong>Every shirt frays differently over time. Yours becomes yours.</strong></div>
+    <div class="collection-desc">Heavyweight cotton. Raw-cut neck and sleeves. No collar stitching, no hems. Just holes for the head and arms. <strong>Every shirt frays differently over time. Yours becomes yours.</strong></div>
   </div>
 
   <div class="product-grid">
@@ -529,7 +527,7 @@ body::after {
       <div class="product-img tobacco">
         <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
-        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="raw-edge-note">Raw cut · no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
       </div>
       <div class="product-info">
@@ -546,7 +544,7 @@ body::after {
       <div class="product-img canvas">
         <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
-        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="raw-edge-note">Raw cut · no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
       </div>
       <div class="product-info">
@@ -563,7 +561,7 @@ body::after {
       <div class="product-img warmblack">
         <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
-        <div class="raw-edge-note">Raw cut — no hem</div>
+        <div class="raw-edge-note">Raw cut · no hem</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
       </div>
       <div class="product-info">
@@ -664,7 +662,7 @@ body::after {
       <div class="product-img artist">
         <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
-        <div class="product-badge">Limited — 30 pcs</div>
+        <div class="product-badge">Limited · 30 pcs</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
       </div>
       <div class="product-info">
@@ -681,7 +679,7 @@ body::after {
       <div class="product-img artist" style="background: linear-gradient(165deg, #322E28 0%, #28241E 50%, #1E1A16 100%);">
         <svg viewBox="0 0 200 220" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60%;opacity:0.15;z-index:1"><path d="M40 30 L60 10 Q80 25 100 25 Q120 25 140 10 L160 30 L140 55 L140 200 L60 200 L60 55 Z" stroke="rgba(196,154,82,0.8)" stroke-width="2.5" fill="rgba(196,154,82,0.04)" stroke-linejoin="round" stroke-linecap="round"/><path d="M85 25 Q100 40 115 25" stroke="rgba(196,154,82,0.4)" stroke-width="1.5" fill="none"/></svg>
         <div class="product-img-label">roughly</div>
-        <div class="product-badge">Limited — 20 pcs</div>
+        <div class="product-badge">Limited · 20 pcs</div>
         <div class="coming-soon-overlay"><div class="coming-soon-tag">Coming Soon</div></div>
       </div>
       <div class="product-info">
@@ -779,7 +777,7 @@ body::after {
       <div class="email-panel-mark">roughly</div>
       <div class="email-panel-tagline">life happens in the -ish</div>
       <div class="email-panel-headline">Be the first to know.</div>
-      <div class="email-panel-desc">Drops, network additions, events, and the things we're building — straight to your inbox. No spam. No algorithm.</div>
+      <div class="email-panel-desc">Drops, network additions, events, and the things we're building. Straight to your inbox. No spam. No algorithm.</div>
       <div class="email-form">
         <input type="email" class="email-input" id="email-input" placeholder="your@email.com" autocomplete="email">
         <button class="email-submit" id="email-submit-btn">Notify me</button>
@@ -890,7 +888,8 @@ document.querySelectorAll('.reveal-up,.reveal-left,.reveal-right,.reveal-scale,.
 // Cursor glow
 if (window.matchMedia('(pointer: fine)').matches) {
   const g = document.createElement('div'); g.className = 'cursor-glow'; document.body.appendChild(g);
-  document.addEventListener('mousemove', e => { g.style.left = e.clientX+'px'; g.style.top = e.clientY+'px'; });
+  let gx = 0, gy = 0, raf = false;
+  document.addEventListener('mousemove', e => { gx = e.clientX; gy = e.clientY; if (!raf) { raf = true; requestAnimationFrame(() => { g.style.transform = 'translate(' + (gx-150) + 'px,' + (gy-150) + 'px)'; raf = false; }); } });
 }
 </script>
 </body>
