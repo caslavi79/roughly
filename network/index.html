@@ -18,6 +18,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://roughly.us/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer></script>
 <style>
 :root {
   --warm-black:   #1A1108;
@@ -208,6 +210,7 @@ nav.scrolled {
   border-bottom: 1px solid var(--border);
   padding: 16px 56px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  margin-bottom: 16px;
 }
 .filter-label {
   font-size: 9px; letter-spacing: 3px; text-transform: uppercase;
@@ -226,7 +229,7 @@ nav.scrolled {
   border-color: var(--amber-dust); opacity: 1;
 }
 .search-wrap {
-  margin-left: auto;
+  margin-left: auto; display: flex; align-items: center; gap: 8px;
 }
 .search-input {
   font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px;
@@ -236,6 +239,80 @@ nav.scrolled {
 }
 .search-input::placeholder { color: var(--tobacco); opacity: 0.4; }
 .search-input:focus { border-color: var(--amber-dust); width: 260px; }
+
+/* VIEW TOGGLE */
+.view-toggle {
+  display: flex; gap: 0; flex-shrink: 0;
+  border: 1px solid var(--border); border-radius: 8px; overflow: hidden;
+}
+.view-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0; padding: 8px 10px; border: none;
+  background: transparent; color: var(--old-canvas); cursor: pointer;
+  transition: all 0.3s; opacity: 0.4; display: flex; align-items: center;
+}
+.view-btn svg { width: 16px; height: 16px; fill: currentColor; }
+.view-btn:hover { opacity: 0.7; background: rgba(255,255,255,0.03); }
+.view-btn.active {
+  background: rgba(196,154,82,0.15); color: var(--amber-dust); opacity: 1;
+}
+
+/* MAP */
+#map-container {
+  height: 600px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); box-shadow: var(--shadow-md);
+  margin: 0 56px 48px;
+}
+.map-pin {
+  width: 14px; height: 14px; background: var(--amber-dust);
+  border-radius: 50%; border: 2px solid rgba(26,18,11,0.8);
+  box-shadow: 0 0 12px rgba(196,154,82,0.5), 0 0 24px rgba(196,154,82,0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.map-pin:hover { transform: scale(1.4); box-shadow: 0 0 20px rgba(196,154,82,0.7); }
+.leaflet-popup-content-wrapper {
+  background: rgba(30,22,14,0.95) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 14px !important;
+  box-shadow: var(--shadow-md) !important;
+  color: var(--cream-receipt) !important;
+}
+.leaflet-popup-tip { background: rgba(30,22,14,0.95) !important; }
+.leaflet-popup-content {
+  font-family: 'IBM Plex Mono', monospace !important;
+  font-size: 12px !important; line-height: 1.5 !important;
+  margin: 14px 16px !important; min-width: 200px;
+}
+.leaflet-popup-content .popup-name {
+  font-family: 'Playfair Display', serif; font-size: 18px;
+  font-weight: 400; color: var(--cream-receipt); margin-bottom: 4px;
+}
+.leaflet-popup-content .popup-cat {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--tobacco); opacity: 0.6; margin-bottom: 10px;
+}
+.leaflet-popup-content .popup-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.leaflet-popup-content .popup-tag {
+  font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 100px; border: 1px solid var(--border);
+  color: var(--old-canvas); opacity: 0.6;
+}
+.leaflet-popup-content .popup-btn {
+  display: inline-block; font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  padding: 8px 16px; border-radius: 100px; border: 1px solid var(--amber-dust);
+  color: var(--amber-dust); background: transparent; cursor: pointer;
+  transition: all 0.3s;
+}
+.leaflet-popup-content .popup-btn:hover { background: var(--amber-dust); color: var(--ink); }
+.leaflet-popup-content .popup-soon {
+  font-size: 11px; font-style: italic; color: var(--tobacco); opacity: 0.5;
+}
+.leaflet-container { background: #0d0a07 !important; }
+.leaflet-control-zoom a {
+  background: rgba(30,22,14,0.9) !important; color: var(--cream-receipt) !important;
+  border-color: var(--border) !important;
+}
 
 /* LOAD MORE */
 .load-more-wrap { text-align: center; padding: 48px 0 0; }
@@ -657,6 +734,8 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
   .search-wrap { margin-left: 0; width: 100%; margin-top: 6px; }
   .search-input { width: 100%; }
   .search-input:focus { width: 100%; }
+  .view-toggle { margin-left: auto; }
+  #map-container { height: 450px; margin: 0 24px 48px; }
   .network-section { padding: 52px 24px 80px; }
   .network-header { flex-direction: column; align-items: flex-start; gap: 6px; margin-bottom: 32px; }
   .business-grid { grid-template-columns: 1fr; gap: 12px; }
@@ -688,6 +767,8 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
   .filter-bar::-webkit-scrollbar { display: none; }
   .filter-label { display: none; }
   .filter-btn { white-space: nowrap; flex-shrink: 0; padding: 6px 14px; font-size: 9px; }
+  .view-btn { flex-shrink: 0; }
+  #map-container { height: 350px; margin: 0 20px 48px; }
   .network-section { padding: 44px 20px 72px; }
   .business-grid { gap: 10px; }
   .biz-card-top { padding: 24px 20px 16px; }
@@ -929,8 +1010,17 @@ body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-eve
   <button class="filter-btn" data-filter="health">Health</button>
   <button class="filter-btn" data-filter="service">Service</button>
   <button class="filter-btn" data-filter="shop">Shop</button>
-  <div class="search-wrap"><input type="text" class="search-input" id="biz-search" placeholder="Search..."></div>
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="biz-search" placeholder="Search...">
+    <div class="view-toggle">
+      <button class="view-btn active" data-view="grid" aria-label="Grid view"><svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg></button>
+      <button class="view-btn" data-view="map" aria-label="Map view"><svg viewBox="0 0 16 16"><path d="M8 1C5.2 1 3 3.1 3 5.7 3 9.5 8 15 8 15s5-5.5 5-9.3C13 3.1 10.8 1 8 1zm0 6.4c-1 0-1.8-.8-1.8-1.7S7 4 8 4s1.8.8 1.8 1.7S9 7.4 8 7.4z"/></svg></button>
+    </div>
+  </div>
 </div>
+
+<!-- MAP VIEW -->
+<div id="map-container" style="display:none;"></div>
 
 <!-- NETWORK GRID -->
 <section class="network-section">
@@ -1473,6 +1563,136 @@ document.getElementById('biz-search').addEventListener('input', e => {
 loadMoreBtn.addEventListener('click', () => { currentPage++; renderCards(); });
 
 renderCards();
+
+// ---- MAP VIEW ----
+const neighborhoodCoords = {
+  'downtown': [38.8339, -104.8214],
+  'briargate': [38.9580, -104.7620],
+  'east side': [38.8350, -104.7900],
+  'old colorado city': [38.8460, -104.8620],
+  'manitou springs': [38.8586, -104.9172],
+  'midtown': [38.8550, -104.8210],
+  'westside': [38.8400, -104.8500],
+  'fountain': [38.6812, -104.7007],
+  'north end': [38.8600, -104.8200],
+  'ivywild': [38.8130, -104.8270],
+  'old north end': [38.8520, -104.8230],
+};
+
+let currentView = 'grid';
+let map = null;
+let mapMarkers = [];
+const mapContainer = document.getElementById('map-container');
+const bizGrid = document.getElementById('biz-grid');
+const networkSection = document.querySelector('.network-section');
+
+function getCardLocation(card) {
+  const catText = card.querySelector('.biz-category')?.textContent || '';
+  const parts = catText.split('—');
+  if (parts.length < 2) return null;
+  const loc = parts[parts.length - 1].trim().toLowerCase();
+  return neighborhoodCoords[loc] || null;
+}
+
+function getCardInfo(card) {
+  return {
+    name: card.querySelector('.biz-name')?.textContent || '',
+    category: card.querySelector('.biz-category')?.textContent || '',
+    desc: card.querySelector('.biz-desc')?.textContent || '',
+    tags: Array.from(card.querySelectorAll('.biz-tag')).map(t => t.textContent),
+    bizIdx: card.dataset.biz,
+    hasFull: typeof businesses !== 'undefined' && businesses[card.dataset.biz]
+  };
+}
+
+function initMap() {
+  if (map) return;
+  map = L.map('map-container', {
+    center: [38.84, -104.82],
+    zoom: 11,
+    zoomControl: true
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; OSM &copy; CARTO',
+    subdomains: 'abcd', maxZoom: 19
+  }).addTo(map);
+
+  const pinIcon = L.divIcon({ className: '', html: '<div class="map-pin"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
+
+  // Slightly offset duplicate locations
+  const usedCoords = {};
+  allCards.forEach(card => {
+    const coords = getCardLocation(card);
+    if (!coords) return;
+    const key = coords.join(',');
+    if (usedCoords[key]) { coords[0] += 0.003 * usedCoords[key]; coords[1] += 0.002 * usedCoords[key]; }
+    usedCoords[key] = (usedCoords[key] || 0) + 1;
+
+    const info = getCardInfo(card);
+    const tagsHtml = info.tags.map(t => `<span class="popup-tag">${t}</span>`).join('');
+    const actionHtml = info.hasFull
+      ? `<button class="popup-btn" onclick="openModal(${info.bizIdx})">View Details →</button>`
+      : `<span class="popup-soon">Full audit coming soon</span>`;
+
+    const popupHtml = `
+      <div class="popup-name">${info.name}</div>
+      <div class="popup-cat">${info.category}</div>
+      <div class="popup-tags">${tagsHtml}</div>
+      ${actionHtml}
+    `;
+
+    const marker = L.marker(coords, { icon: pinIcon }).bindPopup(popupHtml, { maxWidth: 280 });
+    marker._bizCard = card;
+    mapMarkers.push(marker);
+    marker.addTo(map);
+  });
+}
+
+function updateMapMarkers() {
+  if (!map) return;
+  const filtered = getFilteredCards();
+  mapMarkers.forEach(m => {
+    if (filtered.includes(m._bizCard)) {
+      if (!map.hasLayer(m)) m.addTo(map);
+    } else {
+      if (map.hasLayer(m)) m.remove();
+    }
+  });
+}
+
+// Toggle handlers
+document.querySelectorAll('.view-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.view === currentView) return;
+    document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentView = btn.dataset.view;
+
+    if (currentView === 'map') {
+      networkSection.style.display = 'none';
+      loadMoreWrap.style.display = 'none';
+      mapContainer.style.display = 'block';
+      initMap();
+      setTimeout(() => map.invalidateSize(), 100);
+      updateMapMarkers();
+    } else {
+      mapContainer.style.display = 'none';
+      networkSection.style.display = '';
+      renderCards();
+    }
+  });
+});
+
+// Extend filter handlers to update map
+const origFilterHandler = () => {};
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (currentView === 'map') updateMapMarkers();
+  });
+});
+document.getElementById('biz-search').addEventListener('input', () => {
+  if (currentView === 'map') setTimeout(updateMapMarkers, 10);
+});
 
 // ---- INTERSECTION OBSERVER ----
 const observer = new IntersectionObserver((entries) => {
