@@ -62,8 +62,8 @@ body.locked {
 /* ── SLIDE SYSTEM ───────────────────────────── */
 .slide-deck { position: relative; width: 100%; height: 100vh; height: 100svh; overflow: hidden; }
 .slide {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; justify-content: center;
+  position: absolute !important; inset: 0;
+  display: flex !important; flex-direction: column; justify-content: center;
   overflow-y: auto; overflow-x: hidden;
   z-index: 1; opacity: 0; pointer-events: none;
 }
@@ -256,7 +256,7 @@ body.locked {
 .slide .section-divider.divider-top { top: 0; }
 .slide .section-divider.divider-bottom { bottom: 0; }
 /* Audit section keeps grid layout inside slide */
-.slide.audit-section { align-items: start; padding-top: 80px; }
+.slide.audit-section { display: grid !important; align-content: center; padding: 80px 56px; }
 /* Dividers inside slides */
 
 .reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
