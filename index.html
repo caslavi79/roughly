@@ -71,7 +71,7 @@ body.locked {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
-.slide[data-state="current"] { opacity: 1; pointer-events: auto; z-index: 2; }
+.slide[data-state="current"] { opacity: 1; pointer-events: auto; z-index: 2; transform: translate(0,0); }
 .slide[data-state="above"] { transform: translateY(-100%); }
 .slide[data-state="below"] { transform: translateY(100%); }
 
@@ -106,15 +106,15 @@ body.locked {
 @keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
 @keyframes b2InBwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
-/* B3: Origin→ScrollZone — button is right side → so slide horizontally right */
+/* B3: Origin→ScrollZone — button is bottom-right ↘ so slide diagonally */
 .b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-fwd  { z-index:2!important; animation: b3InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
-@keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
-@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
-@keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b3OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
+@keyframes b3InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
+@keyframes b3InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
   position: absolute; display: flex; align-items: center; gap: 10px;
@@ -1284,10 +1284,10 @@ function goTo(index) {
 
   // Animate incoming
   const incoming = slides[index];
-  incoming.setAttribute('data-state', fwd ? 'below' : 'above');
-  void incoming.offsetWidth; // force reflow
+  // Remove default positioning so animation controls everything
+  incoming.removeAttribute('data-state');
+  incoming.style.pointerEvents = 'auto';
   incoming.classList.add(tx.inp);
-  incoming.setAttribute('data-state', 'current');
 
   // Trigger reveal animations
   incoming.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale, .stamp-animate').forEach(el => {
@@ -1296,8 +1296,8 @@ function goTo(index) {
 
   setTimeout(() => {
     incoming.classList.remove(tx.inp);
-    incoming.style.transform = '';
-    incoming.style.opacity = '';
+    incoming.setAttribute('data-state', 'current');
+    incoming.style.pointerEvents = '';
     transitioning = false;
   }, dur + 30);
 
