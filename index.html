@@ -60,42 +60,73 @@ body.locked {
 }
 
 /* ── SLIDE SYSTEM ───────────────────────────── */
+.slide-deck { position: relative; width: 100%; height: 100vh; height: 100svh; overflow: hidden; }
 .slide {
-  min-height: 100vh; min-height: 100svh;
-  display: none; flex-direction: column; justify-content: center;
-  position: relative;
-  padding-bottom: 100px; /* room for advance button */
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow-y: auto; overflow-x: hidden;
+  z-index: 1; opacity: 0; pointer-events: none;
 }
-.slide.slide-active {
-  display: flex;
-}
-.slide.slide-from-bottom { animation: slideFromBottom 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
-.slide.slide-from-right { animation: slideFromRight 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
-.slide.slide-from-left { animation: slideFromLeft 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
-.slide.slide-from-top { animation: slideFromTop 0.75s cubic-bezier(0.16,1,0.3,1) forwards; }
-@keyframes slideFromBottom {
-  from { opacity: 0; transform: translateY(60px); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes slideFromRight {
-  from { opacity: 0; transform: translateX(60px); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes slideFromLeft {
-  from { opacity: 0; transform: translateX(-60px); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes slideFromTop {
-  from { opacity: 0; transform: translateY(-60px); }
-  to { opacity: 1; transform: none; }
-}
+.slide[data-state="current"] { opacity: 1; pointer-events: auto; z-index: 2; }
+.slide[data-state="above"] { transform: translateY(-100%); }
+.slide[data-state="below"] { transform: translateY(100%); }
+
+/* ── BOUNDARY TRANSITIONS ─────────────────── */
+/* B0: Hero→Against — vertical slide down */
+.b0-out-fwd { z-index:3!important; animation: b0OutFwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b0-in-fwd  { z-index:2!important; animation: b0InFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b0-out-bwd { z-index:3!important; animation: b0OutBwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b0-in-bwd  { z-index:2!important; animation: b0InBwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes b0OutFwd { from{transform:translateY(0);opacity:1} to{transform:translateY(-100%);opacity:0} }
+@keyframes b0InFwd  { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes b0OutBwd { from{transform:translateY(0);opacity:1} to{transform:translateY(100%);opacity:0} }
+@keyframes b0InBwd  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+
+/* B1: Against→WhatWeDo — dissolve with blur */
+.b1-out-fwd { z-index:3!important; animation: b1OutFwd 0.7s cubic-bezier(0.25,0,0.5,1) forwards!important; }
+.b1-in-fwd  { z-index:2!important; animation: b1InFwd  0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards!important; opacity:0; }
+.b1-out-bwd { z-index:3!important; animation: b1OutBwd 0.7s cubic-bezier(0.25,0,0.5,1) forwards!important; }
+.b1-in-bwd  { z-index:2!important; animation: b1InBwd  0.8s cubic-bezier(0.16,1,0.3,1) 0.3s forwards!important; opacity:0; }
+@keyframes b1OutFwd { 0%{opacity:1;filter:blur(0)} 50%{opacity:0.5;filter:blur(3px)} 100%{opacity:0;filter:blur(8px)} }
+@keyframes b1InFwd  { from{opacity:0;filter:blur(6px)} to{opacity:1;filter:blur(0)} }
+@keyframes b1OutBwd { 0%{opacity:1;filter:blur(0)} 50%{opacity:0.5;filter:blur(3px)} 100%{opacity:0;filter:blur(8px)} }
+@keyframes b1InBwd  { from{opacity:0;filter:blur(6px)} to{opacity:1;filter:blur(0)} }
+
+/* B2: WhatWeDo→Audit — diagonal slide (down-right) */
+.b2-out-fwd { z-index:3!important; animation: b2OutFwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-in-fwd  { z-index:2!important; animation: b2InFwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-out-bwd { z-index:3!important; animation: b2OutBwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b2-in-bwd  { z-index:2!important; animation: b2InBwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-40%,-60%);opacity:0} }
+@keyframes b2InFwd  { from{transform:translate(40%,60%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(40%,60%);opacity:0} }
+@keyframes b2InBwd  { from{transform:translate(-40%,-60%);opacity:0} to{transform:translate(0,0);opacity:1} }
+
+/* B3: Audit→Origin — horizontal slide left */
+.b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b3-in-fwd  { z-index:2!important; animation: b3InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+.b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
+@keyframes b3InFwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+@keyframes b3InBwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+
+/* B4: Origin→ScrollZone — scale zoom + blur */
+.b4-out-fwd { z-index:3!important; animation: b4OutFwd 0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
+.b4-in-fwd  { z-index:2!important; animation: b4InFwd  0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
+.b4-out-bwd { z-index:3!important; animation: b4OutBwd 0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
+.b4-in-bwd  { z-index:2!important; animation: b4InBwd  0.65s cubic-bezier(0.4,0,0.2,1) forwards!important; }
+@keyframes b4OutFwd { from{transform:scale(1);opacity:1;filter:blur(0)} to{transform:scale(1.1);opacity:0;filter:blur(6px)} }
+@keyframes b4InFwd  { from{transform:scale(0.9);opacity:0;filter:blur(6px)} to{transform:scale(1);opacity:1;filter:blur(0)} }
+@keyframes b4OutBwd { from{transform:scale(1);opacity:1;filter:blur(0)} to{transform:scale(0.9);opacity:0;filter:blur(6px)} }
+@keyframes b4InBwd  { from{transform:scale(1.1);opacity:0;filter:blur(6px)} to{transform:scale(1);opacity:1;filter:blur(0)} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
-  position: absolute; display: none; align-items: center; gap: 10px;
+  position: absolute; display: flex; align-items: center; gap: 10px;
   cursor: pointer; background: none; border: none; z-index: 10;
-  transition: opacity 0.3s;
+  opacity: 0.7; transition: opacity 0.3s;
 }
-.slide-advance.advance-visible { display: flex; }
 .slide-advance:hover { opacity: 1; }
 /* Right side: vertically centered on right edge, arrow points right */
 .slide-advance.pos-right {
@@ -113,15 +144,15 @@ body.locked {
   flex-direction: column;
 }
 .slide-advance-text {
-  font-family: 'IBM Plex Mono', monospace; font-size: 9px;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10px;
   letter-spacing: 3px; text-transform: uppercase;
-  color: var(--amber-dust); opacity: 0.5;
-  transition: opacity 0.3s;
+  color: var(--amber-dust);
+  transition: color 0.3s;
 }
-.slide-advance:hover .slide-advance-text { opacity: 1; }
+.slide-advance:hover .slide-advance-text { color: var(--cream-receipt); }
 /* Right-pointing arrow */
 .slide-advance.pos-right .slide-advance-arrow {
-  width: 28px; height: 1px; position: relative; opacity: 0.4;
+  width: 36px; height: 1px; position: relative; opacity: 0.7;
 }
 .slide-advance.pos-right .slide-advance-arrow::before {
   content: ''; position: absolute; top: 0; left: 0;
@@ -134,7 +165,7 @@ body.locked {
 }
 /* Left-pointing arrow */
 .slide-advance.pos-left .slide-advance-arrow {
-  width: 28px; height: 1px; position: relative; opacity: 0.4;
+  width: 36px; height: 1px; position: relative; opacity: 0.7;
 }
 .slide-advance.pos-left .slide-advance-arrow::before {
   content: ''; position: absolute; top: 0; left: 0;
@@ -147,7 +178,7 @@ body.locked {
 }
 /* Down-pointing arrow */
 .slide-advance.pos-bottom .slide-advance-arrow {
-  width: 1px; height: 28px; position: relative; opacity: 0.4;
+  width: 1px; height: 36px; position: relative; opacity: 0.7;
 }
 .slide-advance.pos-bottom .slide-advance-arrow::before {
   content: ''; position: absolute; top: 0; left: 0;
@@ -221,20 +252,12 @@ body.locked {
 .slide-back:hover .slide-back-arrow,
 .slide-back:hover .slide-back-arrow::before { background: var(--cream-receipt); border-color: var(--cream-receipt); }
 /* Dividers inside slides */
-.slide .section-divider { position: absolute; left: 0; right: 0; z-index: 2; }
+.slide .section-divider { position: absolute; left: 0; right: 0; z-index: 5; pointer-events: none; }
 .slide .section-divider.divider-top { top: 0; }
 .slide .section-divider.divider-bottom { bottom: 0; }
-/* Last scrollable section */
-.slide-scroll { display: block; min-height: auto; }
-/* Override section-specific display when acting as slide */
-.slide.against-section,
-.slide.what-section,
-.slide.origin-section { display: none; }
-.slide.against-section.slide-active,
-.slide.what-section.slide-active,
-.slide.origin-section.slide-active { display: flex; }
-.slide.audit-section { display: none; }
-.slide.audit-section.slide-active { display: grid; min-height: 100vh; min-height: 100svh; align-content: center; }
+/* Audit section keeps grid layout inside slide */
+.slide.audit-section { align-items: start; padding-top: 80px; }
+/* Dividers inside slides */
 
 .reveal, .reveal-up, .reveal-left, .reveal-right, .reveal-scale {
   opacity: 0; transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), filter 0.8s cubic-bezier(0.16,1,0.3,1);
@@ -904,8 +927,10 @@ body::after {
   </button>
 </section>
 
+<div class="slide-deck" id="slide-deck" style="display:none">
+
 <!-- 1. WHAT WE STAND AGAINST -->
-<section class="against-section slide" data-slide="1" data-enter="slide-from-bottom" data-advance-pos="pos-bottom" data-advance-label="What we do" data-advance-anim="slide-from-bottom">
+<section class="against-section slide" data-slide="0" data-advance-pos="pos-bottom" data-advance-label="What we do">
   <div class="section-divider divider-top"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q200 4, 400 14 T800 10 T1200 12" stroke="rgba(196,154,82,0.12)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
   <div class="against-intro">
     <div class="against-eyebrow reveal">What we stand against</div>
@@ -924,7 +949,7 @@ body::after {
 </section>
 
 <!-- 2. WHAT WE DO -->
-<section class="what-section slide" data-slide="2" data-enter="slide-from-bottom" data-advance-pos="pos-bottom-right" data-advance-label="How we do it" data-advance-anim="slide-from-bottom" style="position:relative">
+<section class="what-section slide" data-slide="1" data-advance-pos="pos-bottom-right" data-advance-label="How we do it" style="position:relative">
   <!-- Large decorative SVG behind text -->
   <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0">
     <!-- Hand-drawn circle -->
@@ -948,7 +973,7 @@ body::after {
 </section>
 
 <!-- 3. THE AUDIT -->
-<section class="audit-section slide" data-slide="3" data-enter="slide-from-bottom" data-advance-pos="pos-bottom-left" data-advance-label="Where it started" data-advance-anim="slide-from-left" style="position:relative">
+<section class="audit-section slide" data-slide="2" data-advance-pos="pos-bottom-left" data-advance-label="Where it started" style="position:relative">
   <!-- Large decorative clipboard SVG illustration -->
   <svg class="audit-clipboard" viewBox="0 0 200 280" fill="none" style="position:absolute;left:25%;top:55%;transform:translateX(-50%) translateY(-30%);width:220px;pointer-events:none;z-index:0;opacity:0.12">
     <rect x="20" y="30" width="160" height="230" rx="12" stroke="rgba(196,154,82,1)" stroke-width="2" fill="none"/>
@@ -1015,7 +1040,7 @@ body::after {
 </section>
 
 <!-- 4. ORIGIN STORY -->
-<section class="origin-section slide" data-slide="4" data-enter="slide-from-left" data-advance-pos="pos-right" data-advance-label="Where you come in" data-advance-anim="slide-from-right">
+<section class="origin-section slide" data-slide="3" data-advance-pos="pos-right" data-advance-label="Where you come in">
   <div class="origin-right reveal">
     <div class="origin-card">
       <div class="origin-card-label">Colorado Springs · 2026</div>
@@ -1044,6 +1069,8 @@ body::after {
   </div>
   <div class="section-divider divider-bottom"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 10 Q180 22, 350 12 T700 14 T1050 10 T1200 12" stroke="rgba(196,154,82,0.14)" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></div>
 </section>
+
+</div><!-- /slide-deck -->
 
 <!-- 5+ SCROLLABLE ZONE (hidden until slide system unlocks) -->
 <div id="scroll-zone" style="display:none">
@@ -1180,12 +1207,26 @@ const navEl = document.getElementById('nav');
 const burgerEl = document.getElementById('nav-hamburger');
 let heroActive = true;
 
-// ── SLIDE SYSTEM ──────────────────────────────
+// ── SLIDE SYSTEM (deck-based with simultaneous transitions) ──
+const deck = document.getElementById('slide-deck');
 const slides = Array.from(document.querySelectorAll('.slide'));
-let currentSlide = -1; // -1 = hero active
+const total = slides.length;
+let current = -1; // -1 = hero active
 let transitioning = false;
 
-// Create back button (fixed, reused across slides)
+// Boundary transition durations
+const TX_DUR = [800, 750, 750, 700, 650];
+
+// Get transition classes for a boundary
+function getTx(boundary, fwd) {
+  const d = fwd ? 'fwd' : 'bwd';
+  return { out: `b${boundary}-out-${d}`, inp: `b${boundary}-in-${d}` };
+}
+
+// Init: all slides start as "below" (off-screen below)
+slides.forEach(s => s.setAttribute('data-state', 'below'));
+
+// Create back button
 const backBtn = document.createElement('button');
 backBtn.className = 'slide-back';
 backBtn.innerHTML = '<span class="slide-back-arrow"></span><span>Back</span>';
@@ -1196,111 +1237,91 @@ slides.forEach((slide, i) => {
   const pos = slide.dataset.advancePos || 'pos-bottom';
   const label = slide.dataset.advanceLabel || 'Continue';
   const btn = document.createElement('button');
-  btn.className = `slide-advance advance-visible ${pos}`;
+  btn.className = `slide-advance ${pos}`;
   btn.innerHTML = `<span class="slide-advance-text">${label}</span><div class="slide-advance-arrow"></div>`;
-  btn.addEventListener('click', () => goToSlide(currentSlide + 1));
+  btn.addEventListener('click', () => goTo(current + 1));
   slide.appendChild(btn);
 });
 
-function goToSlide(idx) {
-  if (transitioning) return;
+function goTo(index) {
+  if (index === current || transitioning) return;
+  if (index < 0) return;
   transitioning = true;
 
-  const prevSlide = currentSlide >= 0 ? slides[currentSlide] : null;
-  // Use the previous slide's advance-anim to determine how the next slide enters
-  const enterAnim = prevSlide ? (prevSlide.dataset.advanceAnim || 'slide-from-bottom') : 'slide-from-bottom';
+  const fwd = index > current;
+  const boundary = fwd ? current : index;
 
-  // Last slide: unlock scroll and show scroll zone
-  if (idx >= slides.length) {
-    if (prevSlide) {
-      prevSlide.classList.remove('slide-active');
-      prevSlide.className = prevSlide.className.replace(/slide-from-\w+/g, '');
-    }
+  // Entering scroll zone
+  if (index >= total) {
+    const outgoing = slides[current];
+    const tx = getTx(total - 1, true);
+    outgoing.classList.add(tx.out);
+    deck.style.display = 'none';
     document.getElementById('scroll-zone').style.display = '';
     document.body.classList.remove('locked');
     backBtn.classList.add('visible');
     window.scrollTo(0, 0);
-    transitioning = false;
-    currentSlide = idx;
+    setTimeout(() => {
+      outgoing.classList.remove(tx.out);
+      outgoing.setAttribute('data-state', 'above');
+      transitioning = false;
+    }, TX_DUR[total - 1] || 700);
+    current = index;
     return;
   }
 
-  const nextSlide = slides[idx];
+  // Normal slide transition
+  const tx = getTx(Math.max(0, boundary), fwd);
+  const dur = TX_DUR[Math.max(0, boundary)] || 700;
 
-  // Hide previous
-  if (prevSlide) {
-    prevSlide.classList.remove('slide-active');
-    prevSlide.className = prevSlide.className.replace(/slide-from-\w+/g, '');
+  // Show deck if hidden
+  deck.style.display = '';
+
+  if (current >= 0 && current < total) {
+    // Animate outgoing
+    const outgoing = slides[current];
+    outgoing.classList.add(tx.out);
+    setTimeout(() => {
+      outgoing.classList.remove(tx.out);
+      outgoing.setAttribute('data-state', fwd ? 'above' : 'below');
+    }, dur + 30);
   }
 
-  // Show next
-  window.scrollTo(0, 0);
-  document.body.classList.remove('locked');
-  nextSlide.classList.add('slide-active', enterAnim);
+  // Animate incoming
+  const incoming = slides[index];
+  incoming.setAttribute('data-state', fwd ? 'below' : 'above');
+  void incoming.offsetWidth; // force reflow
+  incoming.classList.add(tx.inp);
+  incoming.setAttribute('data-state', 'current');
 
-  // Trigger reveal animations inside the slide
-  nextSlide.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale, .stamp-animate').forEach(el => {
+  // Trigger reveal animations
+  incoming.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-up, .reveal-scale, .stamp-animate').forEach(el => {
     el.classList.add('visible');
   });
 
-  // Update back button
-  if (idx > 0) {
-    backBtn.classList.add('visible');
-  } else {
-    backBtn.classList.remove('visible');
-  }
-
-  currentSlide = idx;
-  setTimeout(() => { transitioning = false; }, 800);
-}
-
-function goBack() {
-  if (transitioning || currentSlide <= 0) return;
-  transitioning = true;
-
-  const prevSlide = slides[currentSlide];
-  const targetIdx = currentSlide - 1;
-  const targetSlide = slides[targetIdx];
-
-  // Determine reverse animation direction
-  const enterAnim = prevSlide.dataset.enter || 'slide-from-bottom';
-  const reverseMap = {
-    'slide-from-bottom': 'slide-from-top',
-    'slide-from-top': 'slide-from-bottom',
-    'slide-from-right': 'slide-from-left',
-    'slide-from-left': 'slide-from-right'
-  };
-  const reverseAnim = reverseMap[enterAnim] || 'slide-from-top';
-
-  // Hide current
-  prevSlide.classList.remove('slide-active');
-  prevSlide.className = prevSlide.className.replace(/slide-from-\w+/g, '');
-
-  // Show target with reverse animation
-  window.scrollTo(0, 0);
-  targetSlide.className = targetSlide.className.replace(/slide-from-\w+/g, '');
-  targetSlide.classList.add('slide-active', reverseAnim);
+  setTimeout(() => {
+    incoming.classList.remove(tx.inp);
+    incoming.style.transform = '';
+    incoming.style.opacity = '';
+    transitioning = false;
+  }, dur + 30);
 
   // Update back button
-  if (targetIdx <= 0) backBtn.classList.remove('visible');
-
-  currentSlide = targetIdx;
-  setTimeout(() => { transitioning = false; }, 800);
+  backBtn.classList.toggle('visible', index > 0);
+  current = index;
 }
 
-// Handle going back from scroll section
+// Back button
 backBtn.addEventListener('click', () => {
-  if (currentSlide >= slides.length) {
-    // We're in the scroll section, go back to last slide
+  if (current >= total) {
+    // Return from scroll zone to last slide
     document.getElementById('scroll-zone').style.display = 'none';
-    currentSlide = slides.length - 1;
-    const lastSlide = slides[currentSlide];
-    lastSlide.className = lastSlide.className.replace(/slide-from-\w+/g, '');
-    lastSlide.classList.add('slide-active', 'slide-from-top');
-    window.scrollTo(0, 0);
-    if (currentSlide <= 0) backBtn.classList.remove('visible');
+    deck.style.display = '';
+    document.body.classList.add('locked');
+    current = total; // set so goTo thinks we're at scroll zone
+    goTo(total - 1);
   } else {
-    goBack();
+    goTo(current - 1);
   }
 });
 
@@ -1316,8 +1337,8 @@ function dismissHero() {
   hero.addEventListener('transitionend', () => {
     hero.style.display = 'none';
     window.scrollTo(0, 0);
-    // Don't unlock scroll — go to slide 1 instead
-    goToSlide(0);
+    deck.style.display = '';
+    goTo(0);
   }, { once: true });
 }
 
