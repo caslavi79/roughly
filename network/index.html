@@ -208,7 +208,7 @@ nav.scrolled {
   background: rgba(26,17,8,0.9);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
-  padding: 16px 56px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 16px 56px; display: flex; align-items: center; gap: 8px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.25);
   margin-bottom: 16px;
 }
@@ -261,7 +261,7 @@ nav.scrolled {
 #map-container {
   height: 600px; border-radius: 20px; overflow: hidden;
   border: 1px solid var(--border); box-shadow: var(--shadow-md);
-  margin: 0 56px 48px;
+  margin: 0 56px 48px; position: relative; z-index: 1;
 }
 .map-pin {
   width: 14px; height: 14px; background: var(--amber-dust);
@@ -731,9 +731,10 @@ footer { background: var(--warm-black); padding: 80px 48px 48px; border-top: 1px
   .hero-scroll-prompt { display: none; }
   .about-strip { grid-template-columns: 1fr; gap: 48px; padding: 72px 24px; }
   .filter-bar { padding: 12px 24px; gap: 6px; flex-wrap: wrap; }
+  .filter-label { display: none; }
   .search-wrap { margin-left: 0; width: 100%; margin-top: 6px; }
-  .search-input { width: 100%; }
-  .search-input:focus { width: 100%; }
+  .search-input { width: 0; flex: 1; min-width: 0; }
+  .search-input:focus { width: 0; flex: 1; }
   .view-toggle { margin-left: auto; }
   #map-container { height: 450px; margin: 0 24px 48px; }
   .network-section { padding: 52px 24px 80px; }
