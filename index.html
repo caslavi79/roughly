@@ -664,8 +664,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   /* Slide sections: override padding but keep slide positioning */
   .slide.against-section { padding: 80px 20px 120px !important; }
   .slide.what-section { padding: 80px 20px !important; }
-  .slide.audit-section { padding: 120px 20px 140px !important; align-content: start !important; }
-  .slide.origin-section { padding: 120px 20px 140px !important; align-content: start !important; }
+  .slide.audit-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
 
   /* Make diagonal transitions vertical on mobile */
   @keyframes b1OutFwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
