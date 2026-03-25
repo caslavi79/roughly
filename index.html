@@ -440,6 +440,9 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* ── HERO CURVED TEXT (mobile only) ─────────── */
+.hero-curve-top, .hero-curve-bottom { display: none; }
+
 /* ── WHAT WE STAND AGAINST ───────────────────── */
 .against-section { padding: 120px 56px; }
 .against-intro { margin-bottom: 72px; text-align: center; }
@@ -664,39 +667,54 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 }
 @media (max-width: 600px) {
   /* ── SLIDE SYSTEM MOBILE ─────────────────────── */
+  /* Allow slides to scroll internally on small screens */
+  .slide { contain: none; -webkit-overflow-scrolling: touch; }
+
+  /* ── ADVANCE BUTTONS: Hero-style pill ──────── */
   .slide-advance {
-    position: static !important; transform: none !important;
+    position: relative !important; transform: none !important;
     writing-mode: horizontal-tb !important;
-    flex-direction: row !important; gap: 12px !important;
-    margin: 40px auto 0; padding: 16px 0;
     top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    /* Match hero-enter layout */
+    display: flex !important; flex-direction: row !important; align-items: center !important;
+    gap: 0 !important;
+    margin: 36px auto 0 !important; padding: 12px 28px !important;
+    border-radius: 50px;
+    opacity: 0.8;
   }
-  .slide-advance .slide-advance-text { writing-mode: horizontal-tb !important; }
-  .slide-back { left: 20px; top: 68px; }
+  /* Glow ring identical to hero-enter */
+  .slide-advance::before {
+    content: '' !important; position: absolute !important; inset: -8px !important;
+    border-radius: 50px !important; width: auto !important; height: auto !important;
+    border: 1px solid rgba(196,154,82,0.3) !important;
+    background: none !important; transform: none !important; transform-origin: unset !important;
+    animation: glowRing 2.5s ease-in-out infinite !important;
+  }
+  .slide-advance .slide-advance-text {
+    writing-mode: horizontal-tb !important; text-orientation: mixed !important;
+  }
+  /* Hide arrow on mobile — pill with text only */
+  .slide-advance .slide-advance-arrow { display: none !important; }
 
-  /* Slide sections: override padding but keep slide positioning */
-  .slide.against-section { padding: 120px 20px 120px !important; justify-content: flex-start !important; }
-  .slide.what-section { padding: 80px 20px !important; }
-  .slide.audit-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
-  .slide.origin-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide-back { left: 20px; top: 60px; }
 
-  /* Make all transitions vertical on mobile with depth scale */
-  @keyframes b0OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
-  @keyframes b0InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b0OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
-  @keyframes b0InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b1OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
-  @keyframes b1InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b1OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
-  @keyframes b1InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b2OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
-  @keyframes b2InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b2OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
-  @keyframes b2InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  /* ── SLIDE SECTION PADDING ─────────────────── */
+  /* NO keyframe overrides — keep directional transitions from desktop */
+  .slide.against-section { padding: 72px 16px 40px !important; justify-content: flex-start !important; }
+  .slide.what-section { padding: 64px 16px !important; }
+  .slide.audit-section { padding: 72px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section { padding: 72px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
 
+  /* Hide slide dividers — save vertical space */
+  .slide .section-divider { display: none; }
+  .audit-clipboard { display: none !important; }
+
+  /* ── NAV ────────────────────────────────────── */
   .nav-right { display: none; }
   .nav-hamburger { display: flex !important; }
   nav { padding: 14px 20px; }
+
+  /* ── GENERAL LAYOUT ────────────────────────── */
   .against-grid { grid-template-columns: 1fr; }
   .cta-actions { flex-direction: column; width: 100%; }
   .cta-btn-primary, .cta-btn-secondary { text-align: center; width: 100%; }
@@ -704,22 +722,75 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .email-panel { padding: 36px 24px; }
   .email-form { flex-direction: column; }
   .email-submit { width: 100%; padding: 14px; }
-  .hero-side-left, .hero-side-right { display: none; }
-  .hero-context-line { padding: 0 16px; }
+  .hero-side-left, .hero-side-right { display: none !important; }
+  /* ── HERO CURVED TEXT ──────────────────────── */
+  .hero-curve-top, .hero-curve-bottom {
+    display: block; position: relative; z-index: 2;
+    width: clamp(260px, 75vw, 320px); height: auto;
+    overflow: visible;
+    opacity: 0; animation: heroIn 1.2s ease-out 0.6s forwards;
+  }
+  .hero-curve-top text, .hero-curve-bottom text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    fill: var(--amber-dust); opacity: 0.7;
+  }
+  .hero-curve-top { order: 1; margin-bottom: -6px; }
+  .hero-wordmark { order: 2; }
+  .hero-tagline { order: 3; }
+  .hero-tagline + svg { order: 4; }
+  .hero-context-line { order: 5; }
+  .hero-curve-bottom { order: 6; margin-top: 32px; }
+  .hero-enter { order: 7; }
+  .hero-context-line { padding: 0 16px; font-size: 12px; }
+  .hero { padding: 60px 20px 100px; }
 
-  /* ── MOBILE SECTIONS ───────────────────────────── */
+  /* ── SECTION: AGAINST ──────────────────────── */
   .section-fade-divider { display: none; }
+  .against-intro { margin-bottom: 16px; }
+  .against-headline { font-size: 24px; margin-bottom: 4px; }
+  .against-sub { font-size: 12px; line-height: 1.5; }
+  .against-item { padding: 14px 16px; gap: 10px; }
+  .against-text { font-size: 14px; line-height: 1.45; }
+  .against-section .against-eyebrow { margin-bottom: 6px; font-size: 8px; }
 
-  .against-intro { margin-bottom: 20px; }
-  .against-headline { font-size: 28px; margin-bottom: 6px; }
-  .against-sub { font-size: 13px; line-height: 1.5; }
-  .against-item { padding: 16px 18px; gap: 12px; }
-  .against-text { font-size: 15px; line-height: 1.5; }
-  .against-section .against-eyebrow { margin-bottom: 8px; }
+  /* ── SECTION: WHAT WE DO ───────────────────── */
+  .what-body p { font-size: 22px; margin-bottom: 20px; }
 
-  /* Non-slide sections (scroll zone) */
-  .process-wrap { padding: 120px 20px 56px; }
+  /* ── SECTION: AUDIT ────────────────────────── */
+  .audit-headline { font-size: 22px; margin-bottom: 16px; }
+  .audit-body { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
+  .audit-eyebrow { margin-bottom: 16px; }
+  .audit-right { gap: 2px; }
+  .audit-criterion { padding: 14px 16px; gap: 14px; border-radius: 10px; }
+  .gauge-wrap { width: 52px; height: 52px; }
+  .gauge-number { font-size: 13px !important; }
+  .gauge-label { font-size: 5px !important; }
+  .gauge-bg, .gauge-fill { stroke-width: 5 !important; }
+  .audit-crit-name { font-size: 14px; }
+  .audit-crit-label { font-size: 7px; margin-bottom: 3px; }
+
+  /* ── SECTION: ORIGIN ───────────────────────── */
+  .origin-headline { font-size: 24px; margin-bottom: 20px; }
+  .origin-body p { font-size: 13px; line-height: 1.75; margin-bottom: 12px; }
+  .origin-pull { font-size: 18px; margin-top: 20px; padding-left: 14px; }
+  .origin-eyebrow { margin-bottom: 16px; }
+  .origin-right { padding-top: 0; }
+  .origin-card { padding: 24px 20px; border-radius: 12px; }
+  .origin-card-name { font-size: 18px; }
+  .origin-card-note { font-size: 13px; padding-top: 14px; margin-bottom: 16px; }
+  .origin-card-label { margin-bottom: 12px; }
+  .origin-card-type { margin-bottom: 16px; }
+  .origin-quote-svg { display: none; }
+
+  /* ── SCROLL ZONE SECTIONS ──────────────────── */
+  .process-wrap { padding: 80px 20px 56px; }
+  .process-node { padding: 24px 16px; }
+  .process-node-title { font-size: 14px; }
   .cta-section { padding: 56px 20px; }
+  .cta-headline { font-size: 22px; }
+  .cta-body { font-size: 13px; }
+  .footer-watermark { font-size: 120px !important; }
 }
 
 /* ── PARTICLES ───────────────────────────────── */
@@ -933,12 +1004,22 @@ body::after {
     <div class="hero-side-text">Clothing · Network · Movement</div>
   </div>
   <div class="hero-wordmark">roughly</div>
+  <!-- Mobile curved text — hidden on desktop -->
+  <svg class="hero-curve-top" viewBox="0 0 320 60" xmlns="http://www.w3.org/2000/svg">
+    <defs><path id="curve-top" d="M20,52 Q160,2 300,52"/></defs>
+    <text><textPath href="#curve-top" startOffset="50%" text-anchor="middle">Colorado Springs · 2026</textPath></text>
+  </svg>
   <div class="hero-tagline">life happens in the -ish</div>
   <!-- Hand-drawn underline SVG beneath tagline -->
   <svg viewBox="0 0 300 12" style="width:clamp(200px,30vw,320px);height:12px;position:relative;z-index:1;margin-top:-4px;overflow:visible;opacity:0;animation:heroIn 1.2s ease-out 0.5s forwards">
     <path d="M10 8 Q50 2, 100 7 Q150 12, 200 6 Q250 1, 290 7" stroke="rgba(196,154,82,0.5)" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="300" stroke-dashoffset="300" style="animation:drawLine 1.5s ease-out 1s forwards"/>
   </svg>
   <div class="hero-context-line">A network of businesses<br>that still run on human time.</div>
+  <!-- Mobile curved text — hidden on desktop -->
+  <svg class="hero-curve-bottom" viewBox="0 0 340 60" xmlns="http://www.w3.org/2000/svg">
+    <defs><path id="curve-bottom" d="M20,8 Q170,62 320,8"/></defs>
+    <text><textPath href="#curve-bottom" startOffset="50%" text-anchor="middle">Clothing · Network · Movement</textPath></text>
+  </svg>
   <button class="hero-enter" id="hero-enter" aria-label="Enter site">
     <span class="hero-enter-text">Step in</span>
   </button>
