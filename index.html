@@ -77,53 +77,66 @@ body.locked {
 .slide[data-state="below"] { transform: translateY(100%); }
 
 /* ── BOUNDARY TRANSITIONS ─────────────────── */
-/* B0: Against→WhatWeDo — button is bottom-center ↓ so slide vertically */
+/* B0: Against→WhatWeDo — button is bottom-right ↘ so slide diagonally */
 .b0-out-fwd { z-index:3!important; animation: b0OutFwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-in-fwd  { z-index:2!important; animation: b0InFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-out-bwd { z-index:3!important; animation: b0OutBwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-in-bwd  { z-index:2!important; animation: b0InBwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b0OutFwd { from{transform:translateY(0);opacity:1} to{transform:translateY(-100%);opacity:0} }
-@keyframes b0InFwd  { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
-@keyframes b0OutBwd { from{transform:translateY(0);opacity:1} to{transform:translateY(100%);opacity:0} }
-@keyframes b0InBwd  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes b0OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
+@keyframes b0InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b0OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
+@keyframes b0InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+
+/* Hero entry: Hero→Against — STEP IN points ↓ so slide vertically */
+.hero-in-fwd  { z-index:2!important; animation: heroInFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
+@keyframes heroInFwd { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
 
 /* B1: WhatWeDo→Audit — button is bottom-right ↘ so slide diagonally */
 .b1-out-fwd { z-index:3!important; animation: b1OutFwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b1-in-fwd  { z-index:2!important; animation: b1InFwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b1-out-bwd { z-index:3!important; animation: b1OutBwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b1-in-bwd  { z-index:2!important; animation: b1InBwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b1OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
-@keyframes b1InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b1OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
-@keyframes b1InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+/* B1: What→Audit — → horizontal right */
+@keyframes b1OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+@keyframes b1InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b1OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
+@keyframes b1InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
 
 /* B2: Audit→Origin — button is bottom-left ↙ so slide from the left */
 .b2-out-fwd { z-index:3!important; animation: b2OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b2-in-fwd  { z-index:2!important; animation: b2InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b2-out-bwd { z-index:3!important; animation: b2OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b2-in-bwd  { z-index:2!important; animation: b2InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,-50%);opacity:0} }
-@keyframes b2InFwd  { from{transform:translate(-50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
-@keyframes b2InBwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+/* B2: Audit→Origin — ↗ diagonal up-right */
+@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
+@keyframes b2InFwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,-50%);opacity:0} }
+@keyframes b2InBwd  { from{transform:translate(-50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
 /* B3: Origin→ScrollZone — arrow points right → so slide horizontally */
 .b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-fwd  { z-index:2!important; animation: b3InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+/* B3: Origin→ScrollZone — ↑ vertical up */
+@keyframes b3OutFwd { from{transform:translateY(0);opacity:1} to{transform:translateY(100%);opacity:0} }
 /* Scroll zone transition */
 #scroll-zone.b3-in-fwd { position: fixed; inset: 0; z-index: 2; overflow-y: auto; animation: b3InFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
 #scroll-zone.b3-out-bwd { position: fixed; inset: 0; z-index: 3; overflow-y: auto; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
-@keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
-@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
-@keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b3InFwd  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translateY(0);opacity:1} to{transform:translateY(-100%);opacity:0} }
+@keyframes b3InBwd  { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
-  position: absolute; display: flex; align-items: center; gap: 10px;
+  position: absolute; display: flex; align-items: center; justify-content: center;
   cursor: pointer; background: none; border: none; z-index: 10;
   opacity: 0.7; transition: opacity 0.3s;
+  padding: 14px 32px; border-radius: 50px;
+}
+.slide-advance::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 50px;
+  border: 1px solid rgba(196,154,82,0.25);
+  animation: glowRing 2.5s ease-in-out infinite;
 }
 .slide-advance:hover { opacity: 1; }
 /* Right side: vertically centered on right edge, arrow points right */
@@ -138,7 +151,7 @@ body.locked {
 }
 /* Bottom center: at the bottom, arrow points down */
 .slide-advance.pos-bottom {
-  bottom: 40px; left: 50%; transform: translateX(-50%);
+  bottom: 48px; left: 50%; transform: translateX(-50%);
   flex-direction: column;
 }
 .slide-advance-text {
@@ -537,7 +550,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
 
 /* ── PROCESS ─────────────────────────────────── */
 .process-wrap {
-  padding: 120px 56px 160px;
+  padding: 180px 56px 100px;
   display: flex; flex-direction: column; align-items: center;
 }
 .section-eyebrow { font-size: 9px; letter-spacing: 4px; text-transform: uppercase; color: var(--amber-dust); margin-bottom: 64px; text-align: center; width: 100%; }
@@ -726,6 +739,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   100% { transform: scale(1.2); opacity: 1; }
 }
 @keyframes slowSpin { to { transform: rotate(360deg); } }
+/* Pause heavy animations on off-screen slides to avoid compositing cost during transitions */
+.slide:not([data-state="current"]) svg * { animation-play-state: paused !important; }
 @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
 /* ── CURSOR GLOW ────────────────────────────── */
@@ -922,14 +937,13 @@ body::after {
   <div class="hero-context-line">A network of businesses<br>that still run on human time.</div>
   <button class="hero-enter" id="hero-enter" aria-label="Enter site">
     <span class="hero-enter-text">Step in</span>
-    <div class="hero-enter-arrow"></div>
   </button>
 </section>
 
 <div class="slide-deck" id="slide-deck" style="display:none">
 
 <!-- 1. WHAT WE STAND AGAINST -->
-<section class="against-section slide" data-slide="0" data-advance-pos="pos-bottom" data-advance-label="What we do">
+<section class="against-section slide" data-slide="0" data-advance-pos="pos-bottom-right" data-advance-label="What we do">
   <div class="section-divider divider-top"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q200 4, 400 14 T800 10 T1200 12" stroke="rgba(196,154,82,0.12)" stroke-width="1.2" fill="none" stroke-linecap="round"/></svg></div>
   <div class="against-intro">
     <div class="against-eyebrow reveal">What we stand against</div>
@@ -952,8 +966,8 @@ body::after {
   <!-- Large decorative SVG behind text -->
   <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0">
     <!-- Hand-drawn circle -->
-    <circle cx="200" cy="200" r="160" stroke="rgba(196,154,82,0.12)" stroke-width="2" fill="none" stroke-dasharray="10 8" style="transform-origin:center;animation:slowSpin 40s linear infinite"/>
-    <circle cx="200" cy="200" r="130" stroke="rgba(196,154,82,0.08)" stroke-width="1.5" fill="none" stroke-dasharray="6 10" style="transform-origin:center;animation:slowSpin 50s linear infinite reverse"/>
+    <circle cx="200" cy="200" r="160" stroke="rgba(196,154,82,0.12)" stroke-width="2" fill="none" stroke-dasharray="10 8" style="transform-origin:center;animation:slowSpin 40s linear infinite;will-change:transform"/>
+    <circle cx="200" cy="200" r="130" stroke="rgba(196,154,82,0.08)" stroke-width="1.5" fill="none" stroke-dasharray="6 10" style="transform-origin:center;animation:slowSpin 50s linear infinite reverse;will-change:transform"/>
     <!-- Handshake/connection symbol -->
     <path d="M140 210 Q160 180, 200 195 Q240 180, 260 210" stroke="rgba(196,154,82,0.2)" stroke-width="3" fill="none" stroke-linecap="round"/>
     <path d="M140 210 C140 240, 170 260, 200 250 C230 260, 260 240, 260 210" stroke="rgba(196,154,82,0.15)" stroke-width="2" fill="rgba(196,154,82,0.03)" stroke-linecap="round"/>
@@ -1236,8 +1250,8 @@ slides.forEach((slide, i) => {
   const pos = slide.dataset.advancePos || 'pos-bottom';
   const label = slide.dataset.advanceLabel || 'Continue';
   const btn = document.createElement('button');
-  btn.className = `slide-advance ${pos}`;
-  btn.innerHTML = `<span class="slide-advance-text">${label}</span><div class="slide-advance-arrow"></div>`;
+  btn.className = 'slide-advance pos-bottom';
+  btn.innerHTML = `<span class="slide-advance-text">${label}</span>`;
   btn.addEventListener('click', () => goTo(current + 1));
   slide.appendChild(btn);
 });
@@ -1275,8 +1289,10 @@ function goTo(index) {
   }
 
   // Normal slide transition
-  const tx = getTx(Math.max(0, boundary), fwd);
-  const dur = TX_DUR[Math.max(0, boundary)] || 700;
+  // Hero entry uses vertical animation; all other transitions use boundary system
+  const isHeroEntry = (current === -1 && index === 0);
+  const tx = isHeroEntry ? { out: null, inp: 'hero-in-fwd' } : getTx(Math.max(0, boundary), fwd);
+  const dur = isHeroEntry ? 800 : (TX_DUR[Math.max(0, boundary)] || 700);
 
   // Show deck if hidden
   deck.style.display = '';
@@ -1315,8 +1331,8 @@ function goTo(index) {
     transitioning = false;
   }, dur + 30);
 
-  // Update back button
-  backBtn.classList.toggle('visible', index > 0);
+  // Update back button (show on all slides including first)
+  backBtn.classList.toggle('visible', index >= 0);
   current = index;
 }
 
@@ -1342,11 +1358,14 @@ backBtn.addEventListener('click', () => {
       scrollZone.style.display = 'none';
       incoming.classList.remove('b3-in-bwd');
       incoming.setAttribute('data-state', 'current');
-      backBtn.classList.toggle('visible', current > 0);
+      backBtn.classList.toggle('visible', current >= 0);
       window.scrollTo(0, 0);
       transitioning = false;
     }, dur);
     return;
+  } else if (current === 0) {
+    // Back to hero — reload since hero is removed from DOM after dismiss
+    window.location.reload();
   } else {
     goTo(current - 1);
   }
