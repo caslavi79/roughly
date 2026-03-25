@@ -328,6 +328,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
   min-height: 100vh; min-height: 100svh;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
   text-align: center; position: relative; overflow: hidden; padding: 80px 24px 120px;
+  transition: transform 0.8s cubic-bezier(0.76,0,0.24,1), opacity 0.8s cubic-bezier(0.76,0,0.24,1);
   z-index: 100;
   transition: transform 0.9s cubic-bezier(0.33,1,0.68,1), opacity 0.7s ease;
 }
@@ -672,13 +673,13 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 
   /* ── ADVANCE BUTTONS: Hero-style pill ──────── */
   .slide-advance {
-    position: relative !important; transform: none !important;
+    position: absolute !important;
+    bottom: 48px !important; left: 50% !important; transform: translateX(-50%) !important;
+    top: auto !important; right: auto !important;
     writing-mode: horizontal-tb !important;
-    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
-    /* Match hero-enter layout */
     display: flex !important; flex-direction: row !important; align-items: center !important;
     gap: 0 !important;
-    margin: 36px auto 0 !important; padding: 12px 28px !important;
+    margin: 0 !important; padding: 12px 28px !important;
     border-radius: 50px;
     opacity: 0.8;
   }
@@ -696,14 +697,15 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   /* Hide arrow on mobile — pill with text only */
   .slide-advance .slide-advance-arrow { display: none !important; }
 
-  .slide-back { left: 20px; top: 60px; }
+  .slide-back { left: 20px; top: 80px; }
 
   /* ── SLIDE SECTION PADDING ─────────────────── */
   /* NO keyframe overrides — keep directional transitions from desktop */
-  .slide.against-section { padding: 72px 16px 40px !important; justify-content: flex-start !important; }
-  .slide.what-section { padding: 64px 16px !important; }
-  .slide.audit-section { padding: 72px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
-  .slide.origin-section { padding: 72px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.against-section { padding: 150px 16px 40px !important; justify-content: flex-start !important; }
+  .slide.what-section { padding: 120px 16px 160px !important; justify-content: center !important; }
+  .slide.audit-section { padding: 150px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section { padding: 150px 16px 40px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section .slide-advance { position: relative !important; bottom: auto !important; left: auto !important; transform: none !important; margin: 40px auto 10px !important; }
 
   /* Hide slide dividers — save vertical space */
   .slide .section-divider { display: none; }
@@ -715,7 +717,7 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   nav { padding: 14px 20px; }
 
   /* ── GENERAL LAYOUT ────────────────────────── */
-  .against-grid { grid-template-columns: 1fr; }
+  .against-grid { grid-template-columns: 1fr; gap: 4px; max-width: 90%; margin: 0 auto; }
   .cta-actions { flex-direction: column; width: 100%; }
   .cta-btn-primary, .cta-btn-secondary { text-align: center; width: 100%; }
   footer { padding: 40px 20px 28px; }
@@ -750,7 +752,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .against-intro { margin-bottom: 16px; }
   .against-headline { font-size: 24px; margin-bottom: 4px; }
   .against-sub { font-size: 12px; line-height: 1.5; }
-  .against-item { padding: 14px 16px; gap: 10px; }
+  .against-item { padding: 10px 10px; gap: 8px; }
+  .against-text { font-size: 11px !important; }
   .against-text { font-size: 14px; line-height: 1.45; }
   .against-section .against-eyebrow { margin-bottom: 6px; font-size: 8px; }
 
@@ -761,8 +764,10 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .audit-headline { font-size: 22px; margin-bottom: 16px; }
   .audit-body { font-size: 13px; line-height: 1.7; margin-bottom: 8px; }
   .audit-eyebrow { margin-bottom: 16px; }
-  .audit-right { gap: 2px; }
-  .audit-criterion { padding: 14px 16px; gap: 14px; border-radius: 10px; }
+  .audit-right { display: grid !important; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .audit-criterion { padding: 14px 10px; gap: 10px; border-radius: 10px; flex-direction: column; text-align: center; justify-content: center; }
+  .audit-criterion .gauge-wrap { margin: 0 auto; }
+  .audit-criterion .audit-crit-info { text-align: center; }
   .gauge-wrap { width: 52px; height: 52px; }
   .gauge-number { font-size: 13px !important; }
   .gauge-label { font-size: 5px !important; }
@@ -776,11 +781,12 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .origin-pull { font-size: 18px; margin-top: 20px; padding-left: 14px; }
   .origin-eyebrow { margin-bottom: 16px; }
   .origin-right { padding-top: 0; }
-  .origin-card { padding: 24px 20px; border-radius: 12px; }
-  .origin-card-name { font-size: 18px; }
-  .origin-card-note { font-size: 13px; padding-top: 14px; margin-bottom: 16px; }
-  .origin-card-label { margin-bottom: 12px; }
-  .origin-card-type { margin-bottom: 16px; }
+  .origin-card { padding: 18px 16px; border-radius: 12px; width: 85% !important; margin: 0 auto; }
+  .origin-card-name { font-size: 16px; }
+  .origin-card-note { font-size: 12px; padding-top: 12px; margin-bottom: 12px; line-height: 1.6; }
+  .origin-card-label { margin-bottom: 8px; font-size: 7px; }
+  .origin-card-type { margin-bottom: 12px; font-size: 9px; }
+  .origin-card-stamp svg { width: 56px !important; height: 56px !important; }
   .origin-quote-svg { display: none; }
 
   /* ── SCROLL ZONE SECTIONS ──────────────────── */
@@ -1395,6 +1401,8 @@ function goTo(index) {
 
   // Animate incoming
   const incoming = slides[index];
+  // Reset scroll position so slide starts at top
+  incoming.scrollTop = 0;
   // Remove default positioning so animation controls everything
   incoming.removeAttribute('data-state');
   incoming.style.opacity = '0';
