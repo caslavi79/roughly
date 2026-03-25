@@ -1289,6 +1289,7 @@ function goTo(index) {
   if (current >= 0 && current < total) {
     // Animate outgoing
     const outgoing = slides[current];
+    void outgoing.offsetWidth;
     outgoing.classList.add(tx.out);
     setTimeout(() => {
       outgoing.classList.remove(tx.out);
@@ -1300,7 +1301,11 @@ function goTo(index) {
   const incoming = slides[index];
   // Remove default positioning so animation controls everything
   incoming.removeAttribute('data-state');
+  incoming.style.opacity = '0';
   incoming.style.pointerEvents = 'auto';
+  // Force reflow so browser registers the state change before animation
+  void incoming.offsetWidth;
+  incoming.style.opacity = '';
   incoming.classList.add(tx.inp);
 
   // Trigger reveal animations
@@ -1309,8 +1314,8 @@ function goTo(index) {
   });
 
   setTimeout(() => {
-    incoming.classList.remove(tx.inp);
     incoming.setAttribute('data-state', 'current');
+    incoming.classList.remove(tx.inp);
     incoming.style.pointerEvents = '';
     transitioning = false;
   }, dur + 30);
