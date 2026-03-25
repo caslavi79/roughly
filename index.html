@@ -82,14 +82,14 @@ body.locked {
 .b0-in-fwd  { z-index:2!important; animation: b0InFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-out-bwd { z-index:3!important; animation: b0OutBwd 0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b0-in-bwd  { z-index:2!important; animation: b0InBwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b0OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
-@keyframes b0InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b0OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
-@keyframes b0InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b0OutFwd { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(-60%,-60%) scale(0.94);opacity:0} }
+@keyframes b0InFwd  { from{transform:translate(60%,60%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b0OutBwd { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(60%,60%) scale(0.94);opacity:0} }
+@keyframes b0InBwd  { from{transform:translate(-60%,-60%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
 /* Hero entry: Hero→Against — STEP IN points ↓ so slide vertically */
 .hero-in-fwd  { z-index:2!important; animation: heroInFwd  0.8s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes heroInFwd { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes heroInFwd { from{transform:translateY(120%);opacity:0} to{transform:translateY(0);opacity:1} }
 
 /* B1: WhatWeDo→Audit — button is bottom-right ↘ so slide diagonally */
 .b1-out-fwd { z-index:3!important; animation: b1OutFwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
@@ -97,10 +97,10 @@ body.locked {
 .b1-out-bwd { z-index:3!important; animation: b1OutBwd 0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b1-in-bwd  { z-index:2!important; animation: b1InBwd  0.75s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 /* B1: What→Audit — → horizontal right */
-@keyframes b1OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
-@keyframes b1InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
-@keyframes b1OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
-@keyframes b1InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b1OutFwd { from{transform:translateX(0) scale(1);opacity:1} to{transform:translateX(-120%) scale(0.94);opacity:0} }
+@keyframes b1InFwd  { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b1OutBwd { from{transform:translateX(0) scale(1);opacity:1} to{transform:translateX(120%) scale(0.94);opacity:0} }
+@keyframes b1InBwd  { from{transform:translateX(-120%);opacity:0} to{transform:translateX(0);opacity:1} }
 
 /* B2: Audit→Origin — button is bottom-left ↙ so slide from the left */
 .b2-out-fwd { z-index:3!important; animation: b2OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
@@ -108,10 +108,10 @@ body.locked {
 .b2-out-bwd { z-index:3!important; animation: b2OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b2-in-bwd  { z-index:2!important; animation: b2InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 /* B2: Audit→Origin — ↗ diagonal up-right */
-@keyframes b2OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
-@keyframes b2InFwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,-50%);opacity:0} }
-@keyframes b2InBwd  { from{transform:translate(-50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b2OutFwd { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(-60%,60%) scale(0.94);opacity:0} }
+@keyframes b2InFwd  { from{transform:translate(60%,-60%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b2OutBwd { from{transform:translate(0,0) scale(1);opacity:1} to{transform:translate(60%,-60%) scale(0.94);opacity:0} }
+@keyframes b2InBwd  { from{transform:translate(-60%,60%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
 /* B3: Origin→ScrollZone — arrow points right → so slide horizontally */
 .b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
@@ -119,13 +119,13 @@ body.locked {
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 /* B3: Origin→ScrollZone — ↑ vertical up */
-@keyframes b3OutFwd { from{transform:translateY(0);opacity:1} to{transform:translateY(100%);opacity:0} }
+@keyframes b3OutFwd { from{transform:translateY(0) scale(1);opacity:1} to{transform:translateY(120%) scale(0.94);opacity:0} }
 /* Scroll zone transition */
 #scroll-zone.b3-in-fwd { position: fixed; inset: 0; z-index: 2; overflow-y: auto; animation: b3InFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
 #scroll-zone.b3-out-bwd { position: fixed; inset: 0; z-index: 3; overflow-y: auto; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
-@keyframes b3InFwd  { from{transform:translateY(-100%);opacity:0} to{transform:translateY(0);opacity:1} }
-@keyframes b3OutBwd { from{transform:translateY(0);opacity:1} to{transform:translateY(-100%);opacity:0} }
-@keyframes b3InBwd  { from{transform:translateY(100%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes b3InFwd  { from{transform:translateY(-120%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translateY(0) scale(1);opacity:1} to{transform:translateY(-120%) scale(0.94);opacity:0} }
+@keyframes b3InBwd  { from{transform:translateY(120%);opacity:0} to{transform:translateY(0);opacity:1} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
   position: absolute; display: flex; align-items: center; justify-content: center;
@@ -1364,8 +1364,36 @@ backBtn.addEventListener('click', () => {
     }, dur);
     return;
   } else if (current === 0) {
-    // Back to hero — reload since hero is removed from DOM after dismiss
-    window.location.reload();
+    // Back to hero — animate Against slide out and hero back in
+    if (transitioning) return;
+    transitioning = true;
+    const outgoing = slides[0];
+    const dur = 800;
+    // Prepare hero: show it, unpause animations, keep dismissed state
+    hero.style.display = '';
+    hero.querySelectorAll('*').forEach(el => el.style.animationPlayState = '');
+    // Force reflow then remove dismissed to animate hero back
+    void hero.offsetWidth;
+    hero.classList.remove('dismissed');
+    // Hide nav during transition back
+    navEl.classList.add('nav-hidden');
+    burgerEl.classList.add('burger-hidden');
+    // Slide Against out downward (reverse of hero entry)
+    outgoing.style.transition = `transform ${dur}ms cubic-bezier(0.76,0,0.24,1), opacity ${dur}ms cubic-bezier(0.76,0,0.24,1)`;
+    outgoing.style.transform = 'translateY(120%) scale(0.94)';
+    outgoing.style.opacity = '0';
+    backBtn.classList.remove('visible');
+    heroActive = true;
+    current = -1;
+    setTimeout(() => {
+      outgoing.style.transition = '';
+      outgoing.style.transform = '';
+      outgoing.style.opacity = '';
+      outgoing.setAttribute('data-state', 'below');
+      deck.style.display = 'none';
+      transitioning = false;
+    }, dur + 30);
+    return;
   } else {
     goTo(current - 1);
   }
@@ -1381,7 +1409,10 @@ function dismissHero() {
   burgerEl.classList.remove('burger-hidden');
 
   hero.addEventListener('transitionend', () => {
-    hero.remove(); // fully remove hero + all its SVG animations from DOM
+    // Hide hero but keep in DOM so we can animate back to it
+    hero.style.display = 'none';
+    // Pause all hero animations to save GPU
+    hero.querySelectorAll('*').forEach(el => el.style.animationPlayState = 'paused');
     window.scrollTo(0, 0);
     deck.style.display = '';
     goTo(0);
