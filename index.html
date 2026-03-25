@@ -675,20 +675,24 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .slide-back { left: 20px; top: 68px; }
 
   /* Slide sections: override padding but keep slide positioning */
-  .slide.against-section { padding: 80px 20px 120px !important; }
+  .slide.against-section { padding: 120px 20px 120px !important; justify-content: flex-start !important; }
   .slide.what-section { padding: 80px 20px !important; }
   .slide.audit-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
   .slide.origin-section { padding: 120px 20px 60px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
 
-  /* Make diagonal transitions vertical on mobile */
-  @keyframes b1OutFwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
-  @keyframes b1InFwd { from { transform: translateY(100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b1OutBwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
-  @keyframes b1InBwd { from { transform: translateY(-100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b2OutFwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
-  @keyframes b2InFwd { from { transform: translateY(100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
-  @keyframes b2OutBwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
-  @keyframes b2InBwd { from { transform: translateY(-100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  /* Make all transitions vertical on mobile with depth scale */
+  @keyframes b0OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
+  @keyframes b0InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b0OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
+  @keyframes b0InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b1OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
+  @keyframes b1InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b1OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
+  @keyframes b1InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b2OutFwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(-120%) scale(0.94); opacity: 0; } }
+  @keyframes b2InFwd  { from { transform: translateY(120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b2OutBwd { from { transform: translate(0,0) scale(1); opacity: 1; } to { transform: translateY(120%) scale(0.94); opacity: 0; } }
+  @keyframes b2InBwd  { from { transform: translateY(-120%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
 
   .nav-right { display: none; }
   .nav-hamburger { display: flex !important; }
