@@ -1263,19 +1263,22 @@ function goTo(index) {
   // Entering scroll zone
   if (index >= total) {
     const outgoing = slides[current];
+    const dur = TX_DUR[total - 1] || 700;
     const tx = getTx(total - 1, true);
+    void outgoing.offsetWidth;
     outgoing.classList.add(tx.out);
-    deck.style.display = 'none';
-    document.getElementById('scroll-zone').style.display = '';
-    document.body.classList.remove('locked');
-    backBtn.classList.add('visible');
-    window.scrollTo(0, 0);
+    current = index;
+    // Wait for outgoing animation to finish, THEN show scroll zone
     setTimeout(() => {
       outgoing.classList.remove(tx.out);
       outgoing.setAttribute('data-state', 'above');
+      deck.style.display = 'none';
+      document.getElementById('scroll-zone').style.display = '';
+      document.body.classList.remove('locked');
+      backBtn.classList.add('visible');
+      window.scrollTo(0, 0);
       transitioning = false;
-    }, TX_DUR[total - 1] || 700);
-    current = index;
+    }, dur);
     return;
   }
 
