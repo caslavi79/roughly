@@ -113,6 +113,9 @@ body.locked {
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 @keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+/* Scroll zone entrance — slides in from right to match B3 direction */
+@keyframes scrollZoneIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+#scroll-zone.entering { animation: scrollZoneIn 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
 @keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
 @keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
 @keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
@@ -1273,11 +1276,13 @@ function goTo(index) {
       outgoing.classList.remove(tx.out);
       outgoing.setAttribute('data-state', 'above');
       deck.style.display = 'none';
-      document.getElementById('scroll-zone').style.display = '';
+      const scrollZone = document.getElementById('scroll-zone');
+      scrollZone.style.display = '';
+      scrollZone.classList.add('entering');
       document.body.classList.remove('locked');
       backBtn.classList.add('visible');
       window.scrollTo(0, 0);
-      transitioning = false;
+      setTimeout(() => { scrollZone.classList.remove('entering'); transitioning = false; }, 700);
     }, dur);
     return;
   }
