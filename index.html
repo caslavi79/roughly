@@ -476,7 +476,7 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
   padding: 110px 56px;
   text-align: center;
 }
-.what-inner { display: flex; flex-direction: column; align-items: center; }
+.what-inner { display: flex; flex-direction: column; align-items: center; transform: translateZ(0); will-change: transform; }
 .what-body p {
   font-family: 'Crimson Pro', serif; font-style: italic;
   font-size: clamp(24px, 3.5vw, 48px); font-weight: 400;
@@ -964,7 +964,7 @@ body::after {
 <!-- 2. WHAT WE DO -->
 <section class="what-section slide" data-slide="1" data-advance-pos="pos-bottom-right" data-advance-label="How we do it" style="position:relative">
   <!-- Large decorative SVG behind text -->
-  <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0">
+  <svg viewBox="0 0 400 400" fill="none" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) translateZ(0);width:min(500px,80vw);height:auto;pointer-events:none;z-index:0;will-change:transform">
     <!-- Hand-drawn circle -->
     <circle cx="200" cy="200" r="160" stroke="rgba(196,154,82,0.12)" stroke-width="2" fill="none" stroke-dasharray="10 8" style="transform-origin:center;animation:slowSpin 40s linear infinite;will-change:transform"/>
     <circle cx="200" cy="200" r="130" stroke="rgba(196,154,82,0.08)" stroke-width="1.5" fill="none" stroke-dasharray="6 10" style="transform-origin:center;animation:slowSpin 50s linear infinite reverse;will-change:transform"/>
