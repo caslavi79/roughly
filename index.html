@@ -114,8 +114,8 @@ body.locked {
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 @keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
 /* Scroll zone transition */
-#scroll-zone.animating { position: fixed; inset: 0; z-index: 2; overflow-y: auto; }
 #scroll-zone.b3-in-fwd { position: fixed; inset: 0; z-index: 2; overflow-y: auto; animation: b3InFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
+#scroll-zone.b3-out-bwd { position: fixed; inset: 0; z-index: 3; overflow-y: auto; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
 @keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
 @keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
 @keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
@@ -1336,12 +1336,30 @@ function goTo(index) {
 // Back button
 backBtn.addEventListener('click', () => {
   if (current >= total) {
-    // Return from scroll zone to last slide
-    document.getElementById('scroll-zone').style.display = 'none';
+    if (transitioning) return;
+    transitioning = true;
+    const scrollZone = document.getElementById('scroll-zone');
+    const dur = TX_DUR[total - 1] || 700;
+    const incoming = slides[total - 1];
+    // Show deck and animate incoming slide from left
     deck.style.display = '';
+    incoming.removeAttribute('data-state');
+    void incoming.offsetWidth;
+    incoming.classList.add('b3-in-bwd');
+    // Animate scroll zone out to the right
+    scrollZone.classList.add('b3-out-bwd');
     document.body.classList.add('locked');
-    current = total; // set so goTo thinks we're at scroll zone
-    goTo(total - 1);
+    current = total - 1;
+    setTimeout(() => {
+      scrollZone.classList.remove('b3-out-bwd');
+      scrollZone.style.display = 'none';
+      incoming.classList.remove('b3-in-bwd');
+      incoming.setAttribute('data-state', 'current');
+      backBtn.classList.toggle('visible', current > 0);
+      window.scrollTo(0, 0);
+      transitioning = false;
+    }, dur);
+    return;
   } else {
     goTo(current - 1);
   }
