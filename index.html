@@ -107,15 +107,15 @@ body.locked {
 @keyframes b2OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,50%);opacity:0} }
 @keyframes b2InBwd  { from{transform:translate(50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
 
-/* B3: Origin→ScrollZone — button is bottom-right ↘ so slide diagonally */
+/* B3: Origin→ScrollZone — arrow points right → so slide horizontally */
 .b3-out-fwd { z-index:3!important; animation: b3OutFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-fwd  { z-index:2!important; animation: b3InFwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
-@keyframes b3OutFwd { from{transform:translate(0,0);opacity:1} to{transform:translate(-50%,-50%);opacity:0} }
-@keyframes b3InFwd  { from{transform:translate(50%,50%);opacity:0} to{transform:translate(0,0);opacity:1} }
-@keyframes b3OutBwd { from{transform:translate(0,0);opacity:1} to{transform:translate(50%,50%);opacity:0} }
-@keyframes b3InBwd  { from{transform:translate(-50%,-50%);opacity:0} to{transform:translate(0,0);opacity:1} }
+@keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
+@keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
+@keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
+@keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
 /* Advance button: positioned on the side or bottom of the slide */
 .slide-advance {
   position: absolute; display: flex; align-items: center; gap: 10px;
@@ -746,15 +746,11 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 
 /* ── AMBIENT DRIFT ──────────────────────────── */
 body::before {
-  content: ''; position: fixed; inset: -50%; z-index: -1; pointer-events: none;
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(ellipse at 20% 50%, rgba(196,154,82,0.10), transparent 50%),
               radial-gradient(ellipse at 80% 20%, rgba(122,61,42,0.08), transparent 50%),
               radial-gradient(ellipse at 50% 80%, rgba(196,154,82,0.06), transparent 50%);
-  will-change: transform;
-  animation: ambientDrift 25s ease-in-out infinite alternate;}
-@keyframes ambientDrift {
-  0% { transform: translate(0, 0) rotate(0deg); }
-  100% { transform: translate(5%, 3%) rotate(2deg); }
+  transform: translateZ(0);
 }
 
 /* ── SVG SECTION DIVIDERS ───────────────────── */
@@ -1348,7 +1344,7 @@ function dismissHero() {
   burgerEl.classList.remove('burger-hidden');
 
   hero.addEventListener('transitionend', () => {
-    hero.style.display = 'none';
+    hero.remove(); // fully remove hero + all its SVG animations from DOM
     window.scrollTo(0, 0);
     deck.style.display = '';
     goTo(0);
