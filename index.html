@@ -651,12 +651,14 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
 }
 @media (max-width: 600px) {
   /* ── SLIDE SYSTEM MOBILE ─────────────────────── */
-  .slide-advance.pos-right { right: 20px; top: auto; bottom: 24px; transform: none; }
-  .slide-advance.pos-left { left: 20px; top: auto; bottom: 24px; transform: none; }
-  .slide-advance.pos-bottom { bottom: 24px; }
-  .slide-advance.pos-bottom-right { bottom: 24px; right: 20px; left: auto; }
-  .slide-advance.pos-bottom-left { bottom: 24px; left: 20px; right: auto; }
-  .slide-advance.pos-bottom-right-arrow { bottom: 24px; left: 50%; transform: translateX(-50%); }
+  .slide-advance {
+    position: static !important; transform: none !important;
+    writing-mode: horizontal-tb !important;
+    flex-direction: row !important; gap: 12px !important;
+    margin: 40px auto 0; padding: 16px 0;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+  }
+  .slide-advance .slide-advance-text { writing-mode: horizontal-tb !important; }
   .slide-back { left: 20px; top: 68px; }
 
   /* Slide sections: override padding but keep slide positioning */
