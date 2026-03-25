@@ -1271,11 +1271,8 @@ function goTo(index) {
     void outgoing.offsetWidth;
     outgoing.classList.add(tx.out);
     current = index;
-    // Wait for outgoing animation to finish, THEN show scroll zone
+    // Overlap: start scroll zone entrance at 40% through outgoing animation
     setTimeout(() => {
-      outgoing.classList.remove(tx.out);
-      outgoing.setAttribute('data-state', 'above');
-      deck.style.display = 'none';
       const scrollZone = document.getElementById('scroll-zone');
       scrollZone.style.display = '';
       scrollZone.classList.add('entering');
@@ -1283,6 +1280,12 @@ function goTo(index) {
       backBtn.classList.add('visible');
       window.scrollTo(0, 0);
       setTimeout(() => { scrollZone.classList.remove('entering'); transitioning = false; }, 700);
+    }, dur * 0.35);
+    // Clean up outgoing after full duration
+    setTimeout(() => {
+      outgoing.classList.remove(tx.out);
+      outgoing.setAttribute('data-state', 'above');
+      deck.style.display = 'none';
     }, dur);
     return;
   }
