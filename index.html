@@ -650,9 +650,31 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .footer-bottom { flex-direction: column; gap: 10px; align-items: flex-start; }
 }
 @media (max-width: 600px) {
-  .slide-advance.pos-right { right: 20px; }
-  .slide-advance.pos-left { left: 20px; }
-  .slide-back { left: 20px; top: 78px; }
+  /* ── SLIDE SYSTEM MOBILE ─────────────────────── */
+  .slide-advance.pos-right { right: 20px; top: auto; bottom: 24px; transform: none; }
+  .slide-advance.pos-left { left: 20px; top: auto; bottom: 24px; transform: none; }
+  .slide-advance.pos-bottom { bottom: 24px; }
+  .slide-advance.pos-bottom-right { bottom: 24px; right: 20px; left: auto; }
+  .slide-advance.pos-bottom-left { bottom: 24px; left: 20px; right: auto; }
+  .slide-advance.pos-bottom-right-arrow { bottom: 24px; left: 50%; transform: translateX(-50%); }
+  .slide-back { left: 20px; top: 68px; }
+
+  /* Slide sections: override padding but keep slide positioning */
+  .slide.against-section { padding: 80px 20px 80px !important; }
+  .slide.what-section { padding: 80px 20px !important; }
+  .slide.audit-section { padding: 80px 20px 80px !important; }
+  .slide.origin-section { padding: 80px 20px 80px !important; }
+
+  /* Make diagonal transitions vertical on mobile */
+  @keyframes b1OutFwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
+  @keyframes b1InFwd { from { transform: translateY(100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b1OutBwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
+  @keyframes b1InBwd { from { transform: translateY(-100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b2OutFwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(-100%); opacity: 0; } }
+  @keyframes b2InFwd { from { transform: translateY(100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+  @keyframes b2OutBwd { from { transform: translate(0,0); opacity: 1; } to { transform: translateY(100%); opacity: 0; } }
+  @keyframes b2InBwd { from { transform: translateY(-100%); opacity: 0; } to { transform: translate(0,0); opacity: 1; } }
+
   .nav-right { display: none; }
   .nav-hamburger { display: flex !important; }
   nav { padding: 14px 20px; }
@@ -669,20 +691,6 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   /* ── MOBILE SECTIONS ───────────────────────────── */
   .section-fade-divider { display: none; }
 
-  .against-section,
-  .what-section,
-  .audit-section,
-  .origin-section,
-  .process-wrap,
-  .cta-section {
-    position: relative;
-  }
-
-  .against-section {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 20px 40px;
-  }
   .against-intro { margin-bottom: 20px; }
   .against-headline { font-size: 28px; margin-bottom: 6px; }
   .against-sub { font-size: 13px; line-height: 1.5; }
@@ -690,32 +698,9 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .against-text { font-size: 15px; line-height: 1.5; }
   .against-section .against-eyebrow { margin-bottom: 8px; }
 
-  .what-section {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    padding: 64px 20px;
-  }
-  .audit-section {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 20px;
-  }
-  .origin-section {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 20px;
-  }
-  .process-wrap {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 20px;
-  }
-  .cta-section {
-    min-height: auto;
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 56px 20px;
-  }
-
+  /* Non-slide sections (scroll zone) */
+  .process-wrap { padding: 56px 20px; }
+  .cta-section { padding: 56px 20px; }
 }
 
 /* ── PARTICLES ───────────────────────────────── */
@@ -955,7 +940,7 @@ body::after {
     <div class="against-item reveal-left reveal-d2"><svg class="against-x-svg" viewBox="0 0 16 16"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg><span class="against-text">The hold music that ends with "we value your time"</span></div>
     <div class="against-item reveal-right reveal-d3"><svg class="against-x-svg" viewBox="0 0 16 16"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg><span class="against-text">The manager who schedules you on your day off and calls it "a favor"</span></div>
     <div class="against-item reveal-left reveal-d4"><svg class="against-x-svg" viewBox="0 0 16 16"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg><span class="against-text">The boss who says "we're a family" but won't approve your PTO</span></div>
-    <div class="against-item reveal-right reveal-d5"><svg class="against-x-svg" viewBox="0 0 16 16"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg><span class="against-text">The employer quietly shrinking your role until there's nothing left to fire you from</span></div>
+    <div class="against-item reveal-right reveal-d5"><svg class="against-x-svg" viewBox="0 0 16 16"><line x1="2" y1="2" x2="14" y2="14"/><line x1="14" y1="2" x2="2" y2="14"/></svg><span class="against-text">The employer quietly shrinking your role until there's nothing left</span></div>
   </div>
   <div class="section-divider divider-bottom"><svg viewBox="0 0 1200 24" preserveAspectRatio="none"><path class="divider-path" d="M0 12 Q150 4, 300 12 T600 12 T900 12 T1200 12" stroke="rgba(196,154,82,0.15)" stroke-width="1.5" fill="none" stroke-linecap="round"/></svg></div>
 </section>
