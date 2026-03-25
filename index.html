@@ -650,6 +650,22 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .cta-section { flex-direction: column; align-items: flex-start; }
   .origin-section { grid-template-columns: 1fr; gap: 56px; }
   .origin-right { padding-top: 0; }
+  .hero-side-left, .hero-side-right { display: none; }
+  /* Show curved text whenever sides are hidden */
+  .hero-curve-top, .hero-curve-bottom {
+    display: block; position: relative; z-index: 2;
+    width: clamp(260px, 50vw, 420px); height: auto;
+    overflow: visible;
+    opacity: 0; animation: heroIn 1.2s ease-out 0.6s forwards;
+  }
+  .hero-curve-top text, .hero-curve-bottom text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+    fill: var(--amber-dust); opacity: 0.3;
+  }
+  .hero-curve-top { margin-bottom: -6px; order: -1; }
+  .hero-curve-bottom { margin-top: 32px; order: 10; }
+  .hero-enter { order: 11; }
 }
 @media (max-width: 900px) {
   .process-flow { grid-template-columns: 1fr; gap: 0; }
@@ -708,8 +724,8 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   /* NO keyframe overrides — keep directional transitions from desktop */
   .slide.against-section { padding: 150px 16px 20px !important; justify-content: flex-start !important; }
   .slide.what-section { padding: 80px 16px 20px !important; justify-content: flex-start !important; }
-  .slide.what-section .what-inner { margin-top: auto !important; margin-bottom: 0 !important; }
-  .slide.what-section .slide-advance { margin-top: auto !important; margin-bottom: 48px !important; }
+  .slide.what-section .what-inner { flex: 1 !important; display: flex !important; flex-direction: column !important; justify-content: center !important; }
+  .slide.what-section .slide-advance { margin-top: 0 !important; margin-bottom: 48px !important; }
   .slide.audit-section { padding: 150px 16px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
   .slide.origin-section { padding: 150px 16px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
   .slide.origin-section .slide-advance { }
@@ -732,24 +748,13 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .email-form { flex-direction: column; }
   .email-submit { width: 100%; padding: 14px; }
   .hero-side-left, .hero-side-right { display: none !important; }
-  /* ── HERO CURVED TEXT ──────────────────────── */
-  .hero-curve-top, .hero-curve-bottom {
-    display: block; position: relative; z-index: 2;
-    width: clamp(260px, 75vw, 320px); height: auto;
-    overflow: visible;
-    opacity: 0; animation: heroIn 1.2s ease-out 0.6s forwards;
-  }
-  .hero-curve-top text, .hero-curve-bottom text {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
-    fill: var(--amber-dust); opacity: 0.3;
-  }
-  .hero-curve-top { order: 1; margin-bottom: -6px; }
+  /* ── HERO CURVED TEXT — order overrides for mobile flex ── */
+  .hero-curve-top { order: 1; }
   .hero-wordmark { order: 2; }
   .hero-tagline { order: 3; }
   .hero-tagline + svg { order: 4; }
   .hero-context-line { order: 5; }
-  .hero-curve-bottom { order: 6; margin-top: 32px; }
+  .hero-curve-bottom { order: 6; }
   .hero-enter { order: 7; }
   .hero-context-line { padding: 0 16px; font-size: 12px; }
   .hero { padding: 60px 20px 100px; }
@@ -816,6 +821,199 @@ footer { padding: 80px 48px 48px; border-top: 1px solid var(--border); }
   .cta-section span[style] { display: none !important; }
   footer { overflow: hidden; }
   .process-wrap { overflow: hidden; }
+}
+
+/* ── SHORT PHONES (smaller iPhones, SE, etc) ── */
+@media (max-width: 600px) and (max-height: 750px) {
+  .slide.against-section { padding-top: 100px !important; }
+  .against-intro { margin-bottom: 10px; }
+  .against-headline { font-size: 20px; margin-bottom: 2px; }
+  .against-sub { font-size: 11px; line-height: 1.4; }
+  .against-section .against-eyebrow { margin-bottom: 4px; }
+  .against-item { padding: 8px 12px; gap: 8px; }
+  .against-text { font-size: 12px; line-height: 1.35; }
+  .against-grid { gap: 3px; }
+
+  .slide.audit-section { padding-top: 100px !important; }
+  .audit-headline { font-size: 18px; margin-bottom: 8px; }
+  .audit-body { font-size: 11px; line-height: 1.6; }
+  .audit-eyebrow { margin-bottom: 8px; }
+  .audit-criterion { padding: 10px 8px; }
+  .gauge-wrap { width: 42px; height: 42px; }
+  .audit-crit-name { font-size: 11px; }
+
+  .slide.origin-section { padding-top: 100px !important; }
+  .origin-headline { font-size: 20px; margin-bottom: 14px; }
+  .origin-body p { font-size: 11px; line-height: 1.6; margin-bottom: 8px; }
+  .origin-pull { font-size: 15px; margin-top: 14px; }
+  .origin-card { padding: 16px 14px; }
+  .origin-card-name { font-size: 15px; }
+  .origin-card-note { font-size: 11px; padding-top: 10px; margin-bottom: 10px; }
+
+  .what-body p { font-size: 18px; margin-bottom: 14px; }
+
+  .slide-back { top: 64px; }
+}
+
+/* ── REGULAR PHONES (non-Max iPhones ~844px) ── */
+@media (max-width: 600px) and (min-height: 751px) and (max-height: 860px) {
+  .slide.against-section { padding-top: 120px !important; }
+  .against-headline { font-size: 24px; }
+  .against-sub { font-size: 13px; line-height: 1.5; }
+  .against-item { padding: 14px 16px; }
+  .against-text { font-size: 15px; line-height: 1.5; }
+  .against-grid { gap: 4px; }
+
+  .slide.audit-section { padding-top: 120px !important; }
+  .audit-headline { font-size: 22px; }
+  .audit-criterion { padding: 16px 12px; }
+  .gauge-wrap { width: 52px; height: 52px; }
+  .audit-crit-name { font-size: 14px; }
+
+  .slide.origin-section { padding-top: 120px !important; }
+  .origin-body p { font-size: 14px; line-height: 1.8; }
+  .origin-card { padding: 22px 20px; }
+
+  .what-body p { font-size: 24px; }
+}
+
+/* ── TALL SCREENS at mobile width (iPads in split, tall previews, Pro Max) ── */
+@media (max-width: 600px) and (min-height: 861px) {
+  .against-headline { font-size: 28px; margin-bottom: 8px; }
+  .against-sub { font-size: 14px; line-height: 1.6; }
+  .against-section .against-eyebrow { margin-bottom: 10px; }
+  .against-item { padding: 18px 20px; gap: 12px; }
+  .against-text { font-size: 16px; line-height: 1.55; }
+  .against-grid { gap: 6px; }
+  .against-intro { margin-bottom: 24px; }
+
+  .audit-headline { font-size: 26px; margin-bottom: 20px; }
+  .audit-body { font-size: 15px; line-height: 1.8; margin-bottom: 24px; }
+  .audit-eyebrow { margin-bottom: 20px; }
+  .audit-criterion { padding: 20px 16px; }
+  .gauge-wrap { width: 60px; height: 60px; }
+  .audit-crit-name { font-size: 16px; }
+  .audit-crit-label { font-size: 8px; }
+
+  .origin-headline { font-size: 28px; margin-bottom: 24px; }
+  .origin-body p { font-size: 15px; line-height: 1.85; margin-bottom: 16px; }
+  .origin-pull { font-size: 20px; margin-top: 28px; }
+  .origin-card { padding: 28px 24px; }
+  .origin-card-name { font-size: 20px; }
+  .origin-card-note { font-size: 15px; padding-top: 18px; margin-bottom: 20px; }
+  .origin-card-type { margin-bottom: 20px; }
+
+  .what-body p { font-size: 26px; margin-bottom: 28px; }
+}
+
+/* ── SAMSUNG FOLDED (~344px wide, ultra-narrow) ── */
+@media (max-width: 380px) {
+  .hero-wordmark { font-size: clamp(60px, 18vw, 100px) !important; }
+  .hero-tagline { font-size: clamp(18px, 5vw, 28px) !important; }
+  .hero-context-line { font-size: 11px !important; }
+  .hero-curve-top, .hero-curve-bottom { width: 240px !important; }
+  .hero-curve-top text, .hero-curve-bottom text { font-size: 7px !important; letter-spacing: 2px !important; }
+
+  .slide.against-section { padding: 90px 12px 16px !important; }
+  .against-headline { font-size: 18px !important; }
+  .against-sub { font-size: 10px !important; }
+  .against-item { padding: 7px 10px !important; }
+  .against-text { font-size: 11px !important; line-height: 1.3 !important; }
+  .against-grid { gap: 2px !important; }
+
+  .slide.audit-section { padding: 90px 12px 16px !important; }
+  .audit-headline { font-size: 17px !important; }
+  .audit-body { font-size: 10px !important; }
+  .audit-right { gap: 4px !important; }
+  .audit-criterion { padding: 8px 6px !important; }
+  .gauge-wrap { width: 38px !important; height: 38px !important; }
+  .audit-crit-name { font-size: 10px !important; }
+  .audit-crit-label { font-size: 6px !important; }
+
+  .slide.origin-section { padding: 90px 12px 16px !important; }
+  .origin-headline { font-size: 18px !important; }
+  .origin-body p { font-size: 10px !important; line-height: 1.5 !important; }
+  .origin-pull { font-size: 14px !important; }
+  .origin-card { padding: 14px 12px !important; }
+  .origin-card-name { font-size: 14px !important; }
+  .origin-card-note { font-size: 10px !important; }
+
+  .what-body p { font-size: 16px !important; }
+  .slide-advance { padding: 10px 22px !important; }
+  .slide-advance-text { font-size: 9px !important; }
+  .slide-back { left: 12px !important; }
+  nav { padding: 12px 14px !important; }
+}
+
+/* ── SAMSUNG UNFOLDED / SMALL TABLETS (601–768px) ── */
+@media (min-width: 601px) and (max-width: 768px) {
+  .hero-side-left, .hero-side-right { display: none !important; }
+  .against-grid { grid-template-columns: 1fr 1fr !important; }
+  .slide .section-divider { display: none; }
+  .audit-clipboard { display: none !important; }
+  html, body { overflow-x: hidden !important; }
+  /* Flow-based advance buttons */
+  .slide-advance {
+    position: relative !important; transform: none !important;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    writing-mode: horizontal-tb !important;
+    display: flex !important; flex-direction: row !important; align-items: center !important;
+    justify-content: center !important;
+    margin: auto auto 48px !important; padding: 14px 32px !important;
+    border-radius: 50px; opacity: 0.8;
+  }
+  .slide-advance::before {
+    content: '' !important; position: absolute !important; inset: -8px !important;
+    border-radius: 50px !important; width: auto !important; height: auto !important;
+    border: 1px solid rgba(196,154,82,0.3) !important;
+    background: none !important; transform: none !important;
+    animation: glowRing 2.5s ease-in-out infinite !important;
+  }
+  .slide-advance .slide-advance-text { writing-mode: horizontal-tb !important; }
+  .slide-advance .slide-advance-arrow { display: none !important; }
+  .slide.what-section .what-inner { margin-top: auto !important; margin-bottom: auto !important; }
+  .slide.against-section { padding: 160px 28px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.what-section { padding: 100px 28px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.audit-section { padding: 160px 28px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section { padding: 160px 28px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .process-wrap { padding: 120px 28px 72px !important; }
+}
+
+/* ── iPAD PORTRAIT (769–1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-side-left, .hero-side-right { display: none !important; }
+  .slide .section-divider { display: none; }
+  /* Flow-based advance buttons at this width since content is single-column */
+  .slide-advance {
+    position: relative !important; transform: none !important;
+    top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+    writing-mode: horizontal-tb !important;
+    display: flex !important; flex-direction: row !important; align-items: center !important;
+    justify-content: center !important;
+    margin: auto auto 48px !important; padding: 14px 32px !important;
+    border-radius: 50px; opacity: 0.8;
+  }
+  .slide-advance::before {
+    content: '' !important; position: absolute !important; inset: -8px !important;
+    border-radius: 50px !important; width: auto !important; height: auto !important;
+    border: 1px solid rgba(196,154,82,0.3) !important;
+    background: none !important; transform: none !important;
+    animation: glowRing 2.5s ease-in-out infinite !important;
+  }
+  .slide-advance .slide-advance-text { writing-mode: horizontal-tb !important; }
+  .slide-advance .slide-advance-arrow { display: none !important; }
+  .slide.what-section .what-inner { margin-top: auto !important; margin-bottom: auto !important; }
+  .slide.against-section { padding: 180px 40px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.what-section { padding: 120px 40px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.audit-section { padding: 180px 40px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .slide.origin-section { padding: 180px 40px 20px !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; }
+  .process-wrap { padding: 120px 40px 72px !important; }
+  .against-grid { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ── WIDE TOUCH DEVICES (1025px+) ── */
+@media (min-width: 1025px) and (pointer: coarse) {
+  .slide-advance { min-height: 48px; }
 }
 
 /* ── PARTICLES ───────────────────────────────── */
