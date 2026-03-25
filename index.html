@@ -113,9 +113,9 @@ body.locked {
 .b3-out-bwd { z-index:3!important; animation: b3OutBwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 .b3-in-bwd  { z-index:2!important; animation: b3InBwd  0.7s cubic-bezier(0.76,0,0.24,1) forwards!important; }
 @keyframes b3OutFwd { from{transform:translateX(0);opacity:1} to{transform:translateX(-100%);opacity:0} }
-/* Scroll zone entrance — slides in from right to match B3 direction */
-@keyframes scrollZoneIn { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
-#scroll-zone.entering { animation: scrollZoneIn 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
+/* Scroll zone transition */
+#scroll-zone.animating { position: fixed; inset: 0; z-index: 2; overflow-y: auto; }
+#scroll-zone.b3-in-fwd { position: fixed; inset: 0; z-index: 2; overflow-y: auto; animation: b3InFwd 0.7s cubic-bezier(0.76,0,0.24,1) forwards; }
 @keyframes b3InFwd  { from{transform:translateX(100%);opacity:0} to{transform:translateX(0);opacity:1} }
 @keyframes b3OutBwd { from{transform:translateX(0);opacity:1} to{transform:translateX(100%);opacity:0} }
 @keyframes b3InBwd  { from{transform:translateX(-100%);opacity:0} to{transform:translateX(0);opacity:1} }
@@ -1263,30 +1263,23 @@ function goTo(index) {
   const fwd = index > current;
   const boundary = fwd ? current : index;
 
-  // Entering scroll zone — treat exactly like a normal slide transition
+  // Entering scroll zone — same animation system as slides
   if (index >= total) {
     const outgoing = slides[current];
     const dur = TX_DUR[total - 1] || 700;
     const tx = getTx(total - 1, true);
     const scrollZone = document.getElementById('scroll-zone');
-    // Show scroll zone off-screen right, then animate both simultaneously
     scrollZone.style.display = '';
-    scrollZone.style.transform = 'translateX(100%)';
-    scrollZone.style.opacity = '0';
+    scrollZone.classList.add('b3-in-fwd');
     document.body.classList.remove('locked');
     void outgoing.offsetWidth;
-    void scrollZone.offsetWidth;
-    // Both animate at the same time
     outgoing.classList.add(tx.out);
-    scrollZone.classList.add('b3-in-fwd');
     backBtn.classList.add('visible');
     current = index;
     setTimeout(() => {
       outgoing.classList.remove(tx.out);
       outgoing.setAttribute('data-state', 'above');
       scrollZone.classList.remove('b3-in-fwd');
-      scrollZone.style.transform = '';
-      scrollZone.style.opacity = '';
       deck.style.display = 'none';
       window.scrollTo(0, 0);
       transitioning = false;
