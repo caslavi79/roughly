@@ -540,12 +540,11 @@ nav.nav-hidden { opacity: 0; pointer-events: none; }
 }
 .origin-card:hover { transform: perspective(600px) rotateY(-2deg) rotateX(1deg); box-shadow: var(--shadow-lg), var(--shadow-glow); }
 .origin-card::before {
-  content: ''; position: absolute; inset: -2px; border-radius: 18px; z-index: -1;
-  background: conic-gradient(from 0deg, transparent, rgba(196,154,82,0.15), transparent, rgba(196,154,82,0.1), transparent);
-  animation: borderRotate 8s linear infinite; opacity: 0; transition: opacity 0.5s;
+  content: ''; position: absolute; inset: -1px; border-radius: 17px; z-index: -1;
+  background: linear-gradient(135deg, rgba(196,154,82,0.12), transparent 50%, rgba(196,154,82,0.08));
+  opacity: 0; transition: opacity 0.5s;
 }
 .origin-card:hover::before { opacity: 1; }
-@keyframes borderRotate { to { transform: rotate(360deg); } }
 .origin-card-label { font-size: 8px; letter-spacing: 3px; text-transform: uppercase; color: var(--tobacco); opacity: 0.4; margin-bottom: 20px; }
 .origin-card-name { font-family: 'Crimson Pro', serif; font-style: italic; font-size: 22px; font-weight: 400; color: var(--cream-receipt); margin-bottom: 8px; }
 .origin-card-type { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--tobacco); opacity: 0.5; margin-bottom: 24px; }
